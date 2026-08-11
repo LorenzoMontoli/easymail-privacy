@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Easymail — Privacy notice and terms of use</title>
+<meta name="description" content="Privacy notice and terms of use for Easymail, the Android app that shows your Gmail as chat conversations.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c5221f'/><path d='M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z' fill='white'/><path d='M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z' fill='%23f6f8fc'/></svg>">
+<style>
+  /* Light is the base palette; the dark set only redefines tokens. */
+  :root {
+    --ground:      #ffffff;
+    --surface:     #f6f8fc;
+    --hairline:    #e1e4e8;
+    --ink:         #1f1f21;
+    --ink-muted:   #5f6368;
+    --accent:      #1a73e8;
+    --accent-soft: #e8f0fe;
+    --mark:        #c5221f;
+    --shadow:      0 1px 2px rgba(31, 31, 33, .08), 0 4px 14px rgba(31, 31, 33, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #15171a;
+      --surface:     #1d2024;
+      --hairline:    #2e3238;
+      --ink:         #e6e8eb;
+      --ink-muted:   #9aa0a6;
+      --accent:      #8ab4f8;
+      --accent-soft: #1e2a3d;
+      --mark:        #f28b82;
+      --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #15171a;
+    --surface:     #1d2024;
+    --hairline:    #2e3238;
+    --ink:         #e6e8eb;
+    --ink-muted:   #9aa0a6;
+    --accent:      #8ab4f8;
+    --accent-soft: #1e2a3d;
+    --mark:        #f28b82;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont,
+                 Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans",
+                 "Yu Gothic UI", "Microsoft YaHei", "Malgun Gothic", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- header ------------------------------------------------------------------ */
+
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand svg { display: block; }
+  .bar .spacer { flex: 1; }
+
+  select {
+    font: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* --- page -------------------------------------------------------------------- */
+
+  main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 40px 20px 96px;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.35rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 0 20px;
+  }
+
+  h2 {
+    font-size: 1.06rem;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+    color: var(--accent);
+    margin: 36px 0 8px;
+  }
+
+  p { margin: 0 0 14px; }
+
+  /* Identity card: who publishes this, when it changed, how to reach them. */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 0 0 22px;
+    box-shadow: var(--shadow);
+  }
+  .card dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 18px;
+    margin: 0;
+    font-size: 15px;
+  }
+  .card dt {
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    align-self: baseline;
+    padding-top: 3px;
+  }
+  .card dd { margin: 0; }
+  @media (max-width: 34rem) {
+    .card dl { grid-template-columns: 1fr; gap: 2px; }
+    .card dd { margin-bottom: 10px; }
+    .card dd:last-child { margin-bottom: 0; }
+  }
+
+  .mirror {
+    color: var(--ink-muted);
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* --- language switching ------------------------------------------------------ */
+
+  article[data-lang] { display: none; }
+  :root:not([data-active]) article[data-lang="en"] { display: block; }
+  :root[data-active="en"] article[data-lang="en"] { display: block; }
+  :root[data-active="it"] article[data-lang="it"] { display: block; }
+  :root[data-active="fr"] article[data-lang="fr"] { display: block; }
+  :root[data-active="de"] article[data-lang="de"] { display: block; }
+  :root[data-active="es"] article[data-lang="es"] { display: block; }
+  :root[data-active="zh"] article[data-lang="zh"] { display: block; }
+  :root[data-active="ja"] article[data-lang="ja"] { display: block; }
+  :root[data-active="ko"] article[data-lang="ko"] { display: block; }
+
+  /* CJK reads better slightly looser and without the Latin letter-spacing. */
+  article[data-lang="zh"], article[data-lang="ja"], article[data-lang="ko"] { line-height: 1.85; }
+  article[data-lang="zh"] h1, article[data-lang="ja"] h1, article[data-lang="ko"] h1,
+  article[data-lang="zh"] h2, article[data-lang="ja"] h2, article[data-lang="ko"] h2 {
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <span class="brand">
+    <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--mark)"/>
+      <path d="M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" fill="#fff"/>
+      <path d="M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z" fill="#f6f8fc"/>
+    </svg>
+    Easymail
+  </span>
+  <span class="spacer"></span>
+  <label class="visually-hidden" for="lang">Language</label>
+  <select id="lang">
+    <option value="en">English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+    <option value="zh">中文</option>
+    <option value="ja">日本語</option>
+    <option value="ko">한국어</option>
+  </select>
+</header>
+
+<main>
+
+<!-- ============================== ENGLISH ============================== -->
+<article data-lang="en" lang="en">
+  <h1>Privacy notice and terms of use</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Last updated</dt><dd>11 August 2026</dd>
+      <dt>Published by</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">This page reproduces the notice shown inside the app, which you accept on first launch.</p>
+
+  <h2>1. What Easymail does</h2>
+  <p>Easymail displays the mail in your Google account as chat conversations, and lets you reply and start new messages. It is an alternative way of reading the same mailbox, not a separate mail service.</p>
+
+  <h2>2. What it accesses</h2>
+  <p>With the authorization you grant to Google, Easymail reads your messages and their attachments, the addresses of senders and recipients, and sends messages on your behalf. It requests only two permissions: reading and modifying Gmail, and reading your send-as aliases so it can tell which messages are yours.</p>
+
+  <h2>3. Where your data goes</h2>
+  <p>Your mail goes nowhere except Google. There is no Easymail server: the app talks over an encrypted connection directly to the Gmail interface. Your messages, their attachments and your contacts are never sent to us or to any third party, and are never used to decide which advertising you see.</p>
+
+  <h2>4. Advertising</h2>
+  <p>The app is free and is paid for by a banner at the bottom of the screen, served by Google AdMob. The advertising never sees your mail: AdMob receives only what advertising in any app receives — an advertising identifier, your approximate region, the device model. Nothing is derived from your messages, and no ad is chosen on the basis of what you write or receive. You are asked for a separate consent before any of this happens, and you may refuse: the app keeps working and simply shows no banner.</p>
+
+  <h2>5. Limited use of the data</h2>
+  <p>Use of information received from Google is subject to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including its Limited Use requirements. Data is used solely to provide the functions described here, and never transferred to others except where you explicitly instruct it or where the law requires it.</p>
+
+  <h2>6. What is kept on your device</h2>
+  <p>To open quickly and work offline, the app keeps a local copy on your phone: the headers of your conversations, the text of those you have opened, and the attachments you have downloaded. This copy is capped and the oldest content is discarded automatically. Signing out or uninstalling the app deletes it entirely.</p>
+
+  <h2>7. Remote images and tracking</h2>
+  <p>Images hosted on external sites are blocked until you ask for them. Many marketing emails include an invisible image whose only purpose is to tell the sender that you opened the mail; blocking it by default prevents that.</p>
+
+  <h2>8. Your control</h2>
+  <p>You can revoke Easymail's access at any time from your Google account, at <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Revoking it stops the app immediately. Deleting messages, and any other permanent operation on your mailbox, remains something you do in Gmail.</p>
+
+  <h2>9. Limits</h2>
+  <p>Email was not designed to look like a chat: Easymail reformats messages to display them, and on complex ones the result may differ from the original. For anything legally or professionally critical, check the message in Gmail. The service is provided as is, with no guarantee of uninterrupted availability.</p>
+
+  <h2>10. Changes</h2>
+  <p>If this notice changes substantially, you will be asked to read and accept it again. You can reopen it at any time from Settings.</p>
+
+  <h2>11. Your rights</h2>
+  <p>If you are in the European Union or the United Kingdom, you have the right to access your personal data, to have it corrected or erased, to restrict or object to its processing, and to receive it in a portable format. Because Easymail keeps no data on any server of ours, these rights are exercised directly in your Google account: the data is Google's copy of your mail, and the local copy on your phone is removed by signing out or uninstalling. For anything else, write to the contact address above. You also have the right to lodge a complaint with your data protection authority.</p>
+</article>
+
+<!-- ============================== ITALIANO ============================== -->
+<article data-lang="it" lang="it">
+  <h1>Informativa privacy e condizioni d'uso</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Ultimo aggiornamento</dt><dd>11 agosto 2026</dd>
+      <dt>Titolare</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contatto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Questa pagina riproduce l'informativa mostrata dentro l'app, che accetti al primo avvio.</p>
+
+  <h2>1. Cosa fa Easymail</h2>
+  <p>Easymail mostra la posta del tuo account Google come conversazioni in stile chat, e ti permette di rispondere e scrivere nuovi messaggi. È un modo diverso di leggere la stessa casella, non un servizio di posta separato.</p>
+
+  <h2>2. A cosa accede</h2>
+  <p>Con l'autorizzazione che concedi a Google, Easymail legge i tuoi messaggi e i relativi allegati, gli indirizzi di mittenti e destinatari, e invia messaggi per tuo conto. Richiede solo due permessi: lettura e modifica di Gmail, e lettura dei tuoi alias di invio per capire quali messaggi sono tuoi.</p>
+
+  <h2>3. Dove finiscono i tuoi dati</h2>
+  <p>La tua posta non va da nessuna parte tranne Google. Non esiste un server Easymail: l'app parla su connessione cifrata direttamente con l'interfaccia di Gmail. I tuoi messaggi, i loro allegati e i tuoi contatti non vengono mai inviati a noi né a terzi, e non vengono mai usati per decidere quale pubblicità vedi.</p>
+
+  <h2>4. Pubblicità</h2>
+  <p>L'app è gratuita e si sostiene con un banner in fondo allo schermo, fornito da Google AdMob. La pubblicità non vede la tua posta: ad AdMob arriva solo ciò che riceve la pubblicità di qualsiasi app — un identificatore pubblicitario, la tua zona approssimativa, il modello del dispositivo. Nulla viene ricavato dai tuoi messaggi, e nessun annuncio è scelto in base a ciò che scrivi o ricevi. Prima che questo avvenga ti viene chiesto un consenso separato, che puoi rifiutare: l'app continua a funzionare e semplicemente non mostra il banner.</p>
+
+  <h2>5. Uso limitato dei dati</h2>
+  <p>L'uso delle informazioni ricevute da Google è soggetto alla <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, inclusi i requisiti di Limited Use. I dati servono unicamente a fornire le funzioni qui descritte e non vengono mai ceduti ad altri, salvo tua esplicita richiesta o obbligo di legge.</p>
+
+  <h2>6. Cosa resta sul tuo dispositivo</h2>
+  <p>Per aprirsi in fretta e funzionare anche offline, l'app tiene una copia locale sul telefono: le intestazioni delle conversazioni, il testo di quelle che hai aperto e gli allegati che hai scaricato. Questa copia ha un tetto massimo e i contenuti più vecchi vengono scartati da soli. Uscendo dall'account o disinstallando l'app viene eliminata del tutto.</p>
+
+  <h2>7. Immagini remote e tracciamento</h2>
+  <p>Le immagini ospitate su siti esterni sono bloccate finché non le richiedi. Molte email pubblicitarie contengono un'immagine invisibile il cui unico scopo è segnalare al mittente che hai aperto il messaggio: bloccarla per impostazione predefinita lo impedisce.</p>
+
+  <h2>8. Il tuo controllo</h2>
+  <p>Puoi revocare l'accesso di Easymail in qualsiasi momento dal tuo account Google, su <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. La revoca ferma l'app immediatamente. L'eliminazione dei messaggi, e ogni altra operazione irreversibile sulla casella, resta una cosa che fai da Gmail.</p>
+
+  <h2>9. Limiti</h2>
+  <p>L'email non è nata per assomigliare a una chat: Easymail riformatta i messaggi per mostrarli, e su quelli complessi il risultato può differire dall'originale. Per qualsiasi cosa rilevante sul piano legale o professionale, verifica il messaggio su Gmail. Il servizio è fornito così com'è, senza garanzia di disponibilità continuativa.</p>
+
+  <h2>10. Modifiche</h2>
+  <p>Se questa informativa cambia in modo sostanziale, ti verrà chiesto di rileggerla e accettarla di nuovo. Puoi riaprirla quando vuoi dalle Impostazioni.</p>
+
+  <h2>11. I tuoi diritti</h2>
+  <p>Se ti trovi nell'Unione Europea o nel Regno Unito, hai diritto di accedere ai tuoi dati personali, di farli correggere o cancellare, di limitarne o opporti al trattamento e di riceverli in un formato portabile. Poiché Easymail non conserva dati su alcun nostro server, questi diritti si esercitano direttamente nel tuo account Google: i dati sono la copia della tua posta presso Google, e la copia locale sul telefono si elimina uscendo dall'account o disinstallando l'app. Per tutto il resto scrivi all'indirizzo di contatto indicato sopra. Hai inoltre diritto di proporre reclamo all'autorità di controllo — in Italia, il Garante per la protezione dei dati personali.</p>
+</article>
+
+<!-- ============================== FRANÇAIS ============================== -->
+<article data-lang="fr" lang="fr">
+  <h1>Avis de confidentialité et conditions d'utilisation</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Dernière mise à jour</dt><dd>11 août 2026</dd>
+      <dt>Éditeur</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Cette page reproduit l'avis affiché dans l'application, que vous acceptez au premier lancement.</p>
+
+  <h2>1. Ce que fait Easymail</h2>
+  <p>Easymail affiche le courrier de votre compte Google sous forme de conversations, et vous permet de répondre et d'écrire de nouveaux messages. C'est une autre façon de lire la même boîte, pas un service de messagerie distinct.</p>
+
+  <h2>2. Ce à quoi l'application accède</h2>
+  <p>Avec l'autorisation que vous accordez à Google, Easymail lit vos messages et leurs pièces jointes, les adresses des expéditeurs et des destinataires, et envoie des messages en votre nom. L'application ne demande que deux autorisations : lire et modifier Gmail, et lire vos alias d'envoi afin de savoir quels messages sont les vôtres.</p>
+
+  <h2>3. Où vont vos données</h2>
+  <p>Votre courrier ne va nulle part sauf chez Google. Il n'existe aucun serveur Easymail : l'application dialogue par connexion chiffrée directement avec l'interface de Gmail. Vos messages, leurs pièces jointes et vos contacts ne nous sont jamais transmis, ni à des tiers, et ne servent jamais à décider quelle publicité vous voyez.</p>
+
+  <h2>4. Publicité</h2>
+  <p>L'application est gratuite et financée par une bannière en bas de l'écran, fournie par Google AdMob. La publicité ne voit jamais votre courrier : AdMob ne reçoit que ce que reçoit la publicité de n'importe quelle application — un identifiant publicitaire, votre région approximative, le modèle de l'appareil. Rien n'est déduit de vos messages, et aucune annonce n'est choisie selon ce que vous écrivez ou recevez. Un consentement distinct vous est demandé au préalable, et vous pouvez le refuser : l'application continue de fonctionner, sans bannière.</p>
+
+  <h2>5. Usage limité des données</h2>
+  <p>L'utilisation des informations reçues de Google est soumise à la <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, y compris à ses exigences d'usage limité. Les données servent uniquement à fournir les fonctions décrites ici et ne sont jamais transférées à des tiers, sauf sur votre demande explicite ou obligation légale.</p>
+
+  <h2>6. Ce qui reste sur votre appareil</h2>
+  <p>Pour s'ouvrir rapidement et fonctionner hors ligne, l'application conserve une copie locale sur votre téléphone : les en-têtes de vos conversations, le texte de celles que vous avez ouvertes et les pièces jointes que vous avez téléchargées. Cette copie est plafonnée et le contenu le plus ancien est supprimé automatiquement. Se déconnecter ou désinstaller l'application l'efface entièrement.</p>
+
+  <h2>7. Images distantes et pistage</h2>
+  <p>Les images hébergées sur des sites externes sont bloquées tant que vous ne les demandez pas. De nombreux e-mails publicitaires contiennent une image invisible dont le seul but est d'indiquer à l'expéditeur que vous avez ouvert le message ; la bloquer par défaut l'en empêche.</p>
+
+  <h2>8. Votre contrôle</h2>
+  <p>Vous pouvez révoquer l'accès d'Easymail à tout moment depuis votre compte Google, sur <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. La révocation arrête l'application immédiatement. La suppression de messages, et toute autre opération irréversible sur votre boîte, reste quelque chose que vous faites dans Gmail.</p>
+
+  <h2>9. Limites</h2>
+  <p>L'e-mail n'a pas été conçu pour ressembler à une discussion : Easymail remet en forme les messages pour les afficher, et sur les plus complexes le résultat peut différer de l'original. Pour tout ce qui est juridiquement ou professionnellement important, vérifiez le message dans Gmail. Le service est fourni en l'état, sans garantie de disponibilité continue.</p>
+
+  <h2>10. Modifications</h2>
+  <p>Si cet avis change de manière substantielle, il vous sera demandé de le relire et de l'accepter à nouveau. Vous pouvez le rouvrir à tout moment depuis les Paramètres.</p>
+
+  <h2>11. Vos droits</h2>
+  <p>Si vous vous trouvez dans l'Union européenne ou au Royaume-Uni, vous avez le droit d'accéder à vos données personnelles, de les faire rectifier ou effacer, d'en limiter le traitement ou de vous y opposer, et de les recevoir dans un format portable. Comme Easymail ne conserve aucune donnée sur un serveur qui nous appartienne, ces droits s'exercent directement dans votre compte Google : les données sont la copie de votre courrier chez Google, et la copie locale sur le téléphone disparaît en vous déconnectant ou en désinstallant l'application. Pour le reste, écrivez à l'adresse de contact indiquée ci-dessus. Vous avez également le droit d'introduire une réclamation auprès de votre autorité de protection des données.</p>
+</article>
+
+<!-- ============================== DEUTSCH ============================== -->
+<article data-lang="de" lang="de">
+  <h1>Datenschutzhinweis und Nutzungsbedingungen</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Zuletzt aktualisiert</dt><dd>11. August 2026</dd>
+      <dt>Anbieter</dt><dd>Lorenzo Montoli</dd>
+      <dt>Kontakt</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Diese Seite gibt den Hinweis wieder, der in der App angezeigt und beim ersten Start akzeptiert wird.</p>
+
+  <h2>1. Was Easymail tut</h2>
+  <p>Easymail zeigt die E-Mails deines Google-Kontos als Chat-Unterhaltungen an und lässt dich antworten und neue Nachrichten schreiben. Es ist eine andere Art, dasselbe Postfach zu lesen, kein eigener E-Mail-Dienst.</p>
+
+  <h2>2. Worauf die App zugreift</h2>
+  <p>Mit der Berechtigung, die du Google erteilst, liest Easymail deine Nachrichten und deren Anhänge, die Adressen von Absendern und Empfängern, und sendet Nachrichten in deinem Namen. Es werden nur zwei Berechtigungen angefordert: Gmail lesen und ändern sowie deine Absender-Aliase lesen, um zu erkennen, welche Nachrichten von dir stammen.</p>
+
+  <h2>3. Wohin deine Daten gehen</h2>
+  <p>Deine E-Mails gehen nirgendwohin außer zu Google. Es gibt keinen Easymail-Server: Die App spricht über eine verschlüsselte Verbindung direkt mit der Gmail-Schnittstelle. Deine Nachrichten, ihre Anhänge und deine Kontakte werden niemals an uns oder an Dritte gesendet und nie dafür verwendet, welche Werbung du siehst.</p>
+
+  <h2>4. Werbung</h2>
+  <p>Die App ist kostenlos und finanziert sich über ein Banner am unteren Bildschirmrand, ausgeliefert von Google AdMob. Die Werbung sieht deine E-Mails nie: AdMob erhält nur, was Werbung in jeder App erhält — eine Werbe-ID, deine ungefähre Region, das Gerätemodell. Nichts wird aus deinen Nachrichten abgeleitet, und keine Anzeige wird danach ausgewählt, was du schreibst oder empfängst. Vorher wirst du um eine gesonderte Einwilligung gebeten, die du ablehnen kannst: Die App funktioniert weiter und zeigt einfach kein Banner.</p>
+
+  <h2>5. Eingeschränkte Nutzung der Daten</h2>
+  <p>Die Verwendung der von Google erhaltenen Informationen unterliegt der <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a> einschließlich ihrer Limited-Use-Anforderungen. Die Daten dienen ausschließlich den hier beschriebenen Funktionen und werden niemals an Dritte weitergegeben, außer auf deine ausdrückliche Anweisung oder wenn das Gesetz es verlangt.</p>
+
+  <h2>6. Was auf deinem Gerät bleibt</h2>
+  <p>Damit die App schnell startet und offline funktioniert, hält sie eine lokale Kopie auf deinem Telefon: die Kopfzeilen deiner Unterhaltungen, den Text der von dir geöffneten und die von dir heruntergeladenen Anhänge. Diese Kopie ist begrenzt, ältere Inhalte werden automatisch verworfen. Abmelden oder Deinstallieren löscht sie vollständig.</p>
+
+  <h2>7. Externe Bilder und Tracking</h2>
+  <p>Auf fremden Servern liegende Bilder werden blockiert, bis du sie anforderst. Viele Werbemails enthalten ein unsichtbares Bild, dessen einziger Zweck es ist, dem Absender zu melden, dass du die Nachricht geöffnet hast; die Standardblockade verhindert das.</p>
+
+  <h2>8. Deine Kontrolle</h2>
+  <p>Du kannst den Zugriff von Easymail jederzeit in deinem Google-Konto widerrufen, unter <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Der Widerruf stoppt die App sofort. Das Löschen von Nachrichten und jeder andere unwiderrufliche Eingriff in dein Postfach bleibt etwas, das du in Gmail tust.</p>
+
+  <h2>9. Grenzen</h2>
+  <p>E-Mail wurde nicht dafür entworfen, wie ein Chat auszusehen: Easymail formatiert Nachrichten für die Anzeige um, und bei komplexen kann das Ergebnis vom Original abweichen. Prüfe rechtlich oder beruflich Wichtiges in Gmail. Der Dienst wird ohne Gewähr und ohne Zusicherung durchgehender Verfügbarkeit bereitgestellt.</p>
+
+  <h2>10. Änderungen</h2>
+  <p>Ändert sich dieser Hinweis wesentlich, wirst du gebeten, ihn erneut zu lesen und zu akzeptieren. Du kannst ihn jederzeit in den Einstellungen wieder öffnen.</p>
+
+  <h2>11. Deine Rechte</h2>
+  <p>Wenn du dich in der Europäischen Union oder im Vereinigten Königreich befindest, hast du das Recht auf Auskunft über deine personenbezogenen Daten, auf Berichtigung oder Löschung, auf Einschränkung der Verarbeitung oder Widerspruch dagegen sowie auf Erhalt in einem übertragbaren Format. Da Easymail keine Daten auf einem eigenen Server speichert, werden diese Rechte direkt in deinem Google-Konto ausgeübt: Die Daten sind Googles Kopie deiner E-Mails, und die lokale Kopie auf dem Telefon wird durch Abmelden oder Deinstallieren entfernt. Für alles Weitere schreibe an die oben genannte Kontaktadresse. Außerdem hast du das Recht, dich bei deiner Datenschutzaufsichtsbehörde zu beschweren.</p>
+</article>
+
+<!-- ============================== ESPAÑOL ============================== -->
+<article data-lang="es" lang="es">
+  <h1>Aviso de privacidad y condiciones de uso</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Última actualización</dt><dd>11 de agosto de 2026</dd>
+      <dt>Responsable</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contacto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Esta página reproduce el aviso que se muestra dentro de la aplicación y que aceptas al primer inicio.</p>
+
+  <h2>1. Qué hace Easymail</h2>
+  <p>Easymail muestra el correo de tu cuenta de Google como conversaciones de chat, y te permite responder y escribir mensajes nuevos. Es otra forma de leer el mismo buzón, no un servicio de correo aparte.</p>
+
+  <h2>2. A qué accede</h2>
+  <p>Con la autorización que concedes a Google, Easymail lee tus mensajes y sus adjuntos, las direcciones de remitentes y destinatarios, y envía mensajes en tu nombre. Solo solicita dos permisos: leer y modificar Gmail, y leer tus alias de envío para saber qué mensajes son tuyos.</p>
+
+  <h2>3. Adónde van tus datos</h2>
+  <p>Tu correo no va a ningún sitio salvo Google. No existe un servidor de Easymail: la aplicación habla por conexión cifrada directamente con la interfaz de Gmail. Tus mensajes, sus adjuntos y tus contactos nunca se envían a nosotros ni a terceros, y nunca se usan para decidir qué publicidad ves.</p>
+
+  <h2>4. Publicidad</h2>
+  <p>La aplicación es gratuita y se sostiene con un banner en la parte inferior de la pantalla, servido por Google AdMob. La publicidad nunca ve tu correo: a AdMob solo le llega lo que recibe la publicidad de cualquier aplicación — un identificador publicitario, tu zona aproximada, el modelo del dispositivo. Nada se deduce de tus mensajes, y ningún anuncio se elige según lo que escribes o recibes. Antes de todo esto se te pide un consentimiento aparte, que puedes rechazar: la aplicación sigue funcionando y simplemente no muestra el banner.</p>
+
+  <h2>5. Uso limitado de los datos</h2>
+  <p>El uso de la información recibida de Google está sujeto a la <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, incluidos sus requisitos de uso limitado. Los datos sirven únicamente para ofrecer las funciones aquí descritas y nunca se transfieren a terceros, salvo petición expresa tuya u obligación legal.</p>
+
+  <h2>6. Qué se queda en tu dispositivo</h2>
+  <p>Para abrirse deprisa y funcionar sin conexión, la aplicación guarda una copia local en tu teléfono: las cabeceras de tus conversaciones, el texto de las que has abierto y los adjuntos que has descargado. Esa copia tiene un límite y el contenido más antiguo se descarta solo. Cerrar sesión o desinstalar la aplicación la elimina por completo.</p>
+
+  <h2>7. Imágenes remotas y rastreo</h2>
+  <p>Las imágenes alojadas en sitios externos están bloqueadas hasta que las pidas. Muchos correos publicitarios incluyen una imagen invisible cuyo único fin es avisar al remitente de que has abierto el mensaje; bloquearla por defecto lo impide.</p>
+
+  <h2>8. Tu control</h2>
+  <p>Puedes revocar el acceso de Easymail cuando quieras desde tu cuenta de Google, en <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. La revocación detiene la aplicación de inmediato. Borrar mensajes, y cualquier otra operación irreversible sobre tu buzón, sigue siendo algo que haces en Gmail.</p>
+
+  <h2>9. Límites</h2>
+  <p>El correo no nació para parecerse a un chat: Easymail reformatea los mensajes para mostrarlos, y en los complejos el resultado puede diferir del original. Para cualquier cosa relevante en lo legal o lo profesional, comprueba el mensaje en Gmail. El servicio se ofrece tal cual, sin garantía de disponibilidad continua.</p>
+
+  <h2>10. Cambios</h2>
+  <p>Si este aviso cambia de forma sustancial, se te pedirá que lo leas y lo aceptes de nuevo. Puedes volver a abrirlo cuando quieras desde Ajustes.</p>
+
+  <h2>11. Tus derechos</h2>
+  <p>Si te encuentras en la Unión Europea o el Reino Unido, tienes derecho a acceder a tus datos personales, a que se rectifiquen o se supriman, a limitar u oponerte a su tratamiento y a recibirlos en un formato portable. Como Easymail no guarda datos en ningún servidor nuestro, estos derechos se ejercen directamente en tu cuenta de Google: los datos son la copia de tu correo en Google, y la copia local del teléfono se elimina cerrando sesión o desinstalando la aplicación. Para lo demás, escribe a la dirección de contacto indicada arriba. También tienes derecho a presentar una reclamación ante tu autoridad de protección de datos.</p>
+</article>
+
+<!-- ============================== 中文 ============================== -->
+<article data-lang="zh" lang="zh">
+  <h1>隐私说明与使用条款</h1>
+
+  <div class="card">
+    <dl>
+      <dt>最后更新</dt><dd>2026年8月11日</dd>
+      <dt>发布者</dt><dd>Lorenzo Montoli</dd>
+      <dt>联系方式</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">本页面复现应用内首次启动时需要接受的说明。</p>
+
+  <h2>1. Easymail 做什么</h2>
+  <p>Easymail 把你 Google 账号里的邮件显示为聊天式会话，并支持回复和撰写新邮件。它只是阅读同一个邮箱的另一种方式，并非独立的邮件服务。</p>
+
+  <h2>2. 它访问什么</h2>
+  <p>凭你授予 Google 的授权，Easymail 会读取你的邮件及其附件、发件人和收件人地址，并代表你发送邮件。它只申请两项权限：读取和修改 Gmail，以及读取你的发件别名，以便判断哪些邮件是你自己发的。</p>
+
+  <h2>3. 你的数据去了哪里</h2>
+  <p>除 Google 之外，你的邮件哪里都不去。不存在 Easymail 服务器：应用通过加密连接直接与 Gmail 接口通信。你的邮件、附件和联系人绝不会发送给我们或第三方，也绝不会用来决定你看到哪些广告。</p>
+
+  <h2>4. 广告</h2>
+  <p>本应用免费，靠屏幕底部的横幅广告维持，广告由 Google AdMob 投放。广告看不到你的邮件：AdMob 收到的只是任何应用的广告都会收到的信息——广告标识符、大致所在地区、设备型号。没有任何内容取自你的邮件，也没有任何广告是根据你写了什么或收到了什么来挑选的。在此之前会单独征求你的同意，你可以拒绝：应用照常工作，只是不显示横幅。</p>
+
+  <h2>5. 数据的有限使用</h2>
+  <p>对从 Google 获得的信息的使用受 <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a> 约束，包括其 Limited Use 要求。数据仅用于提供本文所述功能，除非你明确指示或法律要求，绝不会转交他人。</p>
+
+  <h2>6. 什么会留在你的设备上</h2>
+  <p>为了快速打开并支持离线使用，应用会在手机上保留一份本地副本：会话的标题信息、你打开过的会话正文，以及你下载过的附件。该副本设有上限，较旧的内容会自动清除。退出登录或卸载应用会将其完全删除。</p>
+
+  <h2>7. 远程图片与追踪</h2>
+  <p>托管在外部站点的图片在你主动请求前会被拦截。许多营销邮件含有一张隐形图片，其唯一目的是告知发件人你已打开邮件；默认拦截可以阻止这一点。</p>
+
+  <h2>8. 你的控制权</h2>
+  <p>你可以随时在 Google 账号中撤销 Easymail 的访问权限，网址为 <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>。撤销后应用会立即停止工作。删除邮件以及对邮箱的其他不可逆操作，仍然需要你在 Gmail 中完成。</p>
+
+  <h2>9. 局限</h2>
+  <p>电子邮件本就不是为聊天外观设计的：Easymail 会重新排版以便显示，复杂邮件的显示结果可能与原件不同。凡涉及法律或工作上的重要内容，请在 Gmail 中核对。本服务按现状提供，不保证持续可用。</p>
+
+  <h2>10. 变更</h2>
+  <p>如本说明发生实质性变更，将请你重新阅读并接受。你随时可以在「设置」中重新打开它。</p>
+
+  <h2>11. 你的权利</h2>
+  <p>如果你身处欧盟或英国，你有权访问自己的个人数据，要求更正或删除，限制或反对处理，并以可移植的格式获取这些数据。由于 Easymail 不在我们的任何服务器上保存数据，这些权利需直接在你的 Google 账号中行使：数据是 Google 保存的邮件副本，而手机上的本地副本可通过退出登录或卸载应用来清除。其他事项请写信至上方的联系地址。你还有权向所在地的数据保护监管机构投诉。</p>
+</article>
+
+<!-- ============================== 日本語 ============================== -->
+<article data-lang="ja" lang="ja">
+  <h1>プライバシーに関する説明と利用規約</h1>
+
+  <div class="card">
+    <dl>
+      <dt>最終更新</dt><dd>2026年8月11日</dd>
+      <dt>提供者</dt><dd>Lorenzo Montoli</dd>
+      <dt>連絡先</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">このページは、アプリ内で初回起動時に同意していただく説明を再掲したものです。</p>
+
+  <h2>1. Easymail がすること</h2>
+  <p>Easymail は Google アカウントのメールをチャット形式の会話として表示し、返信や新規作成ができるようにします。同じメールボックスを別の見方で読むためのもので、独立したメールサービスではありません。</p>
+
+  <h2>2. アクセスする範囲</h2>
+  <p>あなたが Google に与えた許可のもとで、Easymail はメール本文と添付ファイル、差出人と宛先のアドレスを読み取り、あなたの代わりにメールを送信します。要求する権限は二つだけです。Gmail の読み取りと変更、そしてどのメールが自分のものかを判別するための送信エイリアスの読み取りです。</p>
+
+  <h2>3. データの行き先</h2>
+  <p>あなたのメールは Google 以外のどこにも送られません。Easymail のサーバーは存在せず、アプリは暗号化された接続で Gmail のインターフェースと直接やり取りします。メール本文も添付ファイルも連絡先も、当方や第三者に送られることはなく、表示する広告を決めるために使われることもありません。</p>
+
+  <h2>4. 広告</h2>
+  <p>本アプリは無料で、画面下部のバナー広告によって支えられています。配信は Google AdMob です。広告があなたのメールを見ることはありません。AdMob が受け取るのは、どのアプリの広告でも受け取るもの — 広告 ID、おおよその地域、端末の機種 — だけです。あなたのメールから何かが導き出されることはなく、書いた内容や受け取った内容に基づいて広告が選ばれることもありません。その前に別途同意をお尋ねします。拒否しても構いません。アプリはそのまま動作し、バナーが表示されなくなるだけです。</p>
+
+  <h2>5. データの限定利用</h2>
+  <p>Google から受け取った情報の利用は、Limited Use 要件を含む <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a> に従います。データはここに記載した機能の提供にのみ使用し、あなたの明示的な指示または法令による場合を除き、第三者に渡すことはありません。</p>
+
+  <h2>6. 端末に残るもの</h2>
+  <p>すばやく起動しオフラインでも使えるように、アプリは端末内にローカルコピーを保持します。会話のヘッダー情報、開いた会話の本文、ダウンロードした添付ファイルです。このコピーには上限があり、古いものから自動的に削除されます。ログアウトまたはアンインストールすると完全に消去されます。</p>
+
+  <h2>7. リモート画像とトラッキング</h2>
+  <p>外部サイトにある画像は、あなたが要求するまでブロックされます。多くの宣伝メールには、開封したことを差出人に知らせるためだけの見えない画像が含まれています。既定でブロックすることでそれを防ぎます。</p>
+
+  <h2>8. あなたの管理権</h2>
+  <p>Easymail のアクセス権は、Google アカウントの <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a> からいつでも取り消せます。取り消すとアプリは直ちに動作を停止します。メールの削除など、メールボックスに対する取り消せない操作は Gmail で行ってください。</p>
+
+  <h2>9. 制限</h2>
+  <p>メールはチャットのような見た目のために作られたものではありません。Easymail は表示のために整形し直すため、複雑なメールでは原本と異なる場合があります。法的・業務的に重要なものは Gmail で確認してください。本サービスは現状のまま提供され、継続的な利用可能性は保証されません。</p>
+
+  <h2>10. 変更</h2>
+  <p>この説明が実質的に変更された場合、再度お読みいただき同意をお願いします。設定からいつでも開き直せます。</p>
+
+  <h2>11. あなたの権利</h2>
+  <p>欧州連合または英国にお住まいの場合、個人データへのアクセス、訂正または削除、処理の制限または異議申し立て、および可搬な形式での受け取りを求める権利があります。Easymail は当方のサーバーにデータを保存しないため、これらの権利は Google アカウントで直接行使していただきます。データは Google が保持するメールの複製であり、端末内のローカルコピーはログアウトまたはアンインストールで消去されます。その他のご用件は上記の連絡先までお書きください。所在地のデータ保護監督機関に苦情を申し立てる権利もあります。</p>
+</article>
+
+<!-- ============================== 한국어 ============================== -->
+<article data-lang="ko" lang="ko">
+  <h1>개인정보 고지 및 이용약관</h1>
+
+  <div class="card">
+    <dl>
+      <dt>최종 업데이트</dt><dd>2026년 8월 11일</dd>
+      <dt>제공자</dt><dd>Lorenzo Montoli</dd>
+      <dt>문의</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">이 페이지는 앱 최초 실행 시 동의하는 고지를 그대로 옮긴 것입니다.</p>
+
+  <h2>1. Easymail이 하는 일</h2>
+  <p>Easymail은 Google 계정의 메일을 채팅형 대화로 보여 주고, 답장과 새 메시지 작성을 지원합니다. 같은 메일함을 다르게 읽는 방식일 뿐, 별도의 메일 서비스가 아닙니다.</p>
+
+  <h2>2. 접근하는 범위</h2>
+  <p>사용자가 Google에 부여한 권한으로 Easymail은 메시지와 첨부파일, 보낸사람과 받는사람 주소를 읽고, 사용자를 대신해 메시지를 보냅니다. 요청하는 권한은 두 가지뿐입니다. Gmail 읽기 및 수정, 그리고 어떤 메시지가 본인의 것인지 판별하기 위한 보내는 별칭 읽기입니다.</p>
+
+  <h2>3. 데이터가 가는 곳</h2>
+  <p>메일은 Google 외에는 어디에도 가지 않습니다. Easymail 서버는 존재하지 않으며, 앱은 암호화된 연결로 Gmail 인터페이스와 직접 통신합니다. 메시지와 첨부파일, 연락처는 당사나 제3자에게 전송되지 않으며, 어떤 광고를 보여줄지 결정하는 데 사용되지도 않습니다.</p>
+
+  <h2>4. 광고</h2>
+  <p>이 앱은 무료이며 화면 하단의 배너 광고로 운영됩니다. 광고는 Google AdMob이 제공합니다. 광고가 메일을 보는 일은 없습니다. AdMob이 받는 것은 어떤 앱의 광고든 받는 정보 — 광고 식별자, 대략적인 지역, 기기 모델 — 뿐입니다. 메시지에서 무언가를 추출하지 않으며, 작성하거나 수신한 내용에 따라 광고가 선택되지도 않습니다. 그 전에 별도의 동의를 요청하며 거부할 수 있습니다. 거부해도 앱은 그대로 동작하고 배너만 표시되지 않습니다.</p>
+
+  <h2>5. 데이터의 제한적 사용</h2>
+  <p>Google로부터 받은 정보의 사용은 Limited Use 요건을 포함한 <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>를 따릅니다. 데이터는 여기 설명된 기능 제공에만 사용되며, 사용자의 명시적 지시나 법령이 요구하는 경우를 제외하고 타인에게 이전되지 않습니다.</p>
+
+  <h2>6. 기기에 남는 것</h2>
+  <p>빠르게 열리고 오프라인에서도 동작하도록, 앱은 휴대전화에 로컬 사본을 보관합니다. 대화의 헤더 정보, 열어 본 대화의 본문, 내려받은 첨부파일입니다. 이 사본에는 상한이 있으며 오래된 내용부터 자동으로 삭제됩니다. 로그아웃하거나 앱을 삭제하면 완전히 지워집니다.</p>
+
+  <h2>7. 원격 이미지와 추적</h2>
+  <p>외부 사이트에 있는 이미지는 사용자가 요청하기 전까지 차단됩니다. 많은 마케팅 메일에는 열람 사실을 보낸사람에게 알리는 것이 유일한 목적인 보이지 않는 이미지가 들어 있는데, 기본 차단이 이를 막아 줍니다.</p>
+
+  <h2>8. 사용자의 통제권</h2>
+  <p>Google 계정의 <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>에서 언제든지 Easymail의 접근 권한을 해제할 수 있습니다. 해제하면 앱은 즉시 동작을 멈춥니다. 메시지 삭제를 비롯해 메일함에 대한 되돌릴 수 없는 작업은 Gmail에서 하시기 바랍니다.</p>
+
+  <h2>9. 한계</h2>
+  <p>이메일은 채팅처럼 보이도록 설계된 형식이 아닙니다. Easymail은 표시를 위해 메시지를 다시 구성하므로, 복잡한 메일에서는 결과가 원본과 다를 수 있습니다. 법적·업무적으로 중요한 내용은 Gmail에서 확인하세요. 본 서비스는 있는 그대로 제공되며 지속적인 가용성을 보장하지 않습니다.</p>
+
+  <h2>10. 변경</h2>
+  <p>이 고지가 실질적으로 변경되면 다시 읽고 동의하도록 요청드립니다. 설정에서 언제든지 다시 열 수 있습니다.</p>
+
+  <h2>11. 사용자의 권리</h2>
+  <p>유럽연합 또는 영국에 거주하는 경우, 개인정보에 접근하고, 정정 또는 삭제를 요구하고, 처리를 제한하거나 반대하며, 이동 가능한 형식으로 제공받을 권리가 있습니다. Easymail은 당사 서버에 데이터를 보관하지 않으므로 이러한 권리는 Google 계정에서 직접 행사합니다. 데이터는 Google이 보관하는 메일의 사본이며, 휴대전화의 로컬 사본은 로그아웃하거나 앱을 삭제하면 지워집니다. 그 밖의 사항은 위의 연락처로 문의해 주세요. 또한 거주 지역의 개인정보 감독기구에 민원을 제기할 권리가 있습니다.</p>
+</article>
+
+</main>
+
+<script>
+(function () {
+  var SUPPORTED = ["en", "it", "fr", "de", "es", "zh", "ja", "ko"];
+  var root = document.documentElement;
+  var select = document.getElementById("lang");
+
+  function normalize(tag) {
+    var base = String(tag || "").toLowerCase().split("-")[0];
+    return SUPPORTED.indexOf(base) === -1 ? null : base;
+  }
+
+  /* Explicit choice in the URL wins, then the browser's languages, then English —
+     the same fallback order the app itself uses. */
+  function initial() {
+    var fromHash = normalize(location.hash.replace("#", ""));
+    if (fromHash) return fromHash;
+    var params = new URLSearchParams(location.search);
+    var fromQuery = normalize(params.get("lang"));
+    if (fromQuery) return fromQuery;
+    var list = navigator.languages || [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var match = normalize(list[i]);
+      if (match) return match;
+    }
+    return "en";
+  }
+
+  function apply(code) {
+    root.setAttribute("data-active", code);
+    root.setAttribute("lang", code);
+    select.value = code;
+    var heading = document.querySelector('article[data-lang="' + code + '"] h1');
+    if (heading) document.title = "Easymail — " + heading.textContent;
+  }
+
+  apply(initial());
+
+  select.addEventListener("change", function () {
+    apply(select.value);
+    history.replaceState(null, "", "#" + select.value);
+    window.scrollTo(0, 0);
+  });
+
+  window.addEventListener("hashchange", function () {
+    var code = normalize(location.hash.replace("#", ""));
+    if (code) apply(code);
+  });
+})();
+</script>
+
+</body>
+</html>
