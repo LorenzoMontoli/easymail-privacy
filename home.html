@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Easymail — Your inbox, read like a chat</title>
+<meta name="description" content="Easymail is an Android app that signs in to your Gmail account and shows every thread as a chat conversation.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c5221f'/><path d='M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z' fill='white'/><path d='M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z' fill='%23f6f8fc'/></svg>">
+<style>
+  /* Same token set as the privacy notice, so the two pages read as one site. */
+  :root {
+    --ground:      #ffffff;
+    --surface:     #f6f8fc;
+    --surface-2:   #eef1f6;
+    --hairline:    #e1e4e8;
+    --ink:         #1f1f21;
+    --ink-muted:   #5f6368;
+    --accent:      #1a73e8;
+    --accent-soft: #e8f0fe;
+    --mark:        #c5221f;
+    --bubble-in:   #ffffff;
+    --bubble-out:  #d7e6fb;
+    --shadow:      0 1px 2px rgba(31, 31, 33, .08), 0 4px 14px rgba(31, 31, 33, .05);
+    --shadow-lg:   0 2px 6px rgba(31, 31, 33, .10), 0 18px 44px rgba(31, 31, 33, .12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #15171a;
+      --surface:     #1d2024;
+      --surface-2:   #23272c;
+      --hairline:    #2e3238;
+      --ink:         #e6e8eb;
+      --ink-muted:   #9aa0a6;
+      --accent:      #8ab4f8;
+      --accent-soft: #1e2a3d;
+      --mark:        #f28b82;
+      --bubble-in:   #23272c;
+      --bubble-out:  #24405f;
+      --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+      --shadow-lg:   0 2px 6px rgba(0, 0, 0, .5), 0 18px 44px rgba(0, 0, 0, .45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #15171a;
+    --surface:     #1d2024;
+    --surface-2:   #23272c;
+    --hairline:    #2e3238;
+    --ink:         #e6e8eb;
+    --ink-muted:   #9aa0a6;
+    --accent:      #8ab4f8;
+    --accent-soft: #1e2a3d;
+    --mark:        #f28b82;
+    --bubble-in:   #23272c;
+    --bubble-out:  #24405f;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+    --shadow-lg:   0 2px 6px rgba(0, 0, 0, .5), 0 18px 44px rgba(0, 0, 0, .45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont,
+                 Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans",
+                 "Yu Gothic UI", "Microsoft YaHei", "Malgun Gothic", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- chrome ------------------------------------------------------------------ */
+
+  .bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand svg { display: block; }
+  .bar .spacer { flex: 1; }
+
+  select {
+    font: inherit; font-size: 15px;
+    color: var(--ink); background: var(--surface);
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  main { max-width: 62rem; margin: 0 auto; padding: 0 20px 90px; }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* --- hero -------------------------------------------------------------------- */
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    gap: 48px;
+    align-items: center;
+    padding: 60px 0 56px;
+  }
+  @media (max-width: 52rem) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 40px 0 44px; }
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 1.3rem + 2.8vw, 3.05rem);
+    line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance;
+    margin: 0 0 18px;
+  }
+
+  .lead { font-size: 1.09rem; color: var(--ink-muted); margin: 0 0 24px; max-width: 34rem; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--ink-muted);
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 999px; padding: 5px 14px 5px 11px;
+    margin: 0 0 26px;
+  }
+  .pill::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mark); flex: none;
+  }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; font-size: 15.5px; font-weight: 500;
+    text-decoration: none; border-radius: 999px; padding: 10px 22px;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn-primary,
+  :root:not([data-theme="light"]) .btn-primary { color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-primary { background: var(--accent); color: #10233d; }
+  }
+  :root[data-theme="dark"] .btn-primary { background: var(--accent); color: #10233d; }
+  .btn-quiet { background: var(--surface); color: var(--ink); border-color: var(--hairline); }
+
+  /* --- phone mock -------------------------------------------------------------- */
+
+  .mock {
+    justify-self: center;
+    width: 100%; max-width: 310px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 26px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .mock-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px;
+    background: var(--ground);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .dots { display: flex; flex: none; }
+  .dots i {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: inline-block; border: 2px solid var(--ground);
+  }
+  .dots i + i { margin-left: -8px; }
+  .d1 { background: #c5221f; }
+  .d2 { background: #1a73e8; }
+  .mock-head b { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+  .mock-head span { display: block; font-size: 12.5px; color: var(--ink-muted); }
+
+  .mock-body { padding: 16px 14px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .bubble {
+    max-width: 82%; padding: 9px 13px; border-radius: 16px;
+    font-size: 14.5px; line-height: 1.45;
+    box-shadow: var(--shadow);
+  }
+  .bubble.in  { align-self: flex-start; background: var(--bubble-in);  border-bottom-left-radius: 5px; }
+  .bubble.out { align-self: flex-end;   background: var(--bubble-out); border-bottom-right-radius: 5px; }
+  .bubble .who { display: block; font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+  .who.w1 { color: #c5221f; }
+  .who.w2 { color: #1a73e8; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .who.w1 { color: #f28b82; }
+    :root:not([data-theme="light"]) .who.w2 { color: #8ab4f8; }
+  }
+  :root[data-theme="dark"] .who.w1 { color: #f28b82; }
+  :root[data-theme="dark"] .who.w2 { color: #8ab4f8; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 7px; padding: 6px 11px;
+    background: var(--surface-2); border-radius: 10px;
+    font-size: 12.5px; color: var(--ink-muted);
+  }
+  .chip::before {
+    content: ""; width: 13px; height: 16px; flex: none;
+    background: currentColor;
+    -webkit-mask: linear-gradient(#000 0 0) center/9px 12px no-repeat;
+            mask: linear-gradient(#000 0 0) center/9px 12px no-repeat;
+    border-radius: 2px; opacity: .55;
+  }
+
+  /* --- sections ---------------------------------------------------------------- */
+
+  section { padding: 44px 0 0; }
+  h2 {
+    font-size: 1.42rem; line-height: 1.25; letter-spacing: -0.02em;
+    text-wrap: balance; margin: 0 0 6px;
+  }
+  .section-lead { color: var(--ink-muted); margin: 0 0 22px; max-width: 44rem; }
+  section > p { max-width: 44rem; margin: 0 0 14px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+  }
+  .item {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .item h3 { font-size: 1rem; margin: 0 0 5px; letter-spacing: -0.005em; }
+  .item p { margin: 0; font-size: 15px; color: var(--ink-muted); }
+
+  .scope {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 0 0 14px;
+    max-width: 44rem;
+  }
+  .scope h3 { font-size: 1rem; margin: 0 0 5px; }
+  .scope code {
+    font-family: "Cascadia Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+  }
+  .scope p { margin: 0; font-size: 15px; }
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    margin-top: 64px; padding: 28px 0 0;
+    font-size: 15px; color: var(--ink-muted);
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+  }
+
+  /* --- language switching ------------------------------------------------------ */
+
+  div[data-lang] { display: none; }
+  :root:not([data-active]) div[data-lang="en"] { display: block; }
+  :root[data-active="en"] div[data-lang="en"] { display: block; }
+  :root[data-active="it"] div[data-lang="it"] { display: block; }
+  :root[data-active="fr"] div[data-lang="fr"] { display: block; }
+  :root[data-active="de"] div[data-lang="de"] { display: block; }
+  :root[data-active="es"] div[data-lang="es"] { display: block; }
+  :root[data-active="zh"] div[data-lang="zh"] { display: block; }
+  :root[data-active="ja"] div[data-lang="ja"] { display: block; }
+  :root[data-active="ko"] div[data-lang="ko"] { display: block; }
+
+  div[data-lang="zh"], div[data-lang="ja"], div[data-lang="ko"] { line-height: 1.85; }
+  div[data-lang="zh"] h1, div[data-lang="ja"] h1, div[data-lang="ko"] h1,
+  div[data-lang="zh"] h2, div[data-lang="ja"] h2, div[data-lang="ko"] h2 { letter-spacing: 0; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <span class="brand">
+    <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--mark)"/>
+      <path d="M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" fill="#fff"/>
+      <path d="M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z" fill="#f6f8fc"/>
+    </svg>
+    Easymail
+  </span>
+  <span class="spacer"></span>
+  <label class="visually-hidden" for="lang">Language</label>
+  <select id="lang">
+    <option value="en">English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+    <option value="zh">中文</option>
+    <option value="ja">日本語</option>
+    <option value="ko">한국어</option>
+  </select>
+</header>
+
+<main>
+
+<!-- ============================== ENGLISH ============================== -->
+<div data-lang="en" lang="en">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Android app</p>
+      <h1>Your inbox, read like a chat</h1>
+      <p class="lead">Easymail signs in to your Gmail account and shows every thread as a conversation: one bubble per message, one colour per sender, replies written in the same flow. It is the same mailbox, read differently — nothing is moved, converted or copied anywhere.</p>
+      <p class="pill">In development — not yet on Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">Privacy notice and terms</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>Q3 review</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>Sending the deck for tomorrow<span class="chip">deck.pdf · 2.1 MB</span></div>
+        <div class="bubble out">Got it — I'll go through it tonight</div>
+        <div class="bubble in"><span class="who w2">Marco</span>Perfect, thanks</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>What it does</h2>
+    <p class="section-lead">Six things, and nothing that touches your mailbox irreversibly.</p>
+    <div class="grid">
+      <div class="item"><h3>Threads as conversations</h3><p>Every message in a thread becomes a bubble, coloured by sender, the way a group chat works. Expand one to see the full To and Cc.</p></div>
+      <div class="item"><h3>Replies that stay in the thread</h3><p>Outgoing mail carries the In-Reply-To and References headers, so your answer lands inside the same conversation for whoever receives it, not as a new message.</p></div>
+      <div class="item"><h3>Attachments and inline photos</h3><p>Images embedded in a message appear in the bubble; attachments download and open with a tap.</p></div>
+      <div class="item"><h3>Search in Gmail's own syntax</h3><p>from:, has:attachment, older_than:7d, is:unread. The query is passed to Gmail unchanged, and the last ten are kept.</p></div>
+      <div class="item"><h3>More than one account</h3><p>Switch between mailboxes. Each keeps its own separate local store on the device.</p></div>
+      <div class="item"><h3>Eight languages</h3><p>English, Italian, French, German, Spanish, Chinese, Japanese and Korean, following the phone's language.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What it accesses, and why</h2>
+    <p class="section-lead">Easymail asks for two Google permissions and no others. It does not read your contacts, your calendar, your files or your location.</p>
+    <div class="scope">
+      <h3>Read and modify Gmail <code>gmail.modify</code></h3>
+      <p>Needed to display threads, messages and attachments, to send the replies you write, and to mark a conversation as read when you open it. A read-only permission can do none of the last two, and both are central to the app.</p>
+    </div>
+    <div class="scope">
+      <h3>Read send-as aliases <code>gmail.settings.basic</code></h3>
+      <p>Needed to know which addresses are yours, so the app can tell your own messages from everyone else's and place them on the correct side of the conversation.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where your data goes</h2>
+    <p>Nowhere. There is no Easymail server: the app talks to the Gmail interface directly, over an encrypted connection. Your messages, their attachments and your contacts are never sent to us or to any third party.</p>
+    <p>A local copy is kept on the phone so the app opens quickly and works offline. It is capped in size, the oldest content is discarded automatically, and signing out or uninstalling deletes it entirely. The <a href="./">privacy notice</a> describes this in full.</p>
+  </section>
+
+  <section>
+    <h2>Advertising</h2>
+    <p>The app is free and funded by a single banner at the bottom of the screen, served by Google AdMob. No ad is ever chosen from the content of your mail — the advertising never sees it. You are asked for a separate consent beforehand, and you can refuse: the app keeps working, without the banner.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">Privacy notice and terms of use</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== ITALIANO ============================== -->
+<div data-lang="it" lang="it">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">App Android</p>
+      <h1>La tua posta, letta come una chat</h1>
+      <p class="lead">Easymail accede al tuo account Gmail e mostra ogni conversazione come una chat: un fumetto per messaggio, un colore per mittente, le risposte scritte nello stesso flusso. È la stessa casella, letta in modo diverso — niente viene spostato, convertito o copiato altrove.</p>
+      <p class="pill">In sviluppo — non ancora su Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">Informativa e condizioni</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">Contatto</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>Revisione Q3</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>Ti mando le slide per domani<span class="chip">slide.pdf · 2,1 MB</span></div>
+        <div class="bubble out">Ricevute — le guardo stasera</div>
+        <div class="bubble in"><span class="who w2">Marco</span>Perfetto, grazie</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Cosa fa</h2>
+    <p class="section-lead">Sei cose, e nulla che tocchi la tua casella in modo irreversibile.</p>
+    <div class="grid">
+      <div class="item"><h3>Conversazioni al posto dei thread</h3><p>Ogni messaggio di una conversazione diventa un fumetto, colorato per mittente, come in una chat di gruppo. Espandilo per vedere destinatari e Cc per intero.</p></div>
+      <div class="item"><h3>Risposte che restano nel thread</h3><p>La posta in uscita porta con sé le intestazioni In-Reply-To e References, così la tua risposta arriva dentro la stessa conversazione a chi la riceve, non come messaggio nuovo.</p></div>
+      <div class="item"><h3>Allegati e foto nel testo</h3><p>Le immagini incorporate in un messaggio compaiono nel fumetto; gli allegati si scaricano e si aprono con un tocco.</p></div>
+      <div class="item"><h3>Ricerca con la sintassi di Gmail</h3><p>from:, has:attachment, older_than:7d, is:unread. La query arriva a Gmail invariata, e le ultime dieci restano in memoria.</p></div>
+      <div class="item"><h3>Più di un account</h3><p>Passa da una casella all'altra. Ognuna tiene il proprio archivio locale, separato dagli altri.</p></div>
+      <div class="item"><h3>Otto lingue</h3><p>Inglese, italiano, francese, tedesco, spagnolo, cinese, giapponese e coreano, seguendo la lingua del telefono.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A cosa accede, e perché</h2>
+    <p class="section-lead">Easymail chiede due permessi Google e nessun altro. Non legge i tuoi contatti, il calendario, i file o la posizione.</p>
+    <div class="scope">
+      <h3>Lettura e modifica di Gmail <code>gmail.modify</code></h3>
+      <p>Serve per mostrare conversazioni, messaggi e allegati, per inviare le risposte che scrivi e per segnare una conversazione come letta quando la apri. Un permesso di sola lettura non consente le ultime due, che sono centrali nell'app.</p>
+    </div>
+    <div class="scope">
+      <h3>Lettura degli alias di invio <code>gmail.settings.basic</code></h3>
+      <p>Serve per sapere quali indirizzi sono tuoi, così l'app distingue i tuoi messaggi da quelli degli altri e li dispone dal lato giusto della conversazione.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Dove finiscono i tuoi dati</h2>
+    <p>Da nessuna parte. Non esiste un server Easymail: l'app parla direttamente con l'interfaccia di Gmail, su connessione cifrata. I tuoi messaggi, i loro allegati e i tuoi contatti non vengono mai inviati a noi né a terzi.</p>
+    <p>Sul telefono resta una copia locale, perché l'app si apra in fretta e funzioni offline. Ha un tetto massimo, i contenuti più vecchi vengono scartati da soli, e uscendo dall'account o disinstallando viene eliminata del tutto. L'<a href="./">informativa</a> lo descrive per esteso.</p>
+  </section>
+
+  <section>
+    <h2>Pubblicità</h2>
+    <p>L'app è gratuita e si sostiene con un solo banner in fondo allo schermo, fornito da Google AdMob. Nessun annuncio viene scelto in base al contenuto della tua posta — la pubblicità non la vede. Prima ti viene chiesto un consenso separato, che puoi rifiutare: l'app continua a funzionare, senza banner.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">Informativa privacy e condizioni d'uso</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== FRANÇAIS ============================== -->
+<div data-lang="fr" lang="fr">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Application Android</p>
+      <h1>Votre boîte mail, lue comme une discussion</h1>
+      <p class="lead">Easymail se connecte à votre compte Gmail et affiche chaque fil comme une conversation : une bulle par message, une couleur par expéditeur, les réponses écrites dans le même flux. C'est la même boîte, lue autrement — rien n'est déplacé, converti ni copié ailleurs.</p>
+      <p class="pill">En développement — pas encore sur Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">Avis et conditions</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>Revue T3</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>Je t'envoie la présentation pour demain<span class="chip">presentation.pdf · 2,1 Mo</span></div>
+        <div class="bubble out">Bien reçu — je la regarde ce soir</div>
+        <div class="bubble in"><span class="who w2">Marco</span>Parfait, merci</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Ce qu'elle fait</h2>
+    <p class="section-lead">Six choses, et rien qui touche votre boîte de façon irréversible.</p>
+    <div class="grid">
+      <div class="item"><h3>Des conversations à la place des fils</h3><p>Chaque message d'un fil devient une bulle, colorée par expéditeur, comme dans une discussion de groupe. Dépliez-la pour voir les destinataires et les Cc en entier.</p></div>
+      <div class="item"><h3>Des réponses qui restent dans le fil</h3><p>Le courrier sortant porte les en-têtes In-Reply-To et References : votre réponse arrive donc dans la même conversation chez le destinataire, et non comme un nouveau message.</p></div>
+      <div class="item"><h3>Pièces jointes et images intégrées</h3><p>Les images incorporées au message apparaissent dans la bulle ; les pièces jointes se téléchargent et s'ouvrent d'un geste.</p></div>
+      <div class="item"><h3>Recherche avec la syntaxe de Gmail</h3><p>from:, has:attachment, older_than:7d, is:unread. La requête part vers Gmail telle quelle, et les dix dernières sont conservées.</p></div>
+      <div class="item"><h3>Plusieurs comptes</h3><p>Passez d'une boîte à l'autre. Chacune conserve son propre stockage local, séparé des autres.</p></div>
+      <div class="item"><h3>Huit langues</h3><p>Anglais, italien, français, allemand, espagnol, chinois, japonais et coréen, selon la langue du téléphone.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ce à quoi elle accède, et pourquoi</h2>
+    <p class="section-lead">Easymail demande deux autorisations Google, et aucune autre. Elle ne lit ni vos contacts, ni votre agenda, ni vos fichiers, ni votre position.</p>
+    <div class="scope">
+      <h3>Lire et modifier Gmail <code>gmail.modify</code></h3>
+      <p>Nécessaire pour afficher les fils, les messages et les pièces jointes, pour envoyer les réponses que vous écrivez et pour marquer une conversation comme lue à son ouverture. Une autorisation en lecture seule ne permet ni l'un ni l'autre, et les deux sont au cœur de l'application.</p>
+    </div>
+    <div class="scope">
+      <h3>Lire les alias d'envoi <code>gmail.settings.basic</code></h3>
+      <p>Nécessaire pour savoir quelles adresses sont les vôtres, afin que l'application distingue vos messages de ceux des autres et les place du bon côté de la conversation.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Où vont vos données</h2>
+    <p>Nulle part. Il n'existe aucun serveur Easymail : l'application dialogue directement avec l'interface de Gmail, par connexion chiffrée. Vos messages, leurs pièces jointes et vos contacts ne nous sont jamais transmis, ni à des tiers.</p>
+    <p>Une copie locale reste sur le téléphone pour que l'application s'ouvre vite et fonctionne hors ligne. Elle est plafonnée, le contenu le plus ancien est supprimé automatiquement, et se déconnecter ou désinstaller l'efface entièrement. L'<a href="./">avis de confidentialité</a> le décrit en détail.</p>
+  </section>
+
+  <section>
+    <h2>Publicité</h2>
+    <p>L'application est gratuite et financée par une seule bannière en bas de l'écran, fournie par Google AdMob. Aucune annonce n'est choisie d'après le contenu de votre courrier — la publicité ne le voit jamais. Un consentement distinct vous est demandé au préalable, et vous pouvez le refuser : l'application continue de fonctionner, sans bannière.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">Avis de confidentialité et conditions d'utilisation</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== DEUTSCH ============================== -->
+<div data-lang="de" lang="de">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Android-App</p>
+      <h1>Dein Postfach, gelesen wie ein Chat</h1>
+      <p class="lead">Easymail meldet sich bei deinem Gmail-Konto an und zeigt jeden Thread als Unterhaltung: eine Sprechblase pro Nachricht, eine Farbe pro Absender, Antworten im selben Fluss geschrieben. Es ist dasselbe Postfach, nur anders gelesen — nichts wird verschoben, umgewandelt oder anderswohin kopiert.</p>
+      <p class="pill">In Entwicklung — noch nicht bei Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">Hinweis und Bedingungen</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">Kontakt</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>Q3-Review</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>Ich schicke dir die Folien für morgen<span class="chip">folien.pdf · 2,1 MB</span></div>
+        <div class="bubble out">Angekommen — ich sehe sie mir heute Abend an</div>
+        <div class="bubble in"><span class="who w2">Marco</span>Perfekt, danke</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Was sie tut</h2>
+    <p class="section-lead">Sechs Dinge, und nichts, was dein Postfach unwiderruflich verändert.</p>
+    <div class="grid">
+      <div class="item"><h3>Unterhaltungen statt Threads</h3><p>Jede Nachricht eines Threads wird zur Sprechblase, nach Absender eingefärbt, wie in einem Gruppenchat. Aufklappen zeigt Empfänger und Cc vollständig.</p></div>
+      <div class="item"><h3>Antworten, die im Thread bleiben</h3><p>Ausgehende Mail trägt die Kopfzeilen In-Reply-To und References, damit deine Antwort beim Empfänger in derselben Unterhaltung landet und nicht als neue Nachricht.</p></div>
+      <div class="item"><h3>Anhänge und eingebettete Bilder</h3><p>In die Nachricht eingebettete Bilder erscheinen in der Sprechblase; Anhänge werden mit einem Tippen geladen und geöffnet.</p></div>
+      <div class="item"><h3>Suche in Gmails eigener Syntax</h3><p>from:, has:attachment, older_than:7d, is:unread. Die Anfrage geht unverändert an Gmail, die letzten zehn bleiben gespeichert.</p></div>
+      <div class="item"><h3>Mehrere Konten</h3><p>Wechsle zwischen Postfächern. Jedes hat seinen eigenen, getrennten lokalen Speicher.</p></div>
+      <div class="item"><h3>Acht Sprachen</h3><p>Englisch, Italienisch, Französisch, Deutsch, Spanisch, Chinesisch, Japanisch und Koreanisch, entsprechend der Sprache des Telefons.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Worauf sie zugreift, und warum</h2>
+    <p class="section-lead">Easymail fordert zwei Google-Berechtigungen an und keine weiteren. Sie liest weder deine Kontakte noch deinen Kalender, deine Dateien oder deinen Standort.</p>
+    <div class="scope">
+      <h3>Gmail lesen und ändern <code>gmail.modify</code></h3>
+      <p>Nötig, um Threads, Nachrichten und Anhänge anzuzeigen, die von dir geschriebenen Antworten zu senden und eine Unterhaltung beim Öffnen als gelesen zu markieren. Eine Nur-Lese-Berechtigung erlaubt die beiden letzten Punkte nicht, und beide sind zentral für die App.</p>
+    </div>
+    <div class="scope">
+      <h3>Absender-Aliase lesen <code>gmail.settings.basic</code></h3>
+      <p>Nötig, um zu wissen, welche Adressen dir gehören, damit die App deine eigenen Nachrichten von denen der anderen unterscheidet und sie auf der richtigen Seite der Unterhaltung anordnet.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wohin deine Daten gehen</h2>
+    <p>Nirgendwohin. Es gibt keinen Easymail-Server: Die App spricht über eine verschlüsselte Verbindung direkt mit der Gmail-Schnittstelle. Deine Nachrichten, ihre Anhänge und deine Kontakte werden niemals an uns oder an Dritte gesendet.</p>
+    <p>Auf dem Telefon bleibt eine lokale Kopie, damit die App schnell startet und offline funktioniert. Sie ist begrenzt, ältere Inhalte werden automatisch verworfen, und Abmelden oder Deinstallieren löscht sie vollständig. Der <a href="./">Datenschutzhinweis</a> beschreibt das ausführlich.</p>
+  </section>
+
+  <section>
+    <h2>Werbung</h2>
+    <p>Die App ist kostenlos und finanziert sich über ein einziges Banner am unteren Bildschirmrand, ausgeliefert von Google AdMob. Keine Anzeige wird nach dem Inhalt deiner E-Mails ausgewählt — die Werbung sieht ihn nie. Vorher wirst du um eine gesonderte Einwilligung gebeten, die du ablehnen kannst: Die App funktioniert weiter, ohne Banner.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">Datenschutzhinweis und Nutzungsbedingungen</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== ESPAÑOL ============================== -->
+<div data-lang="es" lang="es">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Aplicación Android</p>
+      <h1>Tu buzón, leído como un chat</h1>
+      <p class="lead">Easymail entra en tu cuenta de Gmail y muestra cada hilo como una conversación: un globo por mensaje, un color por remitente, las respuestas escritas en el mismo flujo. Es el mismo buzón, leído de otra forma — nada se mueve, se convierte ni se copia a ninguna parte.</p>
+      <p class="pill">En desarrollo — todavía no está en Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">Aviso y condiciones</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">Contacto</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>Revisión Q3</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>Te mando las diapositivas para mañana<span class="chip">diapositivas.pdf · 2,1 MB</span></div>
+        <div class="bubble out">Recibidas — las miro esta noche</div>
+        <div class="bubble in"><span class="who w2">Marco</span>Perfecto, gracias</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Qué hace</h2>
+    <p class="section-lead">Seis cosas, y nada que altere tu buzón de forma irreversible.</p>
+    <div class="grid">
+      <div class="item"><h3>Conversaciones en lugar de hilos</h3><p>Cada mensaje de un hilo se convierte en un globo, coloreado por remitente, como en un chat de grupo. Despliégalo para ver destinatarios y Cc completos.</p></div>
+      <div class="item"><h3>Respuestas que se quedan en el hilo</h3><p>El correo saliente lleva las cabeceras In-Reply-To y References, así que tu respuesta llega dentro de la misma conversación a quien la recibe, no como un mensaje nuevo.</p></div>
+      <div class="item"><h3>Adjuntos y fotos en el texto</h3><p>Las imágenes incrustadas en un mensaje aparecen en el globo; los adjuntos se descargan y se abren con un toque.</p></div>
+      <div class="item"><h3>Búsqueda con la sintaxis de Gmail</h3><p>from:, has:attachment, older_than:7d, is:unread. La consulta llega a Gmail sin cambios, y las diez últimas se guardan.</p></div>
+      <div class="item"><h3>Más de una cuenta</h3><p>Cambia de un buzón a otro. Cada uno guarda su propio almacén local, separado de los demás.</p></div>
+      <div class="item"><h3>Ocho idiomas</h3><p>Inglés, italiano, francés, alemán, español, chino, japonés y coreano, según el idioma del teléfono.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A qué accede, y por qué</h2>
+    <p class="section-lead">Easymail pide dos permisos de Google y ninguno más. No lee tus contactos, ni tu calendario, ni tus archivos, ni tu ubicación.</p>
+    <div class="scope">
+      <h3>Leer y modificar Gmail <code>gmail.modify</code></h3>
+      <p>Necesario para mostrar hilos, mensajes y adjuntos, para enviar las respuestas que escribes y para marcar una conversación como leída al abrirla. Un permiso de solo lectura no permite las dos últimas, y ambas son centrales en la aplicación.</p>
+    </div>
+    <div class="scope">
+      <h3>Leer los alias de envío <code>gmail.settings.basic</code></h3>
+      <p>Necesario para saber qué direcciones son tuyas, de modo que la aplicación distinga tus mensajes de los de los demás y los coloque en el lado correcto de la conversación.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Adónde van tus datos</h2>
+    <p>A ninguna parte. No existe un servidor de Easymail: la aplicación habla directamente con la interfaz de Gmail, por conexión cifrada. Tus mensajes, sus adjuntos y tus contactos nunca se envían a nosotros ni a terceros.</p>
+    <p>En el teléfono queda una copia local para que la aplicación se abra deprisa y funcione sin conexión. Tiene un límite, el contenido más antiguo se descarta solo, y cerrar sesión o desinstalar la elimina por completo. El <a href="./">aviso de privacidad</a> lo describe en detalle.</p>
+  </section>
+
+  <section>
+    <h2>Publicidad</h2>
+    <p>La aplicación es gratuita y se sostiene con un único banner en la parte inferior de la pantalla, servido por Google AdMob. Ningún anuncio se elige según el contenido de tu correo — la publicidad nunca lo ve. Antes se te pide un consentimiento aparte, que puedes rechazar: la aplicación sigue funcionando, sin banner.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">Aviso de privacidad y condiciones de uso</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== 中文 ============================== -->
+<div data-lang="zh" lang="zh">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Android 应用</p>
+      <h1>把收件箱当聊天来读</h1>
+      <p class="lead">Easymail 登录你的 Gmail 账号，把每一条会话显示成聊天：一条消息一个气泡，一位发件人一种颜色，回复就在同一条流里写。它是同一个邮箱，只是换了一种读法——不搬动、不转换，也不复制到任何别的地方。</p>
+      <p class="pill">开发中 — 尚未上架 Google Play</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">说明与条款</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">联系</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>第三季度复盘</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>把明天的讲稿发给你<span class="chip">讲稿.pdf · 2.1 MB</span></div>
+        <div class="bubble out">收到 — 我今晚看</div>
+        <div class="bubble in"><span class="who w2">Marco</span>好的，谢谢</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>它能做什么</h2>
+    <p class="section-lead">六件事，没有一件会不可逆地改动你的邮箱。</p>
+    <div class="grid">
+      <div class="item"><h3>用会话代替邮件线索</h3><p>一条线索里的每封邮件都变成气泡，按发件人着色，就像群聊一样。展开即可看到完整的收件人和抄送。</p></div>
+      <div class="item"><h3>回复留在同一条线索里</h3><p>发出的邮件带有 In-Reply-To 和 References 头，因此在收件人那边你的回复会落在同一条会话中，而不是变成一封新邮件。</p></div>
+      <div class="item"><h3>附件与正文图片</h3><p>嵌在正文里的图片直接显示在气泡中；附件轻点即可下载并打开。</p></div>
+      <div class="item"><h3>沿用 Gmail 的搜索语法</h3><p>from:、has:attachment、older_than:7d、is:unread。查询原样交给 Gmail，最近十次会被保存。</p></div>
+      <div class="item"><h3>多个账号</h3><p>在多个邮箱之间切换。每个账号在设备上有各自独立的本地存储。</p></div>
+      <div class="item"><h3>八种语言</h3><p>英语、意大利语、法语、德语、西班牙语、中文、日语和韩语，跟随手机的语言设置。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>它访问什么，为什么</h2>
+    <p class="section-lead">Easymail 只申请两项 Google 权限，此外没有别的。它不读取你的通讯录、日历、文件或位置。</p>
+    <div class="scope">
+      <h3>读取和修改 Gmail <code>gmail.modify</code></h3>
+      <p>用于显示会话、邮件和附件，发送你写的回复，以及在你打开会话时把它标记为已读。只读权限无法完成后两项，而这两项正是本应用的核心。</p>
+    </div>
+    <div class="scope">
+      <h3>读取发件别名 <code>gmail.settings.basic</code></h3>
+      <p>用于知道哪些地址属于你，好让应用把你自己的邮件与他人的区分开，并放在会话中正确的一侧。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>你的数据去了哪里</h2>
+    <p>哪里都不去。不存在 Easymail 服务器：应用通过加密连接直接与 Gmail 接口通信。你的邮件、附件和联系人绝不会发送给我们或第三方。</p>
+    <p>手机上会留一份本地副本，让应用打开更快并支持离线使用。该副本设有上限，较旧的内容会自动清除，退出登录或卸载会将其完全删除。<a href="./">隐私说明</a>对此有完整描述。</p>
+  </section>
+
+  <section>
+    <h2>广告</h2>
+    <p>本应用免费，靠屏幕底部的一条横幅广告维持，由 Google AdMob 投放。没有任何广告是根据你的邮件内容挑选的——广告看不到邮件。在此之前会单独征求你的同意，你可以拒绝：应用照常工作，只是没有横幅。</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">隐私说明与使用条款</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== 日本語 ============================== -->
+<div data-lang="ja" lang="ja">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Android アプリ</p>
+      <h1>受信トレイを、チャットとして読む</h1>
+      <p class="lead">Easymail は Gmail アカウントにログインし、スレッドをそのまま会話として表示します。メール一通が一つの吹き出しになり、差出人ごとに色が変わり、返信も同じ流れの中で書けます。同じメールボックスを別の読み方で見るだけで、移動も変換もコピーも行いません。</p>
+      <p class="pill">開発中 — Google Play では未公開です</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">説明と利用規約</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">お問い合わせ</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>第3四半期レビュー</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>明日の資料を送ります<span class="chip">資料.pdf · 2.1 MB</span></div>
+        <div class="bubble out">受け取りました — 今夜目を通します</div>
+        <div class="bubble in"><span class="who w2">Marco</span>助かります、ありがとう</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>できること</h2>
+    <p class="section-lead">六つの機能。どれもメールボックスを元に戻せない形で変更することはありません。</p>
+    <div class="grid">
+      <div class="item"><h3>スレッドを会話として</h3><p>スレッド内の各メールが差出人ごとに色分けされた吹き出しになります。グループチャットと同じ見え方で、開けば宛先と Cc の全体を確認できます。</p></div>
+      <div class="item"><h3>同じスレッドに残る返信</h3><p>送信メールには In-Reply-To と References ヘッダーが付くため、受け取る相手の側でも同じ会話の中に入り、別の新規メールにはなりません。</p></div>
+      <div class="item"><h3>添付ファイルと本文中の画像</h3><p>本文に埋め込まれた画像は吹き出しの中に表示され、添付ファイルはタップでダウンロードして開けます。</p></div>
+      <div class="item"><h3>Gmail と同じ検索構文</h3><p>from:、has:attachment、older_than:7d、is:unread。入力した条件はそのまま Gmail に渡され、直近十件が履歴として残ります。</p></div>
+      <div class="item"><h3>複数アカウント</h3><p>メールボックスを切り替えられます。それぞれが端末内に独立したローカル保存領域を持ちます。</p></div>
+      <div class="item"><h3>八つの言語</h3><p>英語、イタリア語、フランス語、ドイツ語、スペイン語、中国語、日本語、韓国語。端末の言語設定に従います。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>アクセスする範囲と、その理由</h2>
+    <p class="section-lead">Easymail が要求する Google の権限は二つだけで、それ以外はありません。連絡先もカレンダーもファイルも位置情報も読み取りません。</p>
+    <div class="scope">
+      <h3>Gmail の読み取りと変更 <code>gmail.modify</code></h3>
+      <p>スレッド・メール本文・添付ファイルを表示し、あなたが書いた返信を送信し、会話を開いたときに既読にするために必要です。読み取り専用の権限では後の二つができず、いずれもこのアプリの中心的な機能です。</p>
+    </div>
+    <div class="scope">
+      <h3>送信エイリアスの読み取り <code>gmail.settings.basic</code></h3>
+      <p>どのアドレスがあなたのものかを知るために必要です。これにより、自分のメールと他の人のメールを区別し、会話の正しい側に配置できます。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>データの行き先</h2>
+    <p>どこにも送られません。Easymail のサーバーは存在せず、アプリは暗号化された接続で Gmail のインターフェースと直接やり取りします。メール本文も添付ファイルも連絡先も、当方や第三者に送られることはありません。</p>
+    <p>すばやく起動しオフラインでも使えるように、端末内にローカルコピーを保持します。上限があり、古いものから自動的に削除され、ログアウトまたはアンインストールで完全に消去されます。詳細は<a href="./">プライバシーに関する説明</a>に記載しています。</p>
+  </section>
+
+  <section>
+    <h2>広告</h2>
+    <p>本アプリは無料で、画面下部のバナー広告一つによって支えられています。配信は Google AdMob です。メールの内容から広告が選ばれることは一切なく、広告がメールを見ることもありません。事前に別途同意をお尋ねし、拒否もできます。その場合もアプリはそのまま動作し、バナーが表示されなくなるだけです。</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">プライバシーに関する説明と利用規約</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+<!-- ============================== 한국어 ============================== -->
+<div data-lang="ko" lang="ko">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Android 앱</p>
+      <h1>받은편지함을 채팅처럼 읽다</h1>
+      <p class="lead">Easymail은 Google 계정에 로그인해 모든 스레드를 대화로 보여 줍니다. 메시지 하나가 말풍선 하나가 되고, 보낸사람마다 색이 달라지며, 답장도 같은 흐름 안에서 씁니다. 같은 메일함을 다르게 읽을 뿐, 무엇도 옮기거나 변환하거나 다른 곳으로 복사하지 않습니다.</p>
+      <p class="pill">개발 중 — 아직 Google Play에 없습니다</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="./">고지 및 약관</a>
+        <a class="btn btn-quiet" href="mailto:lorenzomontoli@gmail.com">문의</a>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-head">
+        <span class="dots"><i class="d1"></i><i class="d2"></i></span>
+        <span><b>Giulia, Marco</b><span>3분기 리뷰</span></span>
+      </div>
+      <div class="mock-body">
+        <div class="bubble in"><span class="who w1">Giulia</span>내일 발표 자료 보냅니다<span class="chip">자료.pdf · 2.1 MB</span></div>
+        <div class="bubble out">받았어요 — 오늘 밤에 볼게요</div>
+        <div class="bubble in"><span class="who w2">Marco</span>좋아요, 고맙습니다</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2>무엇을 하나</h2>
+    <p class="section-lead">여섯 가지입니다. 메일함을 되돌릴 수 없게 바꾸는 일은 하나도 없습니다.</p>
+    <div class="grid">
+      <div class="item"><h3>스레드 대신 대화로</h3><p>스레드의 각 메시지가 보낸사람별로 색이 다른 말풍선이 됩니다. 그룹 채팅과 같은 방식이며, 펼치면 받는사람과 참조를 전부 볼 수 있습니다.</p></div>
+      <div class="item"><h3>스레드 안에 남는 답장</h3><p>보내는 메일에 In-Reply-To와 References 헤더가 실리므로, 받는 사람 쪽에서도 답장이 같은 대화 안에 들어가고 새 메일로 분리되지 않습니다.</p></div>
+      <div class="item"><h3>첨부파일과 본문 이미지</h3><p>본문에 삽입된 이미지는 말풍선 안에 그대로 보이고, 첨부파일은 한 번 눌러 내려받아 열 수 있습니다.</p></div>
+      <div class="item"><h3>Gmail과 같은 검색 문법</h3><p>from:, has:attachment, older_than:7d, is:unread. 입력한 조건은 그대로 Gmail에 전달되며 최근 열 건이 보관됩니다.</p></div>
+      <div class="item"><h3>여러 계정</h3><p>메일함 사이를 오갈 수 있습니다. 각 계정은 기기에 서로 분리된 로컬 저장소를 가집니다.</p></div>
+      <div class="item"><h3>여덟 개 언어</h3><p>영어, 이탈리아어, 프랑스어, 독일어, 스페인어, 중국어, 일본어, 한국어. 휴대전화의 언어 설정을 따릅니다.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>무엇에 접근하며, 왜인가</h2>
+    <p class="section-lead">Easymail이 요청하는 Google 권한은 두 가지뿐이며 그 외에는 없습니다. 연락처, 캘린더, 파일, 위치는 읽지 않습니다.</p>
+    <div class="scope">
+      <h3>Gmail 읽기 및 수정 <code>gmail.modify</code></h3>
+      <p>스레드와 메시지, 첨부파일을 표시하고, 사용자가 쓴 답장을 보내고, 대화를 열 때 읽음으로 표시하기 위해 필요합니다. 읽기 전용 권한으로는 뒤의 두 가지가 불가능하며, 둘 다 앱의 핵심입니다.</p>
+    </div>
+    <div class="scope">
+      <h3>보내는 별칭 읽기 <code>gmail.settings.basic</code></h3>
+      <p>어떤 주소가 사용자의 것인지 알기 위해 필요합니다. 이를 통해 본인의 메시지와 다른 사람의 메시지를 구분해 대화의 올바른 쪽에 배치합니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>데이터가 가는 곳</h2>
+    <p>어디에도 가지 않습니다. Easymail 서버는 존재하지 않으며, 앱은 암호화된 연결로 Gmail 인터페이스와 직접 통신합니다. 메시지와 첨부파일, 연락처는 당사나 제3자에게 전송되지 않습니다.</p>
+    <p>앱이 빠르게 열리고 오프라인에서도 동작하도록 휴대전화에 로컬 사본을 보관합니다. 상한이 있고 오래된 내용부터 자동으로 삭제되며, 로그아웃하거나 앱을 삭제하면 완전히 지워집니다. 자세한 내용은 <a href="./">개인정보 고지</a>에 있습니다.</p>
+  </section>
+
+  <section>
+    <h2>광고</h2>
+    <p>이 앱은 무료이며 화면 하단의 배너 하나로 운영됩니다. 광고는 Google AdMob이 제공합니다. 메일 내용에 따라 광고가 선택되는 일은 결코 없으며, 광고가 메일을 보지도 않습니다. 사전에 별도의 동의를 요청하고 거부할 수 있습니다. 거부해도 앱은 그대로 동작하며 배너만 표시되지 않습니다.</p>
+  </section>
+
+  <footer>
+    <span>Easymail — Lorenzo Montoli</span>
+    <a href="./">개인정보 고지 및 이용약관</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </footer>
+</div>
+
+</main>
+
+<script>
+(function () {
+  var SUPPORTED = ["en", "it", "fr", "de", "es", "zh", "ja", "ko"];
+  var root = document.documentElement;
+  var select = document.getElementById("lang");
+
+  function normalize(tag) {
+    var base = String(tag || "").toLowerCase().split("-")[0];
+    return SUPPORTED.indexOf(base) === -1 ? null : base;
+  }
+
+  /* Explicit choice in the URL wins, then the browser's languages, then English —
+     the same fallback order the app itself uses. */
+  function initial() {
+    var fromHash = normalize(location.hash.replace("#", ""));
+    if (fromHash) return fromHash;
+    var fromQuery = normalize(new URLSearchParams(location.search).get("lang"));
+    if (fromQuery) return fromQuery;
+    var list = navigator.languages || [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var match = normalize(list[i]);
+      if (match) return match;
+    }
+    return "en";
+  }
+
+  function apply(code) {
+    root.setAttribute("data-active", code);
+    root.setAttribute("lang", code);
+    select.value = code;
+    var heading = document.querySelector('div[data-lang="' + code + '"] h1');
+    if (heading) document.title = "Easymail — " + heading.textContent;
+    /* Carry the choice across to the privacy notice, which uses the same codes. */
+    var links = document.querySelectorAll('div[data-lang="' + code + '"] a[href="./"]');
+    for (var j = 0; j < links.length; j++) links[j].setAttribute("href", "./?lang=" + code);
+  }
+
+  apply(initial());
+
+  select.addEventListener("change", function () {
+    apply(select.value);
+    history.replaceState(null, "", "#" + select.value);
+    window.scrollTo(0, 0);
+  });
+
+  window.addEventListener("hashchange", function () {
+    var code = normalize(location.hash.replace("#", ""));
+    if (code) apply(code);
+  });
+})();
+</script>
+
+</body>
+</html>
