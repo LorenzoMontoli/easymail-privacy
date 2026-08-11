@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Easymail — Terms of use</title>
+<meta name="description" content="Terms of use for Easymail, the Android app that shows your Gmail as chat conversations.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c5221f'/><path d='M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z' fill='white'/><path d='M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z' fill='%23f6f8fc'/></svg>">
+<style>
+  :root {
+    --ground:      #ffffff;
+    --surface:     #f6f8fc;
+    --hairline:    #e1e4e8;
+    --ink:         #1f1f21;
+    --ink-muted:   #5f6368;
+    --accent:      #1a73e8;
+    --mark:        #c5221f;
+    --shadow:      0 1px 2px rgba(31, 31, 33, .08), 0 4px 14px rgba(31, 31, 33, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #15171a;
+      --surface:     #1d2024;
+      --hairline:    #2e3238;
+      --ink:         #e6e8eb;
+      --ink-muted:   #9aa0a6;
+      --accent:      #8ab4f8;
+      --mark:        #f28b82;
+      --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #15171a;
+    --surface:     #1d2024;
+    --hairline:    #2e3238;
+    --ink:         #e6e8eb;
+    --ink-muted:   #9aa0a6;
+    --accent:      #8ab4f8;
+    --mark:        #f28b82;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont,
+                 Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans",
+                 "Yu Gothic UI", "Microsoft YaHei", "Malgun Gothic", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  /* Doubles as the way back to the landing page. */
+  .brand {
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 600; letter-spacing: -0.01em;
+    color: inherit; text-decoration: none;
+  }
+  .brand:hover { text-decoration: underline; text-decoration-color: var(--hairline); }
+  .brand svg { display: block; }
+  .bar .spacer { flex: 1; }
+
+  select {
+    font: inherit; font-size: 15px;
+    color: var(--ink); background: var(--surface);
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  main { max-width: 44rem; margin: 0 auto; padding: 40px 20px 96px; }
+
+  h1 {
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.35rem);
+    line-height: 1.2; letter-spacing: -0.02em; text-wrap: balance;
+    margin: 0 0 20px;
+  }
+  h2 {
+    font-size: 1.06rem; line-height: 1.4; letter-spacing: -0.005em;
+    text-wrap: balance; color: var(--accent);
+    margin: 36px 0 8px;
+  }
+  p { margin: 0 0 14px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 0 0 22px;
+    box-shadow: var(--shadow);
+  }
+  .card dl {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 6px 18px; margin: 0; font-size: 15px;
+  }
+  .card dt {
+    color: var(--ink-muted); font-size: 12.5px;
+    letter-spacing: .06em; text-transform: uppercase;
+    align-self: baseline; padding-top: 3px;
+  }
+  .card dd { margin: 0; }
+  @media (max-width: 34rem) {
+    .card dl { grid-template-columns: 1fr; gap: 2px; }
+    .card dd { margin-bottom: 10px; }
+    .card dd:last-child { margin-bottom: 0; }
+  }
+
+  .mirror { color: var(--ink-muted); font-size: 15px; margin: 0 0 4px; }
+
+  .foot {
+    border-top: 1px solid var(--hairline);
+    margin-top: 44px; padding-top: 20px;
+    font-size: 15px; color: var(--ink-muted);
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+  }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* --- language switching ------------------------------------------------------ */
+
+  [data-lang] { display: none; }
+  :root:not([data-active]) [data-lang="en"] { display: block; }
+  :root[data-active="en"] [data-lang="en"] { display: block; }
+  :root[data-active="it"] [data-lang="it"] { display: block; }
+  :root[data-active="fr"] [data-lang="fr"] { display: block; }
+  :root[data-active="de"] [data-lang="de"] { display: block; }
+  :root[data-active="es"] [data-lang="es"] { display: block; }
+  :root[data-active="zh"] [data-lang="zh"] { display: block; }
+  :root[data-active="ja"] [data-lang="ja"] { display: block; }
+  :root[data-active="ko"] [data-lang="ko"] { display: block; }
+
+  [data-lang="zh"], [data-lang="ja"], [data-lang="ko"] { line-height: 1.85; }
+  [data-lang="zh"] h1, [data-lang="ja"] h1, [data-lang="ko"] h1,
+  [data-lang="zh"] h2, [data-lang="ja"] h2, [data-lang="ko"] h2 { letter-spacing: 0; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="brand" href="home.html">
+    <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="var(--mark)"/>
+      <path d="M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" fill="#fff"/>
+      <path d="M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z" fill="#f6f8fc"/>
+    </svg>
+    Easymail
+  </a>
+  <span class="spacer"></span>
+  <label class="visually-hidden" for="lang">Language</label>
+  <select id="lang">
+    <option value="en">English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+    <option value="zh">中文</option>
+    <option value="ja">日本語</option>
+    <option value="ko">한국어</option>
+  </select>
+</header>
+
+<main>
+
+<!-- ============================== ENGLISH ============================== -->
+<article data-lang="en" lang="en">
+  <h1>Terms of use</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Last updated</dt><dd>11 August 2026</dd>
+      <dt>Published by</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">These terms govern the use of the Easymail application. How your personal data is handled is described separately in the <a href="./">privacy notice</a>.</p>
+
+  <h2>1. Accepting these terms</h2>
+  <p>By installing Easymail and connecting a Google account you accept these terms. If you do not accept them, do not use the app. You are asked to accept them, together with the privacy notice, the first time the app runs.</p>
+
+  <h2>2. What the service is</h2>
+  <p>Easymail is an Android application that displays the mail in your Google account as chat conversations, and lets you reply and write new messages. It is a client for a mailbox you already own: it is not a mail service, it does not give you an address, and it does not store your mail on our behalf.</p>
+
+  <h2>3. Your Google account</h2>
+  <p>You need a Google account with Gmail, and you must grant the app access through Google's own consent screen. That authorization is between you and Google, and you can withdraw it at any time at myaccount.google.com/permissions; the app stops working immediately. You are responsible for the account you connect and for the messages you send from it.</p>
+
+  <h2>4. Acceptable use</h2>
+  <p>Use Easymail only for mail you are entitled to read and to send. Do not use it to send unsolicited bulk messages, to impersonate anyone, or for any purpose unlawful where you are. Do not attempt to work around the limits Google applies to its own interfaces.</p>
+
+  <h2>5. What the app will not do to your mailbox</h2>
+  <p>Easymail does not delete messages and performs no other irreversible operation on your mailbox; those remain things you do in Gmail. Marking a conversation as read when you open it is the only change it makes.</p>
+
+  <h2>6. Limits of the display</h2>
+  <p>Email was not designed to look like a chat. Easymail reformats messages in order to display them, and on complex ones the result may differ from the original. For anything legally or professionally critical, check the message in Gmail.</p>
+
+  <h2>7. Availability and no warranty</h2>
+  <p>The app is provided as is and as available, without warranty of any kind. There is no guarantee of uninterrupted operation: it depends on Google's interfaces, which may change or stop working. Development may be discontinued at any time.</p>
+
+  <h2>8. Liability</h2>
+  <p>To the extent permitted by law, we are not liable for indirect or consequential losses arising from use of the app, including mail not sent, not received, or displayed differently from the original. Nothing in these terms excludes liability that cannot be excluded by law, nor the mandatory rights you have as a consumer.</p>
+
+  <h2>9. Advertising</h2>
+  <p>The app is free and funded by a banner at the bottom of the screen, served by Google AdMob. A separate consent is requested before any advertising appears, and refusing it does not restrict the use of the app.</p>
+
+  <h2>10. Changes to these terms</h2>
+  <p>If these terms change substantially, you will be asked to read and accept them again inside the app. The date at the top of this page shows when they were last revised.</p>
+
+  <h2>11. Governing law</h2>
+  <p>These terms are governed by Italian law. If you are a consumer, this does not deprive you of the protection afforded by the mandatory provisions of the law of your country of residence.</p>
+
+  <p class="foot">
+    <a href="./">Privacy notice</a>
+    <a href="home.html">About Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== ITALIANO ============================== -->
+<article data-lang="it" lang="it">
+  <h1>Condizioni d'uso</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Ultimo aggiornamento</dt><dd>11 agosto 2026</dd>
+      <dt>Titolare</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contatto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Queste condizioni regolano l'uso dell'applicazione Easymail. Il trattamento dei tuoi dati personali è descritto a parte nell'<a href="./">informativa privacy</a>.</p>
+
+  <h2>1. Accettazione</h2>
+  <p>Installando Easymail e collegando un account Google accetti queste condizioni. Se non le accetti, non usare l'app. L'accettazione ti viene chiesta, insieme all'informativa privacy, al primo avvio.</p>
+
+  <h2>2. Cos'è il servizio</h2>
+  <p>Easymail è un'applicazione Android che mostra la posta del tuo account Google come conversazioni in stile chat, e ti permette di rispondere e scrivere nuovi messaggi. È un client per una casella che possiedi già: non è un servizio di posta, non ti fornisce un indirizzo e non conserva la tua posta per nostro conto.</p>
+
+  <h2>3. Il tuo account Google</h2>
+  <p>Serve un account Google con Gmail, e devi concedere l'accesso all'app tramite la schermata di consenso di Google. Quell'autorizzazione è tra te e Google, e puoi revocarla in qualsiasi momento su myaccount.google.com/permissions: l'app smette di funzionare immediatamente. Sei responsabile dell'account che colleghi e dei messaggi che invii da esso.</p>
+
+  <h2>4. Uso consentito</h2>
+  <p>Usa Easymail solo per posta che hai diritto di leggere e inviare. Non usarla per inviare messaggi massivi non richiesti, per fingerti un'altra persona, o per qualsiasi finalità illecita nel luogo in cui ti trovi. Non tentare di aggirare i limiti che Google applica alle proprie interfacce.</p>
+
+  <h2>5. Cosa l'app non fa alla tua casella</h2>
+  <p>Easymail non elimina messaggi e non compie altre operazioni irreversibili sulla tua casella: quelle restano cose che fai da Gmail. Segnare una conversazione come letta quando la apri è l'unica modifica che introduce.</p>
+
+  <h2>6. Limiti della visualizzazione</h2>
+  <p>L'email non è nata per assomigliare a una chat. Easymail riformatta i messaggi per mostrarli, e su quelli complessi il risultato può differire dall'originale. Per qualsiasi cosa rilevante sul piano legale o professionale, verifica il messaggio su Gmail.</p>
+
+  <h2>7. Disponibilità e assenza di garanzie</h2>
+  <p>L'app è fornita così com'è e nei limiti della disponibilità, senza garanzie di alcun tipo. Non è garantito un funzionamento continuativo: dipende dalle interfacce di Google, che possono cambiare o smettere di funzionare. Lo sviluppo può essere interrotto in qualsiasi momento.</p>
+
+  <h2>8. Responsabilità</h2>
+  <p>Nei limiti consentiti dalla legge, non rispondiamo di danni indiretti o consequenziali derivanti dall'uso dell'app, inclusa posta non inviata, non ricevuta o visualizzata in modo diverso dall'originale. Nulla in queste condizioni esclude responsabilità che la legge non consente di escludere, né i diritti inderogabili che ti spettano in quanto consumatore.</p>
+
+  <h2>9. Pubblicità</h2>
+  <p>L'app è gratuita e si sostiene con un banner in fondo allo schermo, fornito da Google AdMob. Prima che compaia qualsiasi annuncio ti viene chiesto un consenso separato, e rifiutarlo non limita l'uso dell'app.</p>
+
+  <h2>10. Modifiche alle condizioni</h2>
+  <p>Se queste condizioni cambiano in modo sostanziale, ti verrà chiesto di rileggerle e accettarle di nuovo dentro l'app. La data in cima a questa pagina indica l'ultima revisione.</p>
+
+  <h2>11. Legge applicabile</h2>
+  <p>Queste condizioni sono regolate dalla legge italiana. Se sei un consumatore, ciò non ti priva della tutela offerta dalle disposizioni inderogabili della legge del tuo paese di residenza.</p>
+
+  <p class="foot">
+    <a href="./">Informativa privacy</a>
+    <a href="home.html">Cos'è Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== FRANÇAIS ============================== -->
+<article data-lang="fr" lang="fr">
+  <h1>Conditions d'utilisation</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Dernière mise à jour</dt><dd>11 août 2026</dd>
+      <dt>Éditeur</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Ces conditions régissent l'utilisation de l'application Easymail. Le traitement de vos données personnelles est décrit séparément dans l'<a href="./">avis de confidentialité</a>.</p>
+
+  <h2>1. Acceptation</h2>
+  <p>En installant Easymail et en connectant un compte Google, vous acceptez ces conditions. Si vous ne les acceptez pas, n'utilisez pas l'application. Leur acceptation vous est demandée, avec l'avis de confidentialité, au premier lancement.</p>
+
+  <h2>2. Ce qu'est le service</h2>
+  <p>Easymail est une application Android qui affiche le courrier de votre compte Google sous forme de conversations, et vous permet de répondre et d'écrire de nouveaux messages. C'est un client pour une boîte que vous possédez déjà : ce n'est pas un service de messagerie, il ne vous fournit pas d'adresse et ne conserve pas votre courrier pour notre compte.</p>
+
+  <h2>3. Votre compte Google</h2>
+  <p>Il vous faut un compte Google avec Gmail, et vous devez accorder l'accès à l'application via l'écran de consentement de Google. Cette autorisation est entre vous et Google, et vous pouvez la retirer à tout moment sur myaccount.google.com/permissions : l'application cesse aussitôt de fonctionner. Vous êtes responsable du compte que vous connectez et des messages que vous en envoyez.</p>
+
+  <h2>4. Usage autorisé</h2>
+  <p>N'utilisez Easymail que pour du courrier que vous avez le droit de lire et d'envoyer. Ne l'utilisez pas pour envoyer des messages en masse non sollicités, pour vous faire passer pour quelqu'un d'autre, ni à des fins illicites là où vous vous trouvez. N'essayez pas de contourner les limites que Google applique à ses propres interfaces.</p>
+
+  <h2>5. Ce que l'application ne fait pas à votre boîte</h2>
+  <p>Easymail ne supprime pas de messages et n'effectue aucune autre opération irréversible sur votre boîte : cela reste ce que vous faites dans Gmail. Marquer une conversation comme lue à son ouverture est la seule modification qu'elle apporte.</p>
+
+  <h2>6. Limites de l'affichage</h2>
+  <p>L'e-mail n'a pas été conçu pour ressembler à une discussion. Easymail remet en forme les messages pour les afficher, et sur les plus complexes le résultat peut différer de l'original. Pour tout ce qui est juridiquement ou professionnellement important, vérifiez le message dans Gmail.</p>
+
+  <h2>7. Disponibilité et absence de garantie</h2>
+  <p>L'application est fournie en l'état et selon disponibilité, sans garantie d'aucune sorte. Aucun fonctionnement ininterrompu n'est garanti : il dépend des interfaces de Google, qui peuvent changer ou cesser de fonctionner. Le développement peut être interrompu à tout moment.</p>
+
+  <h2>8. Responsabilité</h2>
+  <p>Dans les limites permises par la loi, nous ne répondons pas des dommages indirects ou consécutifs résultant de l'utilisation de l'application, y compris un courrier non envoyé, non reçu ou affiché différemment de l'original. Rien dans ces conditions n'exclut une responsabilité que la loi ne permet pas d'exclure, ni les droits impératifs dont vous disposez en tant que consommateur.</p>
+
+  <h2>9. Publicité</h2>
+  <p>L'application est gratuite et financée par une bannière en bas de l'écran, fournie par Google AdMob. Un consentement distinct vous est demandé avant l'apparition de toute annonce, et le refuser ne restreint pas l'usage de l'application.</p>
+
+  <h2>10. Modifications des conditions</h2>
+  <p>Si ces conditions changent de manière substantielle, il vous sera demandé de les relire et de les accepter à nouveau dans l'application. La date en haut de cette page indique la dernière révision.</p>
+
+  <h2>11. Droit applicable</h2>
+  <p>Ces conditions sont régies par le droit italien. Si vous êtes un consommateur, cela ne vous prive pas de la protection des dispositions impératives du droit de votre pays de résidence.</p>
+
+  <p class="foot">
+    <a href="./">Avis de confidentialité</a>
+    <a href="home.html">À propos d'Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== DEUTSCH ============================== -->
+<article data-lang="de" lang="de">
+  <h1>Nutzungsbedingungen</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Zuletzt aktualisiert</dt><dd>11. August 2026</dd>
+      <dt>Anbieter</dt><dd>Lorenzo Montoli</dd>
+      <dt>Kontakt</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Diese Bedingungen regeln die Nutzung der Anwendung Easymail. Wie deine personenbezogenen Daten verarbeitet werden, steht gesondert im <a href="./">Datenschutzhinweis</a>.</p>
+
+  <h2>1. Annahme</h2>
+  <p>Mit der Installation von Easymail und dem Verbinden eines Google-Kontos akzeptierst du diese Bedingungen. Wenn du sie nicht akzeptierst, nutze die App nicht. Beim ersten Start wirst du gebeten, sie zusammen mit dem Datenschutzhinweis anzunehmen.</p>
+
+  <h2>2. Was der Dienst ist</h2>
+  <p>Easymail ist eine Android-Anwendung, die die E-Mails deines Google-Kontos als Chat-Unterhaltungen anzeigt und dich antworten und neue Nachrichten schreiben lässt. Sie ist ein Client für ein Postfach, das dir bereits gehört: kein E-Mail-Dienst, sie vergibt keine Adresse und speichert deine Mails nicht für uns.</p>
+
+  <h2>3. Dein Google-Konto</h2>
+  <p>Du brauchst ein Google-Konto mit Gmail und musst der App über Googles eigenen Zustimmungsdialog Zugriff gewähren. Diese Berechtigung besteht zwischen dir und Google und kann jederzeit unter myaccount.google.com/permissions widerrufen werden; die App stellt dann sofort den Betrieb ein. Für das verbundene Konto und die daraus gesendeten Nachrichten bist du verantwortlich.</p>
+
+  <h2>4. Zulässige Nutzung</h2>
+  <p>Nutze Easymail nur für E-Mails, die du lesen und senden darfst. Nutze sie nicht für unerwünschte Massensendungen, nicht um dich als jemand anderes auszugeben und zu keinem an deinem Aufenthaltsort rechtswidrigen Zweck. Versuche nicht, die Grenzen zu umgehen, die Google für seine eigenen Schnittstellen setzt.</p>
+
+  <h2>5. Was die App deinem Postfach nicht antut</h2>
+  <p>Easymail löscht keine Nachrichten und nimmt keine anderen unwiderruflichen Eingriffe in dein Postfach vor; das bleibt etwas, das du in Gmail tust. Eine Unterhaltung beim Öffnen als gelesen zu markieren ist die einzige Änderung, die sie vornimmt.</p>
+
+  <h2>6. Grenzen der Darstellung</h2>
+  <p>E-Mail wurde nicht dafür entworfen, wie ein Chat auszusehen. Easymail formatiert Nachrichten für die Anzeige um, und bei komplexen kann das Ergebnis vom Original abweichen. Prüfe rechtlich oder beruflich Wichtiges in Gmail.</p>
+
+  <h2>7. Verfügbarkeit und Gewährleistungsausschluss</h2>
+  <p>Die App wird ohne Gewähr und nach Verfügbarkeit bereitgestellt, ohne jede Garantie. Ein ununterbrochener Betrieb wird nicht zugesichert: Er hängt von Googles Schnittstellen ab, die sich ändern oder ausfallen können. Die Entwicklung kann jederzeit eingestellt werden.</p>
+
+  <h2>8. Haftung</h2>
+  <p>Soweit gesetzlich zulässig haften wir nicht für mittelbare Schäden oder Folgeschäden aus der Nutzung der App, einschließlich nicht gesendeter, nicht empfangener oder abweichend dargestellter E-Mails. Nichts in diesen Bedingungen schließt eine Haftung aus, die gesetzlich nicht ausgeschlossen werden kann, noch deine zwingenden Rechte als Verbraucher.</p>
+
+  <h2>9. Werbung</h2>
+  <p>Die App ist kostenlos und finanziert sich über ein Banner am unteren Bildschirmrand, ausgeliefert von Google AdMob. Vor der ersten Anzeige wird eine gesonderte Einwilligung eingeholt; eine Ablehnung schränkt die Nutzung der App nicht ein.</p>
+
+  <h2>10. Änderungen dieser Bedingungen</h2>
+  <p>Ändern sich diese Bedingungen wesentlich, wirst du gebeten, sie in der App erneut zu lesen und anzunehmen. Das Datum oben auf dieser Seite zeigt die letzte Überarbeitung.</p>
+
+  <h2>11. Anwendbares Recht</h2>
+  <p>Diese Bedingungen unterliegen italienischem Recht. Bist du Verbraucher, entzieht dir das nicht den Schutz der zwingenden Vorschriften des Rechts deines Wohnsitzlandes.</p>
+
+  <p class="foot">
+    <a href="./">Datenschutzhinweis</a>
+    <a href="home.html">Über Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== ESPAÑOL ============================== -->
+<article data-lang="es" lang="es">
+  <h1>Condiciones de uso</h1>
+
+  <div class="card">
+    <dl>
+      <dt>Última actualización</dt><dd>11 de agosto de 2026</dd>
+      <dt>Responsable</dt><dd>Lorenzo Montoli</dd>
+      <dt>Contacto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">Estas condiciones rigen el uso de la aplicación Easymail. El tratamiento de tus datos personales se describe aparte en el <a href="./">aviso de privacidad</a>.</p>
+
+  <h2>1. Aceptación</h2>
+  <p>Al instalar Easymail y conectar una cuenta de Google aceptas estas condiciones. Si no las aceptas, no uses la aplicación. Se te pide aceptarlas, junto con el aviso de privacidad, en el primer inicio.</p>
+
+  <h2>2. Qué es el servicio</h2>
+  <p>Easymail es una aplicación Android que muestra el correo de tu cuenta de Google como conversaciones de chat, y te permite responder y escribir mensajes nuevos. Es un cliente para un buzón que ya posees: no es un servicio de correo, no te da una dirección y no guarda tu correo por nuestra cuenta.</p>
+
+  <h2>3. Tu cuenta de Google</h2>
+  <p>Necesitas una cuenta de Google con Gmail, y debes conceder el acceso a la aplicación mediante la pantalla de consentimiento de Google. Esa autorización es entre tú y Google, y puedes revocarla cuando quieras en myaccount.google.com/permissions: la aplicación deja de funcionar de inmediato. Eres responsable de la cuenta que conectas y de los mensajes que envías desde ella.</p>
+
+  <h2>4. Uso permitido</h2>
+  <p>Usa Easymail solo para correo que tengas derecho a leer y enviar. No la uses para enviar mensajes masivos no solicitados, para hacerte pasar por otra persona, ni para ningún fin ilícito donde te encuentres. No intentes eludir los límites que Google aplica a sus propias interfaces.</p>
+
+  <h2>5. Lo que la aplicación no hace en tu buzón</h2>
+  <p>Easymail no borra mensajes ni realiza ninguna otra operación irreversible sobre tu buzón; eso sigue siendo algo que haces en Gmail. Marcar una conversación como leída al abrirla es el único cambio que introduce.</p>
+
+  <h2>6. Límites de la visualización</h2>
+  <p>El correo no nació para parecerse a un chat. Easymail reformatea los mensajes para mostrarlos, y en los complejos el resultado puede diferir del original. Para cualquier cosa relevante en lo legal o lo profesional, comprueba el mensaje en Gmail.</p>
+
+  <h2>7. Disponibilidad y ausencia de garantía</h2>
+  <p>La aplicación se ofrece tal cual y según disponibilidad, sin garantía de ningún tipo. No se garantiza un funcionamiento ininterrumpido: depende de las interfaces de Google, que pueden cambiar o dejar de funcionar. El desarrollo puede interrumpirse en cualquier momento.</p>
+
+  <h2>8. Responsabilidad</h2>
+  <p>En la medida permitida por la ley, no respondemos de daños indirectos o consecuentes derivados del uso de la aplicación, incluido el correo no enviado, no recibido o mostrado de forma distinta al original. Nada en estas condiciones excluye la responsabilidad que la ley no permite excluir, ni los derechos imperativos que te corresponden como consumidor.</p>
+
+  <h2>9. Publicidad</h2>
+  <p>La aplicación es gratuita y se sostiene con un banner en la parte inferior de la pantalla, servido por Google AdMob. Antes de que aparezca cualquier anuncio se te pide un consentimiento aparte, y rechazarlo no limita el uso de la aplicación.</p>
+
+  <h2>10. Cambios en estas condiciones</h2>
+  <p>Si estas condiciones cambian de forma sustancial, se te pedirá que las leas y las aceptes de nuevo dentro de la aplicación. La fecha en la parte superior de esta página indica la última revisión.</p>
+
+  <h2>11. Ley aplicable</h2>
+  <p>Estas condiciones se rigen por la ley italiana. Si eres consumidor, ello no te priva de la protección de las disposiciones imperativas de la ley de tu país de residencia.</p>
+
+  <p class="foot">
+    <a href="./">Aviso de privacidad</a>
+    <a href="home.html">Qué es Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== 中文 ============================== -->
+<article data-lang="zh" lang="zh">
+  <h1>使用条款</h1>
+
+  <div class="card">
+    <dl>
+      <dt>最后更新</dt><dd>2026年8月11日</dd>
+      <dt>发布者</dt><dd>Lorenzo Montoli</dd>
+      <dt>联系方式</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">本条款规范 Easymail 应用的使用。个人数据的处理另见<a href="./">隐私说明</a>。</p>
+
+  <h2>1. 接受条款</h2>
+  <p>安装 Easymail 并连接 Google 账号即表示你接受本条款。若不接受，请勿使用本应用。首次启动时会请你连同隐私说明一并接受。</p>
+
+  <h2>2. 本服务是什么</h2>
+  <p>Easymail 是一款 Android 应用，把你 Google 账号里的邮件显示为聊天式会话，并支持回复和撰写新邮件。它是你已有邮箱的客户端：不是邮件服务，不提供邮箱地址，也不代我们保存你的邮件。</p>
+
+  <h2>3. 你的 Google 账号</h2>
+  <p>你需要一个带 Gmail 的 Google 账号，并通过 Google 自己的授权页面向本应用授予访问权限。该授权存在于你与 Google 之间，你可以随时在 myaccount.google.com/permissions 撤销，撤销后应用立即停止工作。你对所连接的账号以及由该账号发出的邮件负责。</p>
+
+  <h2>4. 允许的使用</h2>
+  <p>只将 Easymail 用于你有权阅读和发送的邮件。不得用于发送未经请求的批量邮件、冒充他人，或在你所在地属于违法的任何用途。不得试图规避 Google 对其接口设置的限制。</p>
+
+  <h2>5. 本应用不会对你的邮箱做什么</h2>
+  <p>Easymail 不删除邮件，也不执行其他不可逆的邮箱操作；这些仍需你在 Gmail 中完成。打开会话时将其标记为已读，是它做出的唯一改动。</p>
+
+  <h2>6. 显示的局限</h2>
+  <p>电子邮件本就不是为聊天外观设计的。Easymail 会重新排版以便显示，复杂邮件的结果可能与原件不同。凡涉及法律或工作上的重要内容，请在 Gmail 中核对。</p>
+
+  <h2>7. 可用性与免责</h2>
+  <p>本应用按现状及可用状态提供，不作任何形式的保证。不保证不间断运行：它依赖 Google 的接口，而接口可能变更或停止服务。开发可能随时终止。</p>
+
+  <h2>8. 责任</h2>
+  <p>在法律允许的范围内，我们不对因使用本应用而产生的间接或后果性损失负责，包括邮件未发出、未收到或显示与原件不同。本条款不排除法律不允许排除的责任，也不影响你作为消费者享有的强制性权利。</p>
+
+  <h2>9. 广告</h2>
+  <p>本应用免费，靠屏幕底部的横幅广告维持，由 Google AdMob 投放。在出现任何广告之前会单独征求你的同意，拒绝并不会限制应用的使用。</p>
+
+  <h2>10. 条款的变更</h2>
+  <p>如本条款发生实质性变更，将请你在应用内重新阅读并接受。本页顶部的日期表示最后一次修订的时间。</p>
+
+  <h2>11. 适用法律</h2>
+  <p>本条款受意大利法律管辖。若你是消费者，这并不剥夺你所在居住国强制性法律规定给予你的保护。</p>
+
+  <p class="foot">
+    <a href="./">隐私说明</a>
+    <a href="home.html">关于 Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== 日本語 ============================== -->
+<article data-lang="ja" lang="ja">
+  <h1>利用規約</h1>
+
+  <div class="card">
+    <dl>
+      <dt>最終更新</dt><dd>2026年8月11日</dd>
+      <dt>提供者</dt><dd>Lorenzo Montoli</dd>
+      <dt>連絡先</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">本規約は Easymail アプリの利用について定めます。個人データの取り扱いは<a href="./">プライバシーに関する説明</a>に別途記載しています。</p>
+
+  <h2>1. 規約への同意</h2>
+  <p>Easymail をインストールし Google アカウントを接続した時点で、本規約に同意したものとします。同意されない場合はご利用にならないでください。初回起動時に、プライバシーに関する説明とあわせて同意をお尋ねします。</p>
+
+  <h2>2. 本サービスの内容</h2>
+  <p>Easymail は、Google アカウントのメールをチャット形式の会話として表示し、返信や新規作成を可能にする Android アプリです。すでにお持ちのメールボックスのクライアントであり、メールサービスではありません。アドレスを発行することも、当方に代わってメールを保管することもありません。</p>
+
+  <h2>3. あなたの Google アカウント</h2>
+  <p>Gmail の使える Google アカウントが必要で、Google 自身の同意画面からアプリにアクセスを許可していただきます。この許可はあなたと Google の間のものであり、myaccount.google.com/permissions でいつでも取り消せます。取り消すとアプリは直ちに動作を停止します。接続したアカウントと、そこから送信したメールについてはあなたの責任となります。</p>
+
+  <h2>4. 許容される利用</h2>
+  <p>Easymail は、あなたが読む権利・送る権利を持つメールにのみお使いください。求められていない大量送信、他人へのなりすまし、所在地の法令に反する目的での利用は禁止します。Google が自社インターフェースに設けた制限を回避しようとしないでください。</p>
+
+  <h2>5. メールボックスに対して行わないこと</h2>
+  <p>Easymail はメールを削除せず、メールボックスに対する他の取り消せない操作も行いません。それらは Gmail で行っていただきます。会話を開いたときに既読にすることが、唯一の変更です。</p>
+
+  <h2>6. 表示上の限界</h2>
+  <p>メールはチャットのような見た目のために作られたものではありません。Easymail は表示のために整形し直すため、複雑なメールでは原本と異なる場合があります。法的・業務的に重要なものは Gmail で確認してください。</p>
+
+  <h2>7. 提供状況と無保証</h2>
+  <p>本アプリは現状のまま、提供可能な範囲で提供され、いかなる保証も伴いません。継続的な稼働は保証されません。Google のインターフェースに依存しており、それらは変更または停止されることがあります。開発はいつでも終了する可能性があります。</p>
+
+  <h2>8. 責任</h2>
+  <p>法令が認める範囲において、当方は本アプリの利用に起因する間接的または結果的な損害について責任を負いません。送信されなかったメール、受信されなかったメール、原本と異なる表示を含みます。法令上排除できない責任、および消費者としての強行法規上の権利を制限するものではありません。</p>
+
+  <h2>9. 広告</h2>
+  <p>本アプリは無料で、画面下部のバナー広告によって支えられています。配信は Google AdMob です。広告が表示される前に別途同意をお尋ねし、拒否しても利用が制限されることはありません。</p>
+
+  <h2>10. 規約の変更</h2>
+  <p>本規約が実質的に変更された場合、アプリ内で再度お読みいただき同意をお願いします。本ページ上部の日付が最終改訂日です。</p>
+
+  <h2>11. 準拠法</h2>
+  <p>本規約はイタリア法に準拠します。あなたが消費者である場合、これによって居住国の強行法規による保護が失われることはありません。</p>
+
+  <p class="foot">
+    <a href="./">プライバシーに関する説明</a>
+    <a href="home.html">Easymail について</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+<!-- ============================== 한국어 ============================== -->
+<article data-lang="ko" lang="ko">
+  <h1>이용약관</h1>
+
+  <div class="card">
+    <dl>
+      <dt>최종 업데이트</dt><dd>2026년 8월 11일</dd>
+      <dt>제공자</dt><dd>Lorenzo Montoli</dd>
+      <dt>문의</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
+    </dl>
+  </div>
+
+  <p class="mirror">이 약관은 Easymail 앱의 이용에 적용됩니다. 개인정보 처리는 <a href="./">개인정보 고지</a>에 따로 설명되어 있습니다.</p>
+
+  <h2>1. 약관의 동의</h2>
+  <p>Easymail을 설치하고 Google 계정을 연결하면 이 약관에 동의한 것으로 봅니다. 동의하지 않으면 앱을 사용하지 마십시오. 최초 실행 시 개인정보 고지와 함께 동의를 요청합니다.</p>
+
+  <h2>2. 서비스의 성격</h2>
+  <p>Easymail은 Google 계정의 메일을 채팅형 대화로 보여 주고 답장과 새 메시지 작성을 지원하는 Android 앱입니다. 이미 보유한 메일함의 클라이언트일 뿐, 메일 서비스가 아니며 주소를 제공하지도, 당사를 대신해 메일을 보관하지도 않습니다.</p>
+
+  <h2>3. 사용자의 Google 계정</h2>
+  <p>Gmail을 사용할 수 있는 Google 계정이 필요하며, Google의 동의 화면을 통해 앱에 접근 권한을 부여해야 합니다. 그 권한은 사용자와 Google 사이의 것이고, myaccount.google.com/permissions에서 언제든지 해제할 수 있으며 해제 시 앱은 즉시 동작을 멈춥니다. 연결한 계정과 그 계정으로 보낸 메시지에 대한 책임은 사용자에게 있습니다.</p>
+
+  <h2>4. 허용되는 이용</h2>
+  <p>읽고 보낼 권한이 있는 메일에만 Easymail을 사용하십시오. 원치 않는 대량 발송, 타인 사칭, 거주지 법령에 위반되는 목적의 이용은 금지됩니다. Google이 자사 인터페이스에 적용하는 제한을 우회하려 하지 마십시오.</p>
+
+  <h2>5. 메일함에 하지 않는 일</h2>
+  <p>Easymail은 메시지를 삭제하지 않으며 메일함에 대한 다른 되돌릴 수 없는 작업도 수행하지 않습니다. 그런 작업은 Gmail에서 하시기 바랍니다. 대화를 열 때 읽음으로 표시하는 것이 유일한 변경입니다.</p>
+
+  <h2>6. 표시의 한계</h2>
+  <p>이메일은 채팅처럼 보이도록 설계된 형식이 아닙니다. Easymail은 표시를 위해 메시지를 다시 구성하므로 복잡한 메일에서는 결과가 원본과 다를 수 있습니다. 법적·업무적으로 중요한 내용은 Gmail에서 확인하세요.</p>
+
+  <h2>7. 가용성과 무보증</h2>
+  <p>본 앱은 있는 그대로, 제공 가능한 범위에서 제공되며 어떠한 보증도 하지 않습니다. 중단 없는 동작은 보장되지 않습니다. Google의 인터페이스에 의존하며, 그 인터페이스는 변경되거나 중단될 수 있습니다. 개발은 언제든 중단될 수 있습니다.</p>
+
+  <h2>8. 책임</h2>
+  <p>법이 허용하는 범위에서, 당사는 앱 이용으로 발생한 간접적·결과적 손해에 대해 책임지지 않습니다. 발송되지 않은 메일, 수신되지 않은 메일, 원본과 다르게 표시된 메일을 포함합니다. 이 약관은 법률상 배제할 수 없는 책임이나 소비자로서 가지는 강행적 권리를 제한하지 않습니다.</p>
+
+  <h2>9. 광고</h2>
+  <p>본 앱은 무료이며 화면 하단의 배너 광고로 운영됩니다. 광고는 Google AdMob이 제공합니다. 광고가 표시되기 전에 별도의 동의를 요청하며, 거부해도 앱 이용이 제한되지 않습니다.</p>
+
+  <h2>10. 약관의 변경</h2>
+  <p>이 약관이 실질적으로 변경되면 앱 안에서 다시 읽고 동의하도록 요청드립니다. 이 페이지 상단의 날짜가 최종 개정일입니다.</p>
+
+  <h2>11. 준거법</h2>
+  <p>이 약관은 이탈리아 법을 준거법으로 합니다. 사용자가 소비자인 경우, 이로 인해 거주 국가의 강행법규에 따른 보호가 배제되지는 않습니다.</p>
+
+  <p class="foot">
+    <a href="./">개인정보 고지</a>
+    <a href="home.html">Easymail 소개</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
+</article>
+
+</main>
+
+<script>
+(function () {
+  var SUPPORTED = ["en", "it", "fr", "de", "es", "zh", "ja", "ko"];
+  var root = document.documentElement;
+  var select = document.getElementById("lang");
+
+  function normalize(tag) {
+    var base = String(tag || "").toLowerCase().split("-")[0];
+    return SUPPORTED.indexOf(base) === -1 ? null : base;
+  }
+
+  function initial() {
+    var fromHash = normalize(location.hash.replace("#", ""));
+    if (fromHash) return fromHash;
+    var fromQuery = normalize(new URLSearchParams(location.search).get("lang"));
+    if (fromQuery) return fromQuery;
+    var list = navigator.languages || [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var match = normalize(list[i]);
+      if (match) return match;
+    }
+    return "en";
+  }
+
+  function apply(code) {
+    root.setAttribute("data-active", code);
+    root.setAttribute("lang", code);
+    select.value = code;
+    var heading = document.querySelector('article[data-lang="' + code + '"] h1');
+    if (heading) document.title = "Easymail — " + heading.textContent;
+    /* Carry the chosen language across to the other two pages. The base href is kept
+       in a data attribute, so switching language twice does not stack query strings. */
+    var links = document.querySelectorAll('a.brand, article[data-lang="' + code + '"] a[href]');
+    for (var j = 0; j < links.length; j++) {
+      var link = links[j];
+      var base = link.getAttribute("data-href");
+      if (base === null) {
+        base = link.getAttribute("href");
+        if (base.indexOf("mailto:") === 0) continue;
+        link.setAttribute("data-href", base);
+      }
+      link.setAttribute("href", base + "?lang=" + code);
+    }
+  }
+
+  apply(initial());
+
+  select.addEventListener("change", function () {
+    apply(select.value);
+    history.replaceState(null, "", "#" + select.value);
+    window.scrollTo(0, 0);
+  });
+
+  window.addEventListener("hashchange", function () {
+    var code = normalize(location.hash.replace("#", ""));
+    if (code) apply(code);
+  });
+})();
+</script>
+
+</body>
+</html>

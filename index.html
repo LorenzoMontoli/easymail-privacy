@@ -75,13 +75,17 @@
     backdrop-filter: saturate(180%) blur(12px);
     border-bottom: 1px solid var(--hairline);
   }
+  /* Doubles as the way back to the landing page. */
   .brand {
     display: flex;
     align-items: center;
     gap: 9px;
     font-weight: 600;
     letter-spacing: -0.01em;
+    color: inherit;
+    text-decoration: none;
   }
+  .brand:hover { text-decoration: underline; text-decoration-color: var(--hairline); }
   .brand svg { display: block; }
   .bar .spacer { flex: 1; }
 
@@ -172,36 +176,43 @@
 
   /* --- language switching ------------------------------------------------------ */
 
-  article[data-lang] { display: none; }
-  :root:not([data-active]) article[data-lang="en"] { display: block; }
-  :root[data-active="en"] article[data-lang="en"] { display: block; }
-  :root[data-active="it"] article[data-lang="it"] { display: block; }
-  :root[data-active="fr"] article[data-lang="fr"] { display: block; }
-  :root[data-active="de"] article[data-lang="de"] { display: block; }
-  :root[data-active="es"] article[data-lang="es"] { display: block; }
-  :root[data-active="zh"] article[data-lang="zh"] { display: block; }
-  :root[data-active="ja"] article[data-lang="ja"] { display: block; }
-  :root[data-active="ko"] article[data-lang="ko"] { display: block; }
+  [data-lang] { display: none; }
+  :root:not([data-active]) [data-lang="en"] { display: block; }
+  :root[data-active="en"] [data-lang="en"] { display: block; }
+  :root[data-active="it"] [data-lang="it"] { display: block; }
+  :root[data-active="fr"] [data-lang="fr"] { display: block; }
+  :root[data-active="de"] [data-lang="de"] { display: block; }
+  :root[data-active="es"] [data-lang="es"] { display: block; }
+  :root[data-active="zh"] [data-lang="zh"] { display: block; }
+  :root[data-active="ja"] [data-lang="ja"] { display: block; }
+  :root[data-active="ko"] [data-lang="ko"] { display: block; }
 
   /* CJK reads better slightly looser and without the Latin letter-spacing. */
-  article[data-lang="zh"], article[data-lang="ja"], article[data-lang="ko"] { line-height: 1.85; }
-  article[data-lang="zh"] h1, article[data-lang="ja"] h1, article[data-lang="ko"] h1,
-  article[data-lang="zh"] h2, article[data-lang="ja"] h2, article[data-lang="ko"] h2 {
+  [data-lang="zh"], [data-lang="ja"], [data-lang="ko"] { line-height: 1.85; }
+  [data-lang="zh"] h1, [data-lang="ja"] h1, [data-lang="ko"] h1,
+  [data-lang="zh"] h2, [data-lang="ja"] h2, [data-lang="ko"] h2 {
     letter-spacing: 0;
+  }
+
+  .foot {
+    border-top: 1px solid var(--hairline);
+    margin-top: 44px; padding-top: 20px;
+    font-size: 15px; color: var(--ink-muted);
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
   }
 </style>
 </head>
 <body>
 
 <header class="bar">
-  <span class="brand">
+  <a class="brand" href="home.html">
     <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
       <rect width="32" height="32" rx="7" fill="var(--mark)"/>
       <path d="M6 11l10 7 10-7v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" fill="#fff"/>
       <path d="M6 10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2l-10 7z" fill="#f6f8fc"/>
     </svg>
     Easymail
-  </span>
+  </a>
   <span class="spacer"></span>
   <label class="visually-hidden" for="lang">Language</label>
   <select id="lang">
@@ -264,6 +275,12 @@
 
   <h2>11. Your rights</h2>
   <p>If you are in the European Union or the United Kingdom, you have the right to access your personal data, to have it corrected or erased, to restrict or object to its processing, and to receive it in a portable format. Because Easymail keeps no data on any server of ours, these rights are exercised directly in your Google account: the data is Google's copy of your mail, and the local copy on your phone is removed by signing out or uninstalling. For anything else, write to the contact address above. You also have the right to lodge a complaint with your data protection authority.</p>
+
+  <p class="foot">
+    <a href="terms.html">Terms of use</a>
+    <a href="home.html">About Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== ITALIANO ============================== -->
@@ -312,6 +329,12 @@
 
   <h2>11. I tuoi diritti</h2>
   <p>Se ti trovi nell'Unione Europea o nel Regno Unito, hai diritto di accedere ai tuoi dati personali, di farli correggere o cancellare, di limitarne o opporti al trattamento e di riceverli in un formato portabile. Poiché Easymail non conserva dati su alcun nostro server, questi diritti si esercitano direttamente nel tuo account Google: i dati sono la copia della tua posta presso Google, e la copia locale sul telefono si elimina uscendo dall'account o disinstallando l'app. Per tutto il resto scrivi all'indirizzo di contatto indicato sopra. Hai inoltre diritto di proporre reclamo all'autorità di controllo — in Italia, il Garante per la protezione dei dati personali.</p>
+
+  <p class="foot">
+    <a href="terms.html">Condizioni d'uso</a>
+    <a href="home.html">Cos'è Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== FRANÇAIS ============================== -->
@@ -360,6 +383,12 @@
 
   <h2>11. Vos droits</h2>
   <p>Si vous vous trouvez dans l'Union européenne ou au Royaume-Uni, vous avez le droit d'accéder à vos données personnelles, de les faire rectifier ou effacer, d'en limiter le traitement ou de vous y opposer, et de les recevoir dans un format portable. Comme Easymail ne conserve aucune donnée sur un serveur qui nous appartienne, ces droits s'exercent directement dans votre compte Google : les données sont la copie de votre courrier chez Google, et la copie locale sur le téléphone disparaît en vous déconnectant ou en désinstallant l'application. Pour le reste, écrivez à l'adresse de contact indiquée ci-dessus. Vous avez également le droit d'introduire une réclamation auprès de votre autorité de protection des données.</p>
+
+  <p class="foot">
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="home.html">À propos d'Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== DEUTSCH ============================== -->
@@ -408,6 +437,12 @@
 
   <h2>11. Deine Rechte</h2>
   <p>Wenn du dich in der Europäischen Union oder im Vereinigten Königreich befindest, hast du das Recht auf Auskunft über deine personenbezogenen Daten, auf Berichtigung oder Löschung, auf Einschränkung der Verarbeitung oder Widerspruch dagegen sowie auf Erhalt in einem übertragbaren Format. Da Easymail keine Daten auf einem eigenen Server speichert, werden diese Rechte direkt in deinem Google-Konto ausgeübt: Die Daten sind Googles Kopie deiner E-Mails, und die lokale Kopie auf dem Telefon wird durch Abmelden oder Deinstallieren entfernt. Für alles Weitere schreibe an die oben genannte Kontaktadresse. Außerdem hast du das Recht, dich bei deiner Datenschutzaufsichtsbehörde zu beschweren.</p>
+
+  <p class="foot">
+    <a href="terms.html">Nutzungsbedingungen</a>
+    <a href="home.html">Über Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== ESPAÑOL ============================== -->
@@ -456,6 +491,12 @@
 
   <h2>11. Tus derechos</h2>
   <p>Si te encuentras en la Unión Europea o el Reino Unido, tienes derecho a acceder a tus datos personales, a que se rectifiquen o se supriman, a limitar u oponerte a su tratamiento y a recibirlos en un formato portable. Como Easymail no guarda datos en ningún servidor nuestro, estos derechos se ejercen directamente en tu cuenta de Google: los datos son la copia de tu correo en Google, y la copia local del teléfono se elimina cerrando sesión o desinstalando la aplicación. Para lo demás, escribe a la dirección de contacto indicada arriba. También tienes derecho a presentar una reclamación ante tu autoridad de protección de datos.</p>
+
+  <p class="foot">
+    <a href="terms.html">Condiciones de uso</a>
+    <a href="home.html">Qué es Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== 中文 ============================== -->
@@ -504,6 +545,12 @@
 
   <h2>11. 你的权利</h2>
   <p>如果你身处欧盟或英国，你有权访问自己的个人数据，要求更正或删除，限制或反对处理，并以可移植的格式获取这些数据。由于 Easymail 不在我们的任何服务器上保存数据，这些权利需直接在你的 Google 账号中行使：数据是 Google 保存的邮件副本，而手机上的本地副本可通过退出登录或卸载应用来清除。其他事项请写信至上方的联系地址。你还有权向所在地的数据保护监管机构投诉。</p>
+
+  <p class="foot">
+    <a href="terms.html">使用条款</a>
+    <a href="home.html">关于 Easymail</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== 日本語 ============================== -->
@@ -552,6 +599,12 @@
 
   <h2>11. あなたの権利</h2>
   <p>欧州連合または英国にお住まいの場合、個人データへのアクセス、訂正または削除、処理の制限または異議申し立て、および可搬な形式での受け取りを求める権利があります。Easymail は当方のサーバーにデータを保存しないため、これらの権利は Google アカウントで直接行使していただきます。データは Google が保持するメールの複製であり、端末内のローカルコピーはログアウトまたはアンインストールで消去されます。その他のご用件は上記の連絡先までお書きください。所在地のデータ保護監督機関に苦情を申し立てる権利もあります。</p>
+
+  <p class="foot">
+    <a href="terms.html">利用規約</a>
+    <a href="home.html">Easymail について</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 <!-- ============================== 한국어 ============================== -->
@@ -600,6 +653,12 @@
 
   <h2>11. 사용자의 권리</h2>
   <p>유럽연합 또는 영국에 거주하는 경우, 개인정보에 접근하고, 정정 또는 삭제를 요구하고, 처리를 제한하거나 반대하며, 이동 가능한 형식으로 제공받을 권리가 있습니다. Easymail은 당사 서버에 데이터를 보관하지 않으므로 이러한 권리는 Google 계정에서 직접 행사합니다. 데이터는 Google이 보관하는 메일의 사본이며, 휴대전화의 로컬 사본은 로그아웃하거나 앱을 삭제하면 지워집니다. 그 밖의 사항은 위의 연락처로 문의해 주세요. 또한 거주 지역의 개인정보 감독기구에 민원을 제기할 권리가 있습니다.</p>
+
+  <p class="foot">
+    <a href="terms.html">이용약관</a>
+    <a href="home.html">Easymail 소개</a>
+    <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
+  </p>
 </article>
 
 </main>
@@ -637,6 +696,19 @@
     select.value = code;
     var heading = document.querySelector('article[data-lang="' + code + '"] h1');
     if (heading) document.title = "Easymail — " + heading.textContent;
+    /* Carry the chosen language across to the other two pages. The base href is kept
+       in a data attribute, so switching language twice does not stack query strings. */
+    var links = document.querySelectorAll('a.brand, article[data-lang="' + code + '"] .foot a[href]');
+    for (var j = 0; j < links.length; j++) {
+      var link = links[j];
+      var base = link.getAttribute("data-href");
+      if (base === null) {
+        base = link.getAttribute("href");
+        if (base.indexOf("mailto:") === 0) continue;
+        link.setAttribute("data-href", base);
+      }
+      link.setAttribute("href", base + "?lang=" + code);
+    }
   }
 
   apply(initial());

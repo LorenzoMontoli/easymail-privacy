@@ -377,7 +377,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">Privacy notice and terms of use</a>
+    <a href="./">Privacy notice</a>
+    <a href="terms.html">Terms of use</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -447,7 +448,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">Informativa privacy e condizioni d'uso</a>
+    <a href="./">Informativa privacy</a>
+    <a href="terms.html">Condizioni d'uso</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -517,7 +519,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">Avis de confidentialité et conditions d'utilisation</a>
+    <a href="./">Avis de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -587,7 +590,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">Datenschutzhinweis und Nutzungsbedingungen</a>
+    <a href="./">Datenschutzhinweis</a>
+    <a href="terms.html">Nutzungsbedingungen</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -657,7 +661,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">Aviso de privacidad y condiciones de uso</a>
+    <a href="./">Aviso de privacidad</a>
+    <a href="terms.html">Condiciones de uso</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -727,7 +732,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">隐私说明与使用条款</a>
+    <a href="./">隐私说明</a>
+    <a href="terms.html">使用条款</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -797,7 +803,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">プライバシーに関する説明と利用規約</a>
+    <a href="./">プライバシーに関する説明</a>
+    <a href="terms.html">利用規約</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -867,7 +874,8 @@
 
   <footer>
     <span>Easymail — Lorenzo Montoli</span>
-    <a href="./">개인정보 고지 및 이용약관</a>
+    <a href="./">개인정보 고지</a>
+    <a href="terms.html">이용약관</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </footer>
 </div>
@@ -906,9 +914,19 @@
     select.value = code;
     var heading = document.querySelector('div[data-lang="' + code + '"] h1');
     if (heading) document.title = "Easymail — " + heading.textContent;
-    /* Carry the choice across to the privacy notice, which uses the same codes. */
-    var links = document.querySelectorAll('div[data-lang="' + code + '"] a[href="./"]');
-    for (var j = 0; j < links.length; j++) links[j].setAttribute("href", "./?lang=" + code);
+    /* Carry the choice across to the other two pages, which use the same codes. The
+       base href is kept in a data attribute so switching twice does not stack it. */
+    var links = document.querySelectorAll('div[data-lang="' + code + '"] a[href]');
+    for (var j = 0; j < links.length; j++) {
+      var link = links[j];
+      var base = link.getAttribute("data-href");
+      if (base === null) {
+        base = link.getAttribute("href");
+        if (base.indexOf("mailto:") === 0) continue;
+        link.setAttribute("data-href", base);
+      }
+      link.setAttribute("href", base + "?lang=" + code);
+    }
   }
 
   apply(initial());
