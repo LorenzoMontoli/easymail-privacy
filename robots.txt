@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://easymail-app.com/sitemap.xml
