@@ -221,6 +221,11 @@
   .phone.android img { border-radius: calc(var(--w) * .08); }
   .phone.android::after { top: calc(var(--w) * .06); width: calc(var(--w) * .05); height: calc(var(--w) * .05); border-radius: 50%; }
 
+  /* The comparison: the same email in a generic classic client and in Easymail. */
+  .versus { display: flex; justify-content: center; align-items: flex-start; gap: 56px; }
+  .versus .phone { --w: 272px; }
+  .versus figure.ours figcaption { color: var(--accent); }
+
   /* --- video ---------------------------------------------------------------------- */
 
   .video {
@@ -336,6 +341,8 @@
     .duo { gap: 14px; }
     .duo .phone { --w: min(42vw, 200px); }
     .duo figure:nth-child(2) { margin-top: 40px; }
+    .versus { gap: 14px; }
+    .versus .phone { --w: min(43vw, 220px); }
     .feature .phone { --w: min(62vw, 236px); }
     .card dl { grid-template-columns: 1fr; gap: 2px; }
     .card dd { margin-bottom: 10px; }
@@ -389,6 +396,22 @@
       </figure>
     </div>
   </div>
+
+  <section>
+    <h2 class="section-h">The same email, two ways to read it</h2>
+    <p class="section-lead">On the left, a conversation as a classic mail app shows it: every reply carries the whole history and a signature. On the right, the same messages in Easymail.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Classic mail app" loading="lazy" decoding="async"></div>
+        <figcaption>Classic mail app</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">The app on the left is a generic example made for this comparison, not the app of any real provider.</p>
+  </section>
 
   <section id="video-en">
     <h2 class="section-h">See it in action</h2>
@@ -487,6 +510,22 @@
     </div>
   </div>
 
+  <section>
+    <h2 class="section-h">La stessa mail, due modi di leggerla</h2>
+    <p class="section-lead">A sinistra una conversazione come la mostra una classica app di posta: ogni risposta si porta dietro tutta la cronologia e una firma. A destra gli stessi messaggi in Easymail.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="App di posta classica" loading="lazy" decoding="async"></div>
+        <figcaption>App di posta classica</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">L'app a sinistra è un esempio generico creato per questo confronto, non l'app di un provider reale.</p>
+  </section>
+
   <section id="video-it">
     <h2 class="section-h">Guardala in azione</h2>
     <p class="section-lead">Un breve giro dell'app, dalla posta in arrivo a una risposta.</p>
@@ -583,6 +622,22 @@
       </figure>
     </div>
   </div>
+
+  <section>
+    <h2 class="section-h">Le même e-mail, deux façons de le lire</h2>
+    <p class="section-lead">À gauche, une conversation telle que l'affiche une messagerie classique : chaque réponse traîne tout l'historique et une signature. À droite, les mêmes messages dans Easymail.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Messagerie classique" loading="lazy" decoding="async"></div>
+        <figcaption>Messagerie classique</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">L'application de gauche est un exemple générique créé pour cette comparaison, et non l'application d'un vrai fournisseur.</p>
+  </section>
 
   <section id="video-fr">
     <h2 class="section-h">La voir en action</h2>
@@ -681,6 +736,22 @@
     </div>
   </div>
 
+  <section>
+    <h2 class="section-h">Dieselbe E-Mail, zwei Arten, sie zu lesen</h2>
+    <p class="section-lead">Links ein Verlauf, wie ihn eine klassische Mail-App zeigt: Jede Antwort schleppt den ganzen Verlauf und eine Signatur mit. Rechts dieselben Nachrichten in Easymail.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Klassische Mail-App" loading="lazy" decoding="async"></div>
+        <figcaption>Klassische Mail-App</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">Die App links ist ein allgemeines Beispiel, das für diesen Vergleich erstellt wurde, nicht die App eines echten Anbieters.</p>
+  </section>
+
   <section id="video-de">
     <h2 class="section-h">So sieht es aus</h2>
     <p class="section-lead">Ein kurzer Rundgang durch die App, vom Posteingang bis zur Antwort.</p>
@@ -777,6 +848,22 @@
       </figure>
     </div>
   </div>
+
+  <section>
+    <h2 class="section-h">El mismo correo, dos formas de leerlo</h2>
+    <p class="section-lead">A la izquierda, una conversación tal como la muestra una app de correo clásica: cada respuesta arrastra todo el historial y una firma. A la derecha, los mismos mensajes en Easymail.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="App de correo clásica" loading="lazy" decoding="async"></div>
+        <figcaption>App de correo clásica</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">La app de la izquierda es un ejemplo genérico creado para esta comparación, no la app de un proveedor real.</p>
+  </section>
 
   <section id="video-es">
     <h2 class="section-h">Mírala en acción</h2>
@@ -875,6 +962,22 @@
     </div>
   </div>
 
+  <section>
+    <h2 class="section-h">同一封邮件，两种读法</h2>
+    <p class="section-lead">左边是传统邮件应用显示的对话：每条回复都带着完整的历史记录和签名。右边是 Easymail 中的同样这些消息。</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="传统邮件应用" loading="lazy" decoding="async"></div>
+        <figcaption>传统邮件应用</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">左边的应用是为这次对比制作的通用示例，并非任何真实邮件服务商的应用。</p>
+  </section>
+
   <section id="video-zh">
     <h2 class="section-h">看看它的样子</h2>
     <p class="section-lead">从收件箱到回复，简短浏览一遍应用。</p>
@@ -972,6 +1075,22 @@
     </div>
   </div>
 
+  <section>
+    <h2 class="section-h">同じメール、二通りの読み方</h2>
+    <p class="section-lead">左は従来のメールアプリでの表示です。返信のたびに、それまでの履歴と署名がすべて付いてきます。右は同じメッセージを Easymail で表示したものです。</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="従来のメールアプリ" loading="lazy" decoding="async"></div>
+        <figcaption>従来のメールアプリ</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">左のアプリはこの比較のために作成した汎用の例であり、実在するメールサービスのアプリではありません。</p>
+  </section>
+
   <section id="video-ja">
     <h2 class="section-h">実際の動きを見る</h2>
     <p class="section-lead">受信トレイから返信まで、アプリを短くご紹介します。</p>
@@ -1068,6 +1187,22 @@
       </figure>
     </div>
   </div>
+
+  <section>
+    <h2 class="section-h">같은 메일, 두 가지 읽는 방식</h2>
+    <p class="section-lead">왼쪽은 기존 메일 앱이 보여 주는 대화입니다. 답장마다 이전 기록 전체와 서명이 따라붙습니다. 오른쪽은 같은 메시지를 Easymail에서 본 모습입니다.</p>
+    <div class="versus">
+      <figure>
+        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="기존 메일 앱" loading="lazy" decoding="async"></div>
+        <figcaption>기존 메일 앱</figcaption>
+      </figure>
+      <figure class="ours">
+        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+    </div>
+    <p class="note">왼쪽 앱은 이 비교를 위해 만든 일반적인 예시이며, 실제 메일 서비스의 앱이 아닙니다.</p>
+  </section>
 
   <section id="video-ko">
     <h2 class="section-h">직접 보세요</h2>

@@ -215,6 +215,11 @@
   .phone.android img { border-radius: calc(var(--w) * .08); }
   .phone.android::after { top: calc(var(--w) * .06); width: calc(var(--w) * .05); height: calc(var(--w) * .05); border-radius: 50%; }
 
+  /* The comparison: the same email in a generic classic client and in Easymail. */
+  .versus { display: flex; justify-content: center; align-items: flex-start; gap: 56px; }
+  .versus .phone { --w: 272px; }
+  .versus figure.ours figcaption { color: var(--accent); }
+
   /* --- video ---------------------------------------------------------------------- */
 
   .video {
@@ -330,6 +335,8 @@
     .duo { gap: 14px; }
     .duo .phone { --w: min(42vw, 200px); }
     .duo figure:nth-child(2) { margin-top: 40px; }
+    .versus { gap: 14px; }
+    .versus .phone { --w: min(43vw, 220px); }
     .feature .phone { --w: min(62vw, 236px); }
     .card dl { grid-template-columns: 1fr; gap: 2px; }
     .card dd { margin-bottom: 10px; }
