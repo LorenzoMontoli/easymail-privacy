@@ -225,6 +225,25 @@
   .versus { display: flex; justify-content: center; align-items: flex-start; gap: 56px; }
   .versus .phone { --w: 272px; }
   .versus figure.ours figcaption { color: var(--accent); }
+  /* Three pairs behind three tabs. The tabs exist only once the script has run: without
+     it the pairs stay on the page one under the other. */
+  .versus-tabs { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+  [data-versus][data-show] .versus-tabs { display: flex; }
+  .versus-tabs button {
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--ink-muted); background: transparent;
+    border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 18px;
+  }
+  .versus-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+  .pair + .pair { margin-top: 56px; }
+  [data-versus][data-show] .pair { display: none; margin-top: 0; }
+  [data-versus][data-show="0"] .pair[data-pair="0"],
+  [data-versus][data-show="1"] .pair[data-pair="1"],
+  [data-versus][data-show="2"] .pair[data-pair="2"] { display: block; }
+  .pair-h {
+    text-align: center; margin: 0 0 24px;
+    font-size: clamp(1.15rem, 1rem + .6vw, 1.45rem); font-weight: 650; letter-spacing: -0.01em;
+  }
 
   /* --- video ---------------------------------------------------------------------- */
 
@@ -399,16 +418,48 @@
 
   <section>
     <h2 class="section-h">The same email, two ways to read it</h2>
-    <p class="section-lead">On the left, a conversation as a classic mail app shows it: every reply carries the whole history and a signature. On the right, the same messages in Easymail.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Classic mail app" loading="lazy" decoding="async"></div>
+    <p class="section-lead">The same messages in a classic mail app, on the left, and in Easymail, on the right. In real email every reply carries the whole history and a signature: Easymail folds them away.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">Conversation</button><button type="button" role="tab" aria-selected="false" data-tab="1">Reply</button><button type="button" role="tab" aria-selected="false" data-tab="2">Photos</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">Read the reply, not the history.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="Classic mail app, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Classic mail app</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">Reply without the paperwork.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="Classic mail app, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Classic mail app</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">The photo, right in the message.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="Classic mail app, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Classic mail app</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">The app on the left is a generic example made for this comparison, not the app of any real provider.</p>
   </section>
@@ -512,16 +563,48 @@
 
   <section>
     <h2 class="section-h">La stessa mail, due modi di leggerla</h2>
-    <p class="section-lead">A sinistra una conversazione come la mostra una classica app di posta: ogni risposta si porta dietro tutta la cronologia e una firma. A destra gli stessi messaggi in Easymail.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="App di posta classica" loading="lazy" decoding="async"></div>
+    <p class="section-lead">Gli stessi messaggi in una classica app di posta, a sinistra, e in Easymail, a destra. Nella posta vera ogni risposta si porta dietro tutta la cronologia e una firma: Easymail le ripiega.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">Conversazione</button><button type="button" role="tab" aria-selected="false" data-tab="1">Risposta</button><button type="button" role="tab" aria-selected="false" data-tab="2">Foto</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">Leggi la risposta, non la cronologia.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="App di posta classica, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>App di posta classica</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">Rispondi senza scartoffie.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="App di posta classica, Android" loading="lazy" decoding="async"></div>
+        <figcaption>App di posta classica</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">La foto, dentro il messaggio.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="App di posta classica, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>App di posta classica</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">L'app a sinistra è un esempio generico creato per questo confronto, non l'app di un provider reale.</p>
   </section>
@@ -625,16 +708,48 @@
 
   <section>
     <h2 class="section-h">Le même e-mail, deux façons de le lire</h2>
-    <p class="section-lead">À gauche, une conversation telle que l'affiche une messagerie classique : chaque réponse traîne tout l'historique et une signature. À droite, les mêmes messages dans Easymail.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Messagerie classique" loading="lazy" decoding="async"></div>
+    <p class="section-lead">Les mêmes messages dans une messagerie classique, à gauche, et dans Easymail, à droite. Dans un vrai e-mail, chaque réponse traîne tout l'historique et une signature : Easymail les replie.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">Conversation</button><button type="button" role="tab" aria-selected="false" data-tab="1">Réponse</button><button type="button" role="tab" aria-selected="false" data-tab="2">Photos</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">Lisez la réponse, pas l'historique.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="Messagerie classique, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Messagerie classique</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">Répondez sans paperasse.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="Messagerie classique, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Messagerie classique</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">La photo, directement dans le message.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="Messagerie classique, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Messagerie classique</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">L'application de gauche est un exemple générique créé pour cette comparaison, et non l'application d'un vrai fournisseur.</p>
   </section>
@@ -738,16 +853,48 @@
 
   <section>
     <h2 class="section-h">Dieselbe E-Mail, zwei Arten, sie zu lesen</h2>
-    <p class="section-lead">Links ein Verlauf, wie ihn eine klassische Mail-App zeigt: Jede Antwort schleppt den ganzen Verlauf und eine Signatur mit. Rechts dieselben Nachrichten in Easymail.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="Klassische Mail-App" loading="lazy" decoding="async"></div>
+    <p class="section-lead">Dieselben Nachrichten in einer klassischen Mail-App, links, und in Easymail, rechts. Bei echten E-Mails schleppt jede Antwort den ganzen Verlauf und eine Signatur mit: Easymail klappt sie ein.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">Unterhaltung</button><button type="button" role="tab" aria-selected="false" data-tab="1">Antwort</button><button type="button" role="tab" aria-selected="false" data-tab="2">Fotos</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">Lies die Antwort, nicht den Verlauf.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="Klassische Mail-App, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Klassische Mail-App</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">Antworten ohne Formular.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="Klassische Mail-App, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Klassische Mail-App</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">Das Foto, direkt in der Nachricht.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="Klassische Mail-App, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Klassische Mail-App</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">Die App links ist ein allgemeines Beispiel, das für diesen Vergleich erstellt wurde, nicht die App eines echten Anbieters.</p>
   </section>
@@ -851,16 +998,48 @@
 
   <section>
     <h2 class="section-h">El mismo correo, dos formas de leerlo</h2>
-    <p class="section-lead">A la izquierda, una conversación tal como la muestra una app de correo clásica: cada respuesta arrastra todo el historial y una firma. A la derecha, los mismos mensajes en Easymail.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="App de correo clásica" loading="lazy" decoding="async"></div>
+    <p class="section-lead">Los mismos mensajes en una app de correo clásica, a la izquierda, y en Easymail, a la derecha. En el correo real cada respuesta arrastra todo el historial y una firma: Easymail los pliega.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">Conversación</button><button type="button" role="tab" aria-selected="false" data-tab="1">Respuesta</button><button type="button" role="tab" aria-selected="false" data-tab="2">Fotos</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">Lee la respuesta, no el historial.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="App de correo clásica, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>App de correo clásica</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">Responde sin papeleo.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="App de correo clásica, Android" loading="lazy" decoding="async"></div>
+        <figcaption>App de correo clásica</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">La foto, dentro del mensaje.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="App de correo clásica, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>App de correo clásica</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">La app de la izquierda es un ejemplo genérico creado para esta comparación, no la app de un proveedor real.</p>
   </section>
@@ -964,16 +1143,48 @@
 
   <section>
     <h2 class="section-h">同一封邮件，两种读法</h2>
-    <p class="section-lead">左边是传统邮件应用显示的对话：每条回复都带着完整的历史记录和签名。右边是 Easymail 中的同样这些消息。</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="传统邮件应用" loading="lazy" decoding="async"></div>
+    <p class="section-lead">左边是传统邮件应用中的消息，右边是 Easymail 中的同样消息。真实邮件里，每条回复都带着完整的历史记录和签名：Easymail 会把它们折叠起来。</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">对话</button><button type="button" role="tab" aria-selected="false" data-tab="1">回复</button><button type="button" role="tab" aria-selected="false" data-tab="2">照片</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">看回复，而不是历史记录。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="传统邮件应用, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>传统邮件应用</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">回复，无需填表。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="传统邮件应用, Android" loading="lazy" decoding="async"></div>
+        <figcaption>传统邮件应用</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">照片，就在消息里。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="传统邮件应用, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>传统邮件应用</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">左边的应用是为这次对比制作的通用示例，并非任何真实邮件服务商的应用。</p>
   </section>
@@ -1077,16 +1288,48 @@
 
   <section>
     <h2 class="section-h">同じメール、二通りの読み方</h2>
-    <p class="section-lead">左は従来のメールアプリでの表示です。返信のたびに、それまでの履歴と署名がすべて付いてきます。右は同じメッセージを Easymail で表示したものです。</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="従来のメールアプリ" loading="lazy" decoding="async"></div>
+    <p class="section-lead">左は従来のメールアプリ、右は Easymail で表示した同じメッセージです。実際のメールでは返信のたびに履歴と署名がすべて付いてきますが、Easymail はそれを折りたたみます。</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">会話</button><button type="button" role="tab" aria-selected="false" data-tab="1">返信</button><button type="button" role="tab" aria-selected="false" data-tab="2">写真</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">読むのは返信だけ、履歴ではなく。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="従来のメールアプリ, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>従来のメールアプリ</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">面倒な入力なしで返信。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="従来のメールアプリ, Android" loading="lazy" decoding="async"></div>
+        <figcaption>従来のメールアプリ</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">写真はメッセージの中に。</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="従来のメールアプリ, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>従来のメールアプリ</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">左のアプリはこの比較のために作成した汎用の例であり、実在するメールサービスのアプリではありません。</p>
   </section>
@@ -1190,16 +1433,48 @@
 
   <section>
     <h2 class="section-h">같은 메일, 두 가지 읽는 방식</h2>
-    <p class="section-lead">왼쪽은 기존 메일 앱이 보여 주는 대화입니다. 답장마다 이전 기록 전체와 서명이 따라붙습니다. 오른쪽은 같은 메시지를 Easymail에서 본 모습입니다.</p>
-    <div class="versus">
-      <figure>
-        <div class="phone android"><img src="img/classic-chat.webp" width="600" height="1298" alt="기존 메일 앱" loading="lazy" decoding="async"></div>
+    <p class="section-lead">왼쪽은 기존 메일 앱, 오른쪽은 Easymail에서 본 같은 메시지입니다. 실제 메일에서는 답장마다 이전 기록 전체와 서명이 따라붙지만, Easymail은 이를 접어 둡니다.</p>
+    <div data-versus>
+      <div class="versus-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="0">대화</button><button type="button" role="tab" aria-selected="false" data-tab="1">답장</button><button type="button" role="tab" aria-selected="false" data-tab="2">사진</button></div>
+      <div class="pair" data-pair="0">
+        <p class="pair-h">기록이 아니라 답장을 읽으세요.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-chat-classic.webp" width="600" height="1304" alt="기존 메일 앱, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>기존 메일 앱</figcaption>
       </figure>
-      <figure class="ours">
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail" loading="lazy" decoding="async"></div>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-chat-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>Easymail</figcaption>
       </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="1">
+        <p class="pair-h">양식 없이 바로 답장.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone android"><img src="img/compare-android-reply-classic.webp" width="600" height="1298" alt="기존 메일 앱, Android" loading="lazy" decoding="async"></div>
+        <figcaption>기존 메일 앱</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone android"><img src="img/compare-android-reply-easymail.webp" width="600" height="1298" alt="Easymail, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
+      <div class="pair" data-pair="2">
+        <p class="pair-h">사진은 메시지 안에.</p>
+        <div class="versus">
+          <figure>
+        <div class="phone ios"><img src="img/compare-iphone-photo-classic.webp" width="600" height="1304" alt="기존 메일 앱, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>기존 메일 앱</figcaption>
+      </figure>
+          <figure class="ours">
+        <div class="phone ios"><img src="img/compare-iphone-photo-easymail.webp" width="600" height="1304" alt="Easymail, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>Easymail</figcaption>
+      </figure>
+        </div>
+      </div>
     </div>
     <p class="note">왼쪽 앱은 이 비교를 위해 만든 일반적인 예시이며, 실제 메일 서비스의 앱이 아닙니다.</p>
   </section>
@@ -1811,6 +2086,21 @@
       holder.appendChild(frame);
       this.replaceWith(holder);
     });
+  }
+
+  /* The comparison: one pair at a time, chosen by its tab. */
+  var sets = document.querySelectorAll("[data-versus]");
+  for (var w = 0; w < sets.length; w++) {
+    (function (set) {
+      var tabs = set.querySelectorAll("[data-tab]");
+      set.setAttribute("data-show", "0");
+      for (var x = 0; x < tabs.length; x++) {
+        tabs[x].addEventListener("click", function () {
+          set.setAttribute("data-show", this.getAttribute("data-tab"));
+          for (var y = 0; y < tabs.length; y++) tabs[y].setAttribute("aria-selected", tabs[y] === this ? "true" : "false");
+        });
+      }
+    })(sets[w]);
   }
 })();
 </script>

@@ -219,6 +219,25 @@
   .versus { display: flex; justify-content: center; align-items: flex-start; gap: 56px; }
   .versus .phone { --w: 272px; }
   .versus figure.ours figcaption { color: var(--accent); }
+  /* Three pairs behind three tabs. The tabs exist only once the script has run: without
+     it the pairs stay on the page one under the other. */
+  .versus-tabs { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; }
+  [data-versus][data-show] .versus-tabs { display: flex; }
+  .versus-tabs button {
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--ink-muted); background: transparent;
+    border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 18px;
+  }
+  .versus-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+  .pair + .pair { margin-top: 56px; }
+  [data-versus][data-show] .pair { display: none; margin-top: 0; }
+  [data-versus][data-show="0"] .pair[data-pair="0"],
+  [data-versus][data-show="1"] .pair[data-pair="1"],
+  [data-versus][data-show="2"] .pair[data-pair="2"] { display: block; }
+  .pair-h {
+    text-align: center; margin: 0 0 24px;
+    font-size: clamp(1.15rem, 1rem + .6vw, 1.45rem); font-weight: 650; letter-spacing: -0.01em;
+  }
 
   /* --- video ---------------------------------------------------------------------- */
 
@@ -702,6 +721,21 @@
       holder.appendChild(frame);
       this.replaceWith(holder);
     });
+  }
+
+  /* The comparison: one pair at a time, chosen by its tab. */
+  var sets = document.querySelectorAll("[data-versus]");
+  for (var w = 0; w < sets.length; w++) {
+    (function (set) {
+      var tabs = set.querySelectorAll("[data-tab]");
+      set.setAttribute("data-show", "0");
+      for (var x = 0; x < tabs.length; x++) {
+        tabs[x].addEventListener("click", function () {
+          set.setAttribute("data-show", this.getAttribute("data-tab"));
+          for (var y = 0; y < tabs.length; y++) tabs[y].setAttribute("aria-selected", tabs[y] === this ? "true" : "false");
+        });
+      }
+    })(sets[w]);
   }
 })();
 </script>
