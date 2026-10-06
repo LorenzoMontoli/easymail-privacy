@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Easymail · Your inbox, read like a chat</title>
-<meta name="description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Privacy notice and terms of use included.">
+<title>Easymail · Your email, as a chat</title>
+<meta name="description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Coming soon to Google Play and the App Store. Privacy notice and terms of use included.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://easymail-app.com/">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/icon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Easymail">
-<meta property="og:description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Privacy notice and terms of use included.">
+<meta property="og:description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Coming soon to Google Play and the App Store. Privacy notice and terms of use included.">
 <meta property="og:url" content="https://easymail-app.com/">
 <meta property="og:image" content="https://easymail-app.com/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,6 +26,9 @@
     --accent:      #1a73e8;
     --accent-ink:  #ffffff;
     --accent-soft: #e8f0fe;
+    --go:          #137333;
+    --go-soft:     #e6f4ea;
+    --go-line:     #c6e6cf;
     --mark:        #c5221f;
     --bezel:       #1b1c1f;
     --shadow:      0 1px 2px rgba(31, 31, 33, .08), 0 4px 14px rgba(31, 31, 33, .05);
@@ -42,6 +45,9 @@
       --accent:      #8ab4f8;
       --accent-ink:  #0b1a33;
       --accent-soft: #1e2a3d;
+      --go:          #81c995;
+      --go-soft:     #15291c;
+      --go-line:     #25442f;
       --mark:        #f28b82;
       --bezel:       #000000;
       --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
@@ -58,6 +64,9 @@
     --accent:      #8ab4f8;
     --accent-ink:  #0b1a33;
     --accent-soft: #1e2a3d;
+    --go:          #81c995;
+    --go-soft:     #15291c;
+    --go-line:     #25442f;
     --mark:        #f28b82;
     --bezel:       #000000;
     --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
@@ -179,11 +188,24 @@
     margin: 0 0 20px;
   }
   .lead { font-size: 1.14rem; color: var(--ink-muted); margin: 0 0 22px; max-width: 34rem; }
+  /* Coming soon, drawn as a status rather than as a sentence: it is the one thing on the page
+     that changes on the day the stores say yes. */
   .soon {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    margin: 0 0 26px; font-size: 15px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: 0 0 26px; padding: 8px 16px 8px 14px; border-radius: 999px;
+    font-size: 15.5px; font-weight: 650; line-height: 1.35;
+    color: var(--go); background: var(--go-soft); border: 1px solid var(--go-line);
   }
-  .soon .dot { width: 8px; height: 8px; border-radius: 50%; background: #1e8e3e; flex: none; }
+  .soon .dot {
+    width: 9px; height: 9px; border-radius: 50%; background: currentColor; flex: none;
+    animation: beat 2.4s ease-out infinite;
+  }
+  @keyframes beat {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
+    70%  { box-shadow: 0 0 0 9px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { .soon .dot { animation: none; } }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
@@ -194,9 +216,18 @@
   .btn-primary { background: var(--accent); color: var(--accent-ink); }
   .btn-quiet { background: transparent; color: var(--ink); border-color: var(--hairline); }
 
-  /* Phones: CSS bezels around the store screenshots, one of each platform. */
-  .duo { display: flex; justify-content: center; align-items: flex-start; gap: 24px; }
-  .duo figure:nth-child(2) { margin-top: 56px; }
+  /* The opening picture, as the promo opens: the same conversation in a classic mail app and
+     in Easymail, with an arrow between them for the change. The arrow sits a little above the
+     middle of the figures because their captions hang below the phones. */
+  .before-after .row { display: flex; justify-content: center; align-items: center; }
+  .before-after .phone { --w: 224px; }
+  .before-after figure.ours figcaption { color: var(--accent); }
+  .before-after .turn {
+    flex: none; display: grid; place-items: center; position: relative; z-index: 1;
+    width: 52px; height: 52px; margin: 0 -12px 34px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-lg);
+  }
+  .before-after .note { text-align: center; max-width: 30rem; margin: 18px auto 0; font-size: 13px; }
   figure { margin: 0; text-align: center; }
   figcaption {
     margin-top: 14px; font-size: 13px; font-weight: 650; letter-spacing: .06em;
@@ -291,6 +322,16 @@
   .trust h3 { font-size: 1.05rem; margin: 0 0 6px; }
   .trust p { margin: 0; color: var(--ink-muted); font-size: 15.5px; }
 
+  /* The end of the page, the way the promo ends: the icon, the line, where it is coming. */
+  .closing-card {
+    text-align: center; background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 28px; padding: 56px 24px;
+  }
+  .closing-card img { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
+  .closing-card .section-h { margin: 18px 0 8px; }
+  .closing-lead { color: var(--ink-muted); margin: 0 0 20px; font-size: 1.1rem; }
+  .closing-card .soon { margin: 0; }
+
   /* The Gmail permission, justified for the OAuth review: the text of the old home page. */
   .scope {
     border-left: 3px solid var(--accent); background: var(--accent-soft);
@@ -357,9 +398,9 @@
   }
   @media (max-width: 34rem) {
     body { font-size: 16px; }
-    .duo { gap: 14px; }
-    .duo .phone { --w: min(42vw, 200px); }
-    .duo figure:nth-child(2) { margin-top: 40px; }
+    .before-after .phone { --w: min(41vw, 200px); }
+    .before-after .turn { width: 40px; height: 40px; margin: 0 -10px 30px; }
+    .before-after .turn svg { width: 20px; height: 20px; }
     .versus { gap: 14px; }
     .versus .phone { --w: min(43vw, 220px); }
     .feature .phone { --w: min(62vw, 236px); }
@@ -396,23 +437,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">For Android and iPhone</p>
-      <h1>Your inbox, read like a chat</h1>
-      <p class="lead">Easymail shows every thread as a conversation: one bubble per message, one colour per sender, replies written in the same flow. It works with Gmail, Outlook and any IMAP mailbox, and it is still your mailbox, just easier to read.</p>
+      <h1>Your email, as a chat</h1>
+      <p class="lead">Easymail turns your email into a chat: one bubble per message, quoted text and signatures folded away, replies written right where you read. You sign in with the email you already have, Gmail, Outlook, iCloud or any IMAP mailbox: no new address, no new account.</p>
       <p class="soon"><span class="dot"></span>Coming soon to Google Play and the App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-en">Watch the video</a>
         <a class="btn btn-quiet" href="#privacy">Privacy notice</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="Classic mail app, Android"></div>
+        <figcaption>Classic mail app</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">The app on the left is a generic example made for this comparison, not the app of any real provider.</p>
     </div>
   </div>
 
@@ -478,38 +523,45 @@
     <h2 class="section-h">What it does</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>Every thread becomes a conversation</h3><p>Messages line up as bubbles, coloured by sender, the way a group chat works. Quoted text and signatures fold away, so you read only what is new.</p></div>
+      <div class="copy"><h3>Gmail, Outlook and any IMAP mailbox</h3><p>Sign in with Google or Microsoft, or add any provider that offers IMAP. Keep several mailboxes and move between them in a tap.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="Every thread becomes a conversation, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook and any IMAP mailbox, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Photos and files where they belong</h3><p>Pictures appear inside the bubble, attachments open with a tap, and a calendar invitation shows as a card with the day, the time and the place.</p></div>
+      <div class="copy"><h3>Every thread, at a glance</h3><p>Your mailbox becomes a list of conversations: who wrote, the last thing they said and how many messages there are, with what is new in bold.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="Every thread, at a glance, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>Photos and files where they belong</h3><p>Pictures appear inside the bubble and attachments open with a tap. A calendar invitation becomes a card with “Add to calendar”, and an email made of lines to fill in, like a sign-up or a booking, has a “Fill in and reply” button.</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="Photos and files where they belong, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Newsletters at full size</h3><p>Mail designed like a web page fills the width of the screen, and one tap opens it full screen, exactly as its sender built it.</p></div>
+      <div class="copy"><h3>Newsletters at full size</h3><p>Mail designed like a web page keeps its headings and pictures right in the chat, and one tap opens it full screen, exactly as its sender built it.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="Newsletters at full size, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="Newsletters at full size, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>Find anything</h3><p>Search your mail and filter it by unread, favourites, attachments or date. Select several conversations at once to clear them away.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="Find anything, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="Find anything, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook and any IMAP mailbox</h3><p>Sign in with Google or Microsoft, or add any provider that offers IMAP. Keep several mailboxes and move between them in a tap.</p></div>
+      <div class="copy"><h3>Text as big as you need</h3><p>Five text sizes, from extra small to extra large, for the whole app. You choose one in Settings.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook and any IMAP mailbox, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="Text as big as you need, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -533,6 +585,15 @@
       <p>Needed to display threads, messages and attachments, to send the replies you write, and to mark a conversation as read when you open it. A read-only permission can do neither of the last two, and both are central to the app. The same permission also authorises reading your send-as aliases, which is how the app tells your own messages from everyone else's and places them on the correct side of the conversation.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">Your inbox, as a chat.</h2>
+      <p class="closing-lead">Free, for Android and iPhone.</p>
+      <p class="soon"><span class="dot"></span>Coming soon to Google Play and the App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -541,23 +602,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">Per Android e iPhone</p>
-      <h1>La tua posta, letta come una chat</h1>
-      <p class="lead">Easymail mostra ogni conversazione come una chat: una bolla per messaggio, un colore per mittente, le risposte scritte nello stesso filo. Funziona con Gmail, Outlook e qualsiasi casella IMAP, ed è sempre la tua casella, solo più facile da leggere.</p>
+      <h1>La tua posta, come una chat</h1>
+      <p class="lead">Easymail trasforma la tua posta in una chat: una bolla per messaggio, citazioni e firme ripiegate, risposte scritte proprio dove leggi. Entri con la mail che hai già, Gmail, Outlook, iCloud, Libero o qualsiasi casella IMAP: nessun indirizzo nuovo, nessun account nuovo.</p>
       <p class="soon"><span class="dot"></span>In arrivo su Google Play e sull'App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-it">Guarda il video</a>
         <a class="btn btn-quiet" href="#privacy">Informativa privacy</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="App di posta classica, Android"></div>
+        <figcaption>App di posta classica</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">L'app a sinistra è un esempio generico creato per questo confronto, non l'app di un provider reale.</p>
     </div>
   </div>
 
@@ -623,38 +688,45 @@
     <h2 class="section-h">Cosa fa</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>Ogni thread diventa una conversazione</h3><p>I messaggi si mettono in fila come bolle, colorate per mittente, come in una chat di gruppo. Citazioni e firme si ripiegano, così leggi solo quello che è nuovo.</p></div>
+      <div class="copy"><h3>Gmail, Outlook e qualsiasi casella IMAP</h3><p>Accedi con Google o Microsoft, oppure aggiungi qualsiasi provider che offra IMAP. Tieni più caselle e passa dall'una all'altra con un tocco.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="Ogni thread diventa una conversazione, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook e qualsiasi casella IMAP, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Foto e file al loro posto</h3><p>Le immagini compaiono dentro la bolla, gli allegati si aprono con un tocco, e un invito del calendario si vede come una scheda con giorno, orario e luogo.</p></div>
+      <div class="copy"><h3>Ogni conversazione, a colpo d'occhio</h3><p>La casella diventa un elenco di conversazioni: chi ha scritto, l'ultima cosa che ha detto e quanti messaggi ci sono, con le novità in grassetto.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="Ogni conversazione, a colpo d&#x27;occhio, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>Foto e file al loro posto</h3><p>Le immagini compaiono dentro la bolla e gli allegati si aprono con un tocco. Un invito del calendario diventa una scheda con «Aggiungi al calendario», e una mail fatta di righe da compilare, come un'iscrizione o una prenotazione, ha il tasto «Compila e rispondi».</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="Foto e file al loro posto, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Newsletter a grandezza piena</h3><p>Le mail impaginate come una pagina web occupano tutta la larghezza dello schermo, e con un tocco le apri a schermo intero, esattamente come le ha costruite chi le manda.</p></div>
+      <div class="copy"><h3>Newsletter a grandezza piena</h3><p>Le mail impaginate come una pagina web tengono titoli e immagini dentro la chat, e con un tocco le apri a schermo intero, esattamente come le ha costruite chi le manda.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="Newsletter a grandezza piena, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="Newsletter a grandezza piena, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>Trovi tutto</h3><p>Cerca nella posta e filtrala per non lette, preferite, con allegati o per data. Seleziona più conversazioni insieme per toglierle di mezzo.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="Trovi tutto, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="Trovi tutto, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook e qualsiasi casella IMAP</h3><p>Accedi con Google o Microsoft, oppure aggiungi qualsiasi provider che offra IMAP. Tieni più caselle e passa dall'una all'altra con un tocco.</p></div>
+      <div class="copy"><h3>Testo grande quanto ti serve</h3><p>Cinque dimensioni del testo, da molto piccolo a molto grande, per tutta l'app. La scegli nelle Impostazioni.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook e qualsiasi casella IMAP, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="Testo grande quanto ti serve, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -678,6 +750,15 @@
       <p>Serve per mostrare conversazioni, messaggi e allegati, per inviare le risposte che scrivi e per segnare una conversazione come letta quando la apri. Un permesso di sola lettura non consente le ultime due, che sono centrali nell'app. Lo stesso permesso autorizza anche la lettura degli alias di invio: è così che l'app distingue i tuoi messaggi da quelli degli altri e li dispone dal lato giusto della conversazione.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">La tua posta, come una chat.</h2>
+      <p class="closing-lead">Gratis, per Android e iPhone.</p>
+      <p class="soon"><span class="dot"></span>In arrivo su Google Play e sull'App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -686,23 +767,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">Pour Android et iPhone</p>
-      <h1>Vos e-mails, lus comme une conversation</h1>
-      <p class="lead">Easymail affiche chaque fil comme une conversation : une bulle par message, une couleur par expéditeur, les réponses écrites dans le même fil. Elle fonctionne avec Gmail, Outlook et toute boîte IMAP, et c'est toujours votre boîte, simplement plus facile à lire.</p>
+      <h1>Vos e-mails, comme une discussion</h1>
+      <p class="lead">Easymail transforme vos e-mails en discussion : une bulle par message, les citations et les signatures repliées, les réponses écrites là où vous lisez. Vous vous connectez avec l'adresse que vous avez déjà, Gmail, Outlook, iCloud ou toute boîte IMAP : pas de nouvelle adresse, pas de nouveau compte.</p>
       <p class="soon"><span class="dot"></span>Bientôt sur Google Play et l'App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-fr">Voir la vidéo</a>
         <a class="btn btn-quiet" href="#privacy">Avis de confidentialité</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="Messagerie classique, Android"></div>
+        <figcaption>Messagerie classique</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">L'application de gauche est un exemple générique créé pour cette comparaison, et non l'application d'un vrai fournisseur.</p>
     </div>
   </div>
 
@@ -768,38 +853,45 @@
     <h2 class="section-h">Ce qu'elle fait</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>Chaque fil devient une conversation</h3><p>Les messages s'alignent en bulles, colorées par expéditeur, comme dans une discussion de groupe. Les citations et les signatures se replient, pour ne lire que ce qui est nouveau.</p></div>
+      <div class="copy"><h3>Gmail, Outlook et toute boîte IMAP</h3><p>Connectez-vous avec Google ou Microsoft, ou ajoutez tout fournisseur proposant IMAP. Gardez plusieurs boîtes et passez de l'une à l'autre d'un geste.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="Chaque fil devient une conversation, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook et toute boîte IMAP, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Photos et fichiers à leur place</h3><p>Les images apparaissent dans la bulle, les pièces jointes s'ouvrent d'un geste, et une invitation d'agenda s'affiche comme une fiche avec le jour, l'heure et le lieu.</p></div>
+      <div class="copy"><h3>Chaque fil, d'un coup d'œil</h3><p>Votre boîte devient une liste de conversations : qui a écrit, les derniers mots échangés et le nombre de messages, avec ce qui est nouveau en gras.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="Chaque fil, d&#x27;un coup d&#x27;œil, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>Photos et fichiers à leur place</h3><p>Les images apparaissent dans la bulle et les pièces jointes s'ouvrent d'un geste. Une invitation d'agenda devient une fiche avec « Ajouter au calendrier », et un e-mail à remplir, comme une inscription ou une réservation, a un bouton « Remplir et répondre ».</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="Photos et fichiers à leur place, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Les newsletters en grand</h3><p>Les e-mails mis en page comme un site occupent toute la largeur de l'écran, et d'un geste ils s'ouvrent en plein écran, tels que l'expéditeur les a conçus.</p></div>
+      <div class="copy"><h3>Les newsletters en grand</h3><p>Les e-mails mis en page comme un site gardent leurs titres et leurs images dans la discussion, et d'un geste ils s'ouvrent en plein écran, tels que l'expéditeur les a conçus.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="Les newsletters en grand, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="Les newsletters en grand, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>Tout retrouver</h3><p>Cherchez dans vos e-mails et filtrez par non lus, favoris, pièces jointes ou date. Sélectionnez plusieurs conversations à la fois pour les supprimer.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="Tout retrouver, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="Tout retrouver, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook et toute boîte IMAP</h3><p>Connectez-vous avec Google ou Microsoft, ou ajoutez tout fournisseur proposant IMAP. Gardez plusieurs boîtes et passez de l'une à l'autre d'un geste.</p></div>
+      <div class="copy"><h3>Un texte aussi grand qu'il le faut</h3><p>Cinq tailles de texte, de très petit à très grand, pour toute l'application. Vous en choisissez une dans les Paramètres.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook et toute boîte IMAP, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="Un texte aussi grand qu&#x27;il le faut, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -823,6 +915,15 @@
       <p>Nécessaire pour afficher les fils, les messages et les pièces jointes, pour envoyer les réponses que vous écrivez et pour marquer une conversation comme lue à son ouverture. Une autorisation en lecture seule ne permet ni l'un ni l'autre, et les deux sont au cœur de l'application. La même autorisation permet aussi de lire vos alias d'envoi : c'est ainsi que l'application distingue vos messages de ceux des autres et les place du bon côté de la conversation.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">Votre boîte mail comme une discussion.</h2>
+      <p class="closing-lead">Gratuite, pour Android et iPhone.</p>
+      <p class="soon"><span class="dot"></span>Bientôt sur Google Play et l'App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -831,23 +932,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">Für Android und iPhone</p>
-      <h1>Deine E‑Mails, gelesen wie ein Chat</h1>
-      <p class="lead">Easymail zeigt jeden Verlauf als Unterhaltung: eine Blase pro Nachricht, eine Farbe pro Absender, Antworten im selben Fluss. Die App funktioniert mit Gmail, Outlook und jedem IMAP-Postfach, und es bleibt dein Postfach, nur leichter zu lesen.</p>
+      <h1>Deine E‑Mails als Chat</h1>
+      <p class="lead">Easymail macht aus deinen E-Mails einen Chat: eine Blase pro Nachricht, Zitate und Signaturen eingeklappt, Antworten genau dort, wo du liest. Du meldest dich mit der Adresse an, die du schon hast, ob Gmail, Outlook, iCloud oder ein beliebiges IMAP-Postfach: keine neue Adresse, kein neues Konto.</p>
       <p class="soon"><span class="dot"></span>Bald bei Google Play und im App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-de">Video ansehen</a>
         <a class="btn btn-quiet" href="#privacy">Datenschutzhinweis</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="Klassische Mail-App, Android"></div>
+        <figcaption>Klassische Mail-App</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">Die App links ist ein allgemeines Beispiel, das für diesen Vergleich erstellt wurde, nicht die App eines echten Anbieters.</p>
     </div>
   </div>
 
@@ -913,38 +1018,45 @@
     <h2 class="section-h">Was die App kann</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>Jeder Verlauf wird zur Unterhaltung</h3><p>Nachrichten reihen sich als Blasen auf, nach Absender eingefärbt, wie in einem Gruppenchat. Zitate und Signaturen werden eingeklappt, damit du nur liest, was neu ist.</p></div>
+      <div class="copy"><h3>Gmail, Outlook und jedes IMAP-Postfach</h3><p>Melde dich mit Google oder Microsoft an oder füge jeden Anbieter hinzu, der IMAP anbietet. Nutze mehrere Postfächer und wechsle mit einem Tippen.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="Jeder Verlauf wird zur Unterhaltung, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook und jedes IMAP-Postfach, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Fotos und Dateien am richtigen Platz</h3><p>Bilder erscheinen in der Blase, Anhänge öffnen sich mit einem Tippen, und eine Kalendereinladung erscheint als Karte mit Tag, Uhrzeit und Ort.</p></div>
+      <div class="copy"><h3>Alle Unterhaltungen auf einen Blick</h3><p>Dein Postfach wird zu einer Liste von Unterhaltungen: wer geschrieben hat, was zuletzt kam und wie viele Nachrichten es sind, Neues in Fettschrift.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="Alle Unterhaltungen auf einen Blick, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>Fotos und Dateien am richtigen Platz</h3><p>Bilder erscheinen in der Blase, Anhänge öffnen sich mit einem Tippen. Eine Kalendereinladung wird zur Karte mit „Zum Kalender hinzufügen“, und eine E-Mail zum Ausfüllen, etwa eine Anmeldung oder Buchung, hat die Schaltfläche „Ausfüllen und antworten“.</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="Fotos und Dateien am richtigen Platz, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Newsletter in voller Größe</h3><p>Wie eine Webseite gestaltete E-Mails füllen die ganze Bildschirmbreite, und mit einem Tippen öffnest du sie im Vollbild, genau so, wie der Absender sie gebaut hat.</p></div>
+      <div class="copy"><h3>Newsletter in voller Größe</h3><p>Wie eine Webseite gestaltete E-Mails behalten ihre Überschriften und Bilder direkt im Chat, und mit einem Tippen öffnest du sie im Vollbild, genau so, wie der Absender sie gebaut hat.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="Newsletter in voller Größe, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="Newsletter in voller Größe, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>Alles wiederfinden</h3><p>Durchsuche deine E-Mails und filtere nach ungelesen, Favoriten, Anhängen oder Datum. Wähle mehrere Unterhaltungen auf einmal aus, um sie wegzuräumen.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="Alles wiederfinden, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="Alles wiederfinden, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook und jedes IMAP-Postfach</h3><p>Melde dich mit Google oder Microsoft an oder füge jeden Anbieter hinzu, der IMAP anbietet. Nutze mehrere Postfächer und wechsle mit einem Tippen.</p></div>
+      <div class="copy"><h3>Text so groß, wie du ihn brauchst</h3><p>Fünf Textgrößen, von sehr klein bis sehr groß, für die ganze App. Du wählst sie in den Einstellungen.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook und jedes IMAP-Postfach, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="Text so groß, wie du ihn brauchst, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -968,6 +1080,15 @@
       <p>Nötig, um Threads, Nachrichten und Anhänge anzuzeigen, die von dir geschriebenen Antworten zu senden und eine Unterhaltung beim Öffnen als gelesen zu markieren. Eine Nur-Lese-Berechtigung erlaubt die beiden letzten Punkte nicht, und beide sind zentral für die App. Dieselbe Berechtigung erlaubt auch das Lesen deiner Absender-Aliase: so unterscheidet die App deine eigenen Nachrichten von denen der anderen und ordnet sie auf der richtigen Seite der Unterhaltung an.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">Dein Posteingang als Chat.</h2>
+      <p class="closing-lead">Kostenlos, für Android und iPhone.</p>
+      <p class="soon"><span class="dot"></span>Bald bei Google Play und im App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -976,23 +1097,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">Para Android y iPhone</p>
-      <h1>Tu correo, leído como un chat</h1>
-      <p class="lead">Easymail muestra cada hilo como una conversación: una burbuja por mensaje, un color por remitente, las respuestas escritas en el mismo hilo. Funciona con Gmail, Outlook y cualquier buzón IMAP, y sigue siendo tu buzón, solo que más fácil de leer.</p>
+      <h1>Tu correo, como un chat</h1>
+      <p class="lead">Easymail convierte tu correo en un chat: una burbuja por mensaje, las citas y las firmas plegadas, las respuestas escritas justo donde lees. Entras con el correo que ya tienes, Gmail, Outlook, iCloud o cualquier buzón IMAP: sin dirección nueva ni cuenta nueva.</p>
       <p class="soon"><span class="dot"></span>Muy pronto en Google Play y en el App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-es">Ver el vídeo</a>
         <a class="btn btn-quiet" href="#privacy">Aviso de privacidad</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="App de correo clásica, Android"></div>
+        <figcaption>App de correo clásica</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">La app de la izquierda es un ejemplo genérico creado para esta comparación, no la app de un proveedor real.</p>
     </div>
   </div>
 
@@ -1058,38 +1183,45 @@
     <h2 class="section-h">Qué hace</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>Cada hilo se convierte en una conversación</h3><p>Los mensajes se alinean como burbujas, coloreadas por remitente, como en un chat de grupo. Las citas y las firmas se pliegan, para que leas solo lo nuevo.</p></div>
+      <div class="copy"><h3>Gmail, Outlook y cualquier buzón IMAP</h3><p>Inicia sesión con Google o Microsoft, o añade cualquier proveedor que ofrezca IMAP. Ten varios buzones y pasa de uno a otro con un toque.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="Cada hilo se convierte en una conversación, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook y cualquier buzón IMAP, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Fotos y archivos en su sitio</h3><p>Las imágenes aparecen dentro de la burbuja, los adjuntos se abren con un toque y una invitación de calendario se ve como una tarjeta con el día, la hora y el lugar.</p></div>
+      <div class="copy"><h3>Cada hilo, de un vistazo</h3><p>Tu buzón se convierte en una lista de conversaciones: quién escribió, lo último que dijo y cuántos mensajes hay, con lo nuevo en negrita.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="Cada hilo, de un vistazo, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>Fotos y archivos en su sitio</h3><p>Las imágenes aparecen dentro de la burbuja y los adjuntos se abren con un toque. Una invitación de calendario se convierte en una tarjeta con «Añadir al calendario», y un correo para rellenar, como una inscripción o una reserva, tiene el botón «Rellenar y responder».</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="Fotos y archivos en su sitio, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Boletines a tamaño completo</h3><p>Los correos diseñados como una página web ocupan todo el ancho de la pantalla, y con un toque se abren a pantalla completa, tal como los creó quien los envía.</p></div>
+      <div class="copy"><h3>Boletines a tamaño completo</h3><p>Los correos diseñados como una página web conservan sus títulos e imágenes dentro del chat, y con un toque se abren a pantalla completa, tal como los creó quien los envía.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="Boletines a tamaño completo, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="Boletines a tamaño completo, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>Encuéntralo todo</h3><p>Busca en tu correo y fíltralo por no leídos, favoritos, adjuntos o fecha. Selecciona varias conversaciones a la vez para quitarlas de en medio.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="Encuéntralo todo, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="Encuéntralo todo, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook y cualquier buzón IMAP</h3><p>Inicia sesión con Google o Microsoft, o añade cualquier proveedor que ofrezca IMAP. Ten varios buzones y pasa de uno a otro con un toque.</p></div>
+      <div class="copy"><h3>Texto tan grande como lo necesites</h3><p>Cinco tamaños de texto, de muy pequeño a muy grande, para toda la app. Lo eliges en Ajustes.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook y cualquier buzón IMAP, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="Texto tan grande como lo necesites, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -1113,6 +1245,15 @@
       <p>Necesario para mostrar hilos, mensajes y adjuntos, para enviar las respuestas que escribes y para marcar una conversación como leída al abrirla. Un permiso de solo lectura no permite las dos últimas, y ambas son centrales en la aplicación. Ese mismo permiso autoriza también la lectura de tus alias de envío: así la aplicación distingue tus mensajes de los de los demás y los coloca en el lado correcto de la conversación.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">Tu correo como un chat.</h2>
+      <p class="closing-lead">Gratis, para Android y iPhone.</p>
+      <p class="soon"><span class="dot"></span>Muy pronto en Google Play y en el App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -1121,23 +1262,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">适用于 Android 和 iPhone</p>
-      <h1>像聊天一样读邮件</h1>
-      <p class="lead">Easymail 把每个邮件会话显示为一段对话：每封邮件一个气泡，每位发件人一种颜色，回复就写在同一个对话里。它支持 Gmail、Outlook 以及任何 IMAP 邮箱，仍然是你的邮箱，只是更容易阅读。</p>
+      <h1>像聊天一样看邮件</h1>
+      <p class="lead">Easymail 把你的邮件变成聊天：每封邮件一个气泡，引用和签名自动折叠，在阅读的地方直接回复。用你现有的邮箱登录，Gmail、Outlook、iCloud 或任何 IMAP 邮箱都可以：无需新地址，也无需新账号。</p>
       <p class="soon"><span class="dot"></span>即将登陆 Google Play 和 App Store</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-zh">观看视频</a>
         <a class="btn btn-quiet" href="#privacy">隐私声明</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="传统邮件应用, Android"></div>
+        <figcaption>传统邮件应用</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">左边的应用是为这次对比制作的通用示例，并非任何真实邮件服务商的应用。</p>
     </div>
   </div>
 
@@ -1203,38 +1348,45 @@
     <h2 class="section-h">它能做什么</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>每个会话都变成一段对话</h3><p>邮件排成一个个气泡，按发件人着色，就像群聊一样。引用和签名会自动折叠，你只需阅读新的内容。</p></div>
+      <div class="copy"><h3>Gmail、Outlook 和任何 IMAP 邮箱</h3><p>用 Google 或 Microsoft 登录，或添加任何提供 IMAP 的服务商。可以同时使用多个邮箱，轻点即可切换。</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="每个会话都变成一段对话, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail、Outlook 和任何 IMAP 邮箱, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>照片和文件各就各位</h3><p>图片直接显示在气泡里，附件轻点即可打开，日历邀请则显示为一张卡片，写明日期、时间和地点。</p></div>
+      <div class="copy"><h3>每个会话，一目了然</h3><p>你的邮箱变成一个对话列表：谁写的、最后说了什么、一共几封邮件，新内容以粗体显示。</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="每个会话，一目了然, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>照片和文件各就各位</h3><p>图片直接显示在气泡里，附件轻点即可打开。日历邀请会变成一张带有“添加到日历”的卡片；报名、预订这类需要填写的邮件，则有“填写并回复”按钮。</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="照片和文件各就各位, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>完整尺寸的新闻邮件</h3><p>像网页一样排版的邮件会占满屏幕宽度，轻点一下即可全屏打开，完全按照发件人的设计呈现。</p></div>
+      <div class="copy"><h3>完整尺寸的新闻邮件</h3><p>像网页一样排版的邮件，标题和图片都直接显示在聊天里，轻点一下即可全屏打开，完全按照发件人的设计呈现。</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="完整尺寸的新闻邮件, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="完整尺寸的新闻邮件, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>什么都找得到</h3><p>搜索你的邮件，并按未读、收藏、附件或日期筛选。一次选中多个对话，一起清理掉。</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="什么都找得到, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="什么都找得到, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail、Outlook 和任何 IMAP 邮箱</h3><p>用 Google 或 Microsoft 登录，或添加任何提供 IMAP 的服务商。可以同时使用多个邮箱，轻点即可切换。</p></div>
+      <div class="copy"><h3>文字大小随你需要</h3><p>五种文字大小，从特小到特大，作用于整个应用。在“设置”里选择。</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail、Outlook 和任何 IMAP 邮箱, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="文字大小随你需要, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -1258,6 +1410,15 @@
       <p>用于显示会话、邮件和附件，发送你写的回复，以及在你打开会话时把它标记为已读。只读权限无法完成后两项，而这两项正是本应用的核心。同一项权限也允许读取你的发件别名：应用正是据此把你自己的邮件与他人的区分开，并放在会话中正确的一侧。</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">像聊天一样看邮件。</h2>
+      <p class="closing-lead">免费，适用于 Android 和 iPhone。</p>
+      <p class="soon"><span class="dot"></span>即将登陆 Google Play 和 App Store</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -1267,22 +1428,26 @@
     <div>
       <p class="eyebrow">Android と iPhone に対応</p>
       <h1>メールを、チャットのように</h1>
-      <p class="lead">Easymail はすべてのスレッドを会話として表示します。メッセージごとに吹き出し、差出人ごとに色分けし、返信も同じ流れの中で書けます。Gmail、Outlook、あらゆる IMAP メールボックスで使え、いつものメールボックスがそのまま、ずっと読みやすくなります。</p>
+      <p class="lead">Easymail はメールをチャットに変えます。メッセージごとに吹き出しひとつ、引用や署名は折りたたまれ、返信は読んでいるその場で書けます。サインインには、いまお使いのメール（Gmail、Outlook、iCloud、あらゆる IMAP メールボックス）をそのまま使います。新しいアドレスもアカウントも要りません。</p>
       <p class="soon"><span class="dot"></span>Google Play と App Store で近日公開</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-ja">動画を見る</a>
         <a class="btn btn-quiet" href="#privacy">プライバシー通知</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="従来のメールアプリ, Android"></div>
+        <figcaption>従来のメールアプリ</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">左のアプリはこの比較のために作成した汎用の例であり、実在するメールサービスのアプリではありません。</p>
     </div>
   </div>
 
@@ -1348,38 +1513,45 @@
     <h2 class="section-h">できること</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>すべてのスレッドが会話に</h3><p>メッセージはグループチャットのように、差出人ごとに色分けされた吹き出しで並びます。引用や署名は折りたたまれるので、新しい部分だけを読めます。</p></div>
+      <div class="copy"><h3>Gmail、Outlook、あらゆる IMAP メールボックス</h3><p>Google または Microsoft でサインインするか、IMAP に対応した任意のプロバイダを追加できます。複数のメールボックスをタップひとつで切り替えられます。</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="すべてのスレッドが会話に, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail、Outlook、あらゆる IMAP メールボックス, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>写真もファイルも、あるべき場所に</h3><p>画像は吹き出しの中に表示され、添付ファイルはタップで開けます。カレンダーの招待は、日付・時刻・場所を示すカードとして表示されます。</p></div>
+      <div class="copy"><h3>すべてのスレッドをひと目で</h3><p>メールボックスが会話の一覧になります。誰が書いたか、最後のひとこと、メッセージの数がわかり、新着は太字で表示されます。</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="すべてのスレッドをひと目で, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>写真もファイルも、あるべき場所に</h3><p>画像は吹き出しの中に表示され、添付ファイルはタップで開けます。カレンダーの招待は「カレンダーに追加」付きのカードになり、申し込みや予約など記入して返すメールには「記入して返信」ボタンが付きます。</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="写真もファイルも、あるべき場所に, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>ニュースレターも大きく</h3><p>ウェブページのようにデザインされたメールは画面の幅いっぱいに表示され、タップすれば差出人が作ったとおりの姿で全画面表示できます。</p></div>
+      <div class="copy"><h3>ニュースレターも大きく</h3><p>ウェブページのようにデザインされたメールも、見出しや画像がそのままチャットの中に表示されます。タップすれば、差出人が作ったとおりの姿で全画面表示できます。</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="ニュースレターも大きく, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="ニュースレターも大きく, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>なんでも見つかる</h3><p>メールを検索し、未読、お気に入り、添付ファイル、日付で絞り込めます。複数の会話をまとめて選んで片付けることもできます。</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="なんでも見つかる, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="なんでも見つかる, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail、Outlook、あらゆる IMAP メールボックス</h3><p>Google または Microsoft でサインインするか、IMAP に対応した任意のプロバイダを追加できます。複数のメールボックスをタップひとつで切り替えられます。</p></div>
+      <div class="copy"><h3>文字は、読みやすい大きさで</h3><p>文字サイズは極小から特大までの 5 段階で、アプリ全体に反映されます。「設定」で選べます。</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail、Outlook、あらゆる IMAP メールボックス, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="文字は、読みやすい大きさで, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -1403,6 +1575,15 @@
       <p>スレッド・メール本文・添付ファイルを表示し、あなたが書いた返信を送信し、会話を開いたときに既読にするために必要です。読み取り専用の権限では後の二つができず、いずれもこのアプリの中心的な機能です。同じ権限で送信エイリアスも読み取れます。これにより、自分のメールと他の人のメールを区別し、会話の正しい側に配置しています。</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">メールをチャットのように。</h2>
+      <p class="closing-lead">無料。Android と iPhone に対応。</p>
+      <p class="soon"><span class="dot"></span>Google Play と App Store で近日公開</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -1411,23 +1592,27 @@
   <div class="hero">
     <div>
       <p class="eyebrow">Android와 iPhone용</p>
-      <h1>메일을 채팅처럼 읽으세요</h1>
-      <p class="lead">Easymail은 모든 스레드를 하나의 대화로 보여 줍니다. 메시지마다 말풍선 하나, 보낸 사람마다 색 하나, 답장도 같은 흐름 안에서 씁니다. Gmail, Outlook, 그리고 모든 IMAP 메일함에서 작동하며, 여전히 사용자의 메일함 그대로이지만 훨씬 읽기 쉬워집니다.</p>
+      <h1>메일을 채팅처럼</h1>
+      <p class="lead">Easymail은 메일을 채팅으로 바꿉니다. 메시지마다 말풍선 하나, 인용문과 서명은 접어 두고, 답장은 읽던 자리에서 바로 씁니다. 로그인은 지금 쓰는 메일 그대로 하면 됩니다. Gmail, Outlook, iCloud는 물론 어떤 IMAP 메일함이든 됩니다. 새 주소도 새 계정도 필요 없습니다.</p>
       <p class="soon"><span class="dot"></span>Google Play와 App Store에 곧 출시</p>
       <div class="actions">
         <a class="btn btn-primary" href="#video-ko">동영상 보기</a>
         <a class="btn btn-quiet" href="#privacy">개인정보 처리방침</a>
       </div>
     </div>
-    <div class="duo">
-      <figure>
-        <div class="phone ios"><img src="img/iphone-threads.webp" width="600" height="1304" alt="Easymail, iPhone"></div>
-        <figcaption>iPhone</figcaption>
+    <div class="before-after">
+      <div class="row">
+        <figure>
+        <div class="phone android"><img src="img/hero-android-classic.webp" width="600" height="1298" alt="기존 메일 앱, Android"></div>
+        <figcaption>기존 메일 앱</figcaption>
       </figure>
-      <figure>
-        <div class="phone android"><img src="img/android-chat.webp" width="600" height="1298" alt="Easymail, Android"></div>
-        <figcaption>Android</figcaption>
+        <span class="turn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+        <figure class="ours">
+        <div class="phone android"><img src="img/hero-android-easymail.webp" width="600" height="1298" alt="Easymail, Android"></div>
+        <figcaption>Easymail</figcaption>
       </figure>
+      </div>
+      <p class="note">왼쪽 앱은 이 비교를 위해 만든 일반적인 예시이며, 실제 메일 서비스의 앱이 아닙니다.</p>
     </div>
   </div>
 
@@ -1493,38 +1678,45 @@
     <h2 class="section-h">주요 기능</h2>
     <div class="features">
     <div class="feature">
-      <div class="copy"><h3>모든 스레드가 대화가 됩니다</h3><p>메시지가 단체 채팅처럼 보낸 사람별로 색이 다른 말풍선으로 나열됩니다. 인용문과 서명은 접혀 있어 새로운 내용만 읽을 수 있습니다.</p></div>
+      <div class="copy"><h3>Gmail, Outlook, 모든 IMAP 메일함</h3><p>Google이나 Microsoft로 로그인하거나, IMAP을 제공하는 어떤 메일 서비스든 추가하세요. 여러 메일함을 두고 탭 한 번으로 전환할 수 있습니다.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-conversation.webp" width="600" height="1304" alt="모든 스레드가 대화가 됩니다, iPhone" loading="lazy" decoding="async"></div>
+        <div class="phone ios"><img src="img/iphone-providers.webp" width="600" height="1304" alt="Gmail, Outlook, 모든 IMAP 메일함, iPhone" loading="lazy" decoding="async"></div>
         <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>사진과 파일은 제자리에</h3><p>이미지는 말풍선 안에 표시되고, 첨부파일은 한 번 탭하면 열리며, 캘린더 초대는 날짜, 시간, 장소가 담긴 카드로 보입니다.</p></div>
+      <div class="copy"><h3>모든 스레드를 한눈에</h3><p>메일함이 대화 목록이 됩니다. 누가 썼는지, 마지막으로 무슨 말을 했는지, 메시지가 몇 개인지 보이고 새 내용은 굵게 표시됩니다.</p></div>
+      <figure>
+        <div class="phone android"><img src="img/android-list.webp" width="600" height="1298" alt="모든 스레드를 한눈에, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
+      </figure>
+    </div>
+    <div class="feature">
+      <div class="copy"><h3>사진과 파일은 제자리에</h3><p>이미지는 말풍선 안에 표시되고 첨부파일은 한 번 탭하면 열립니다. 캘린더 초대는 ‘캘린더에 추가’가 있는 카드가 되고, 신청이나 예약처럼 작성해서 보내는 메일에는 ‘작성하고 답장’ 버튼이 있습니다.</p></div>
       <figure>
         <div class="phone android"><img src="img/android-attachment.webp" width="600" height="1298" alt="사진과 파일은 제자리에, Android" loading="lazy" decoding="async"></div>
         <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>뉴스레터도 큼직하게</h3><p>웹페이지처럼 디자인된 메일은 화면 너비를 가득 채우고, 한 번 탭하면 보낸 사람이 만든 그대로 전체 화면으로 열립니다.</p></div>
+      <div class="copy"><h3>뉴스레터도 큼직하게</h3><p>웹페이지처럼 디자인된 메일도 제목과 이미지가 채팅 안에 바로 보이고, 한 번 탭하면 보낸 사람이 만든 그대로 전체 화면으로 열립니다.</p></div>
       <figure>
-        <div class="phone ios"><img src="img/iphone-newsletter.webp" width="600" height="1304" alt="뉴스레터도 큼직하게, iPhone" loading="lazy" decoding="async"></div>
-        <figcaption>iPhone</figcaption>
+        <div class="phone android"><img src="img/android-newsletter.webp" width="600" height="1298" alt="뉴스레터도 큼직하게, Android" loading="lazy" decoding="async"></div>
+        <figcaption>Android</figcaption>
       </figure>
     </div>
     <div class="feature">
       <div class="copy"><h3>무엇이든 찾기</h3><p>메일을 검색하고 읽지 않음, 즐겨찾기, 첨부파일, 날짜로 걸러 보세요. 여러 대화를 한 번에 선택해 정리할 수도 있습니다.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-search.webp" width="600" height="1298" alt="무엇이든 찾기, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-filters.webp" width="600" height="1304" alt="무엇이든 찾기, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     <div class="feature">
-      <div class="copy"><h3>Gmail, Outlook, 모든 IMAP 메일함</h3><p>Google이나 Microsoft로 로그인하거나, IMAP을 제공하는 어떤 메일 서비스든 추가하세요. 여러 메일함을 두고 탭 한 번으로 전환할 수 있습니다.</p></div>
+      <div class="copy"><h3>필요한 만큼 큰 글자</h3><p>글자 크기는 ‘아주 작게’부터 ‘아주 크게’까지 다섯 단계이며, 앱 전체에 적용됩니다. 설정에서 고를 수 있습니다.</p></div>
       <figure>
-        <div class="phone android"><img src="img/android-providers.webp" width="600" height="1298" alt="Gmail, Outlook, 모든 IMAP 메일함, Android" loading="lazy" decoding="async"></div>
-        <figcaption>Android</figcaption>
+        <div class="phone ios"><img src="img/iphone-textsize.webp" width="600" height="1304" alt="필요한 만큼 큰 글자, iPhone" loading="lazy" decoding="async"></div>
+        <figcaption>iPhone</figcaption>
       </figure>
     </div>
     </div>
@@ -1548,6 +1740,15 @@
       <p>스레드와 메시지, 첨부파일을 표시하고, 사용자가 쓴 답장을 보내고, 대화를 열 때 읽음으로 표시하기 위해 필요합니다. 읽기 전용 권한으로는 뒤의 두 가지가 불가능하며, 둘 다 앱의 핵심입니다. 같은 권한으로 보내는 별칭도 읽을 수 있으며, 이를 통해 본인의 메시지와 다른 사람의 메시지를 구분해 대화의 올바른 쪽에 배치합니다.</p>
     </div>
   </section>
+
+  <section>
+    <div class="closing-card">
+      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <h2 class="section-h">메일함을 채팅처럼.</h2>
+      <p class="closing-lead">무료, Android와 iPhone용.</p>
+      <p class="soon"><span class="dot"></span>Google Play와 App Store에 곧 출시</p>
+    </div>
+  </section>
 </div>
 </div>
 
@@ -1558,7 +1759,7 @@
 
   <div class="card">
     <dl>
-      <dt>Last updated</dt><dd>24 September 2026</dd>
+      <dt>Last updated</dt><dd>3 October 2026</dd>
       <dt>Published by</dt><dd>Lorenzo Montoli</dd>
       <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1606,7 +1807,7 @@
 
   <div class="card">
     <dl>
-      <dt>Ultimo aggiornamento</dt><dd>24 settembre 2026</dd>
+      <dt>Ultimo aggiornamento</dt><dd>3 ottobre 2026</dd>
       <dt>Titolare</dt><dd>Lorenzo Montoli</dd>
       <dt>Contatto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1654,7 +1855,7 @@
 
   <div class="card">
     <dl>
-      <dt>Dernière mise à jour</dt><dd>24 septembre 2026</dd>
+      <dt>Dernière mise à jour</dt><dd>3 octobre 2026</dd>
       <dt>Éditeur</dt><dd>Lorenzo Montoli</dd>
       <dt>Contact</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1702,7 +1903,7 @@
 
   <div class="card">
     <dl>
-      <dt>Zuletzt aktualisiert</dt><dd>24. September 2026</dd>
+      <dt>Zuletzt aktualisiert</dt><dd>3. Oktober 2026</dd>
       <dt>Anbieter</dt><dd>Lorenzo Montoli</dd>
       <dt>Kontakt</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1750,7 +1951,7 @@
 
   <div class="card">
     <dl>
-      <dt>Última actualización</dt><dd>24 de septiembre de 2026</dd>
+      <dt>Última actualización</dt><dd>3 de octubre de 2026</dd>
       <dt>Responsable</dt><dd>Lorenzo Montoli</dd>
       <dt>Contacto</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1798,7 +1999,7 @@
 
   <div class="card">
     <dl>
-      <dt>最后更新</dt><dd>2026年9月24日</dd>
+      <dt>最后更新</dt><dd>2026年10月3日</dd>
       <dt>发布者</dt><dd>Lorenzo Montoli</dd>
       <dt>联系方式</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1846,7 +2047,7 @@
 
   <div class="card">
     <dl>
-      <dt>最終更新</dt><dd>2026年9月24日</dd>
+      <dt>最終更新</dt><dd>2026年10月3日</dd>
       <dt>提供者</dt><dd>Lorenzo Montoli</dd>
       <dt>連絡先</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>
@@ -1894,7 +2095,7 @@
 
   <div class="card">
     <dl>
-      <dt>최종 업데이트</dt><dd>2026년 9월 24일</dd>
+      <dt>최종 업데이트</dt><dd>2026년 10월 3일</dd>
       <dt>제공자</dt><dd>Lorenzo Montoli</dd>
       <dt>문의</dt><dd><a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a></dd>
     </dl>

@@ -20,6 +20,9 @@
     --accent:      #1a73e8;
     --accent-ink:  #ffffff;
     --accent-soft: #e8f0fe;
+    --go:          #137333;
+    --go-soft:     #e6f4ea;
+    --go-line:     #c6e6cf;
     --mark:        #c5221f;
     --bezel:       #1b1c1f;
     --shadow:      0 1px 2px rgba(31, 31, 33, .08), 0 4px 14px rgba(31, 31, 33, .05);
@@ -36,6 +39,9 @@
       --accent:      #8ab4f8;
       --accent-ink:  #0b1a33;
       --accent-soft: #1e2a3d;
+      --go:          #81c995;
+      --go-soft:     #15291c;
+      --go-line:     #25442f;
       --mark:        #f28b82;
       --bezel:       #000000;
       --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
@@ -52,6 +58,9 @@
     --accent:      #8ab4f8;
     --accent-ink:  #0b1a33;
     --accent-soft: #1e2a3d;
+    --go:          #81c995;
+    --go-soft:     #15291c;
+    --go-line:     #25442f;
     --mark:        #f28b82;
     --bezel:       #000000;
     --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .3);
@@ -173,11 +182,24 @@
     margin: 0 0 20px;
   }
   .lead { font-size: 1.14rem; color: var(--ink-muted); margin: 0 0 22px; max-width: 34rem; }
+  /* Coming soon, drawn as a status rather than as a sentence: it is the one thing on the page
+     that changes on the day the stores say yes. */
   .soon {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    margin: 0 0 26px; font-size: 15px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: 0 0 26px; padding: 8px 16px 8px 14px; border-radius: 999px;
+    font-size: 15.5px; font-weight: 650; line-height: 1.35;
+    color: var(--go); background: var(--go-soft); border: 1px solid var(--go-line);
   }
-  .soon .dot { width: 8px; height: 8px; border-radius: 50%; background: #1e8e3e; flex: none; }
+  .soon .dot {
+    width: 9px; height: 9px; border-radius: 50%; background: currentColor; flex: none;
+    animation: beat 2.4s ease-out infinite;
+  }
+  @keyframes beat {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
+    70%  { box-shadow: 0 0 0 9px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { .soon .dot { animation: none; } }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
@@ -188,9 +210,18 @@
   .btn-primary { background: var(--accent); color: var(--accent-ink); }
   .btn-quiet { background: transparent; color: var(--ink); border-color: var(--hairline); }
 
-  /* Phones: CSS bezels around the store screenshots, one of each platform. */
-  .duo { display: flex; justify-content: center; align-items: flex-start; gap: 24px; }
-  .duo figure:nth-child(2) { margin-top: 56px; }
+  /* The opening picture, as the promo opens: the same conversation in a classic mail app and
+     in Easymail, with an arrow between them for the change. The arrow sits a little above the
+     middle of the figures because their captions hang below the phones. */
+  .before-after .row { display: flex; justify-content: center; align-items: center; }
+  .before-after .phone { --w: 224px; }
+  .before-after figure.ours figcaption { color: var(--accent); }
+  .before-after .turn {
+    flex: none; display: grid; place-items: center; position: relative; z-index: 1;
+    width: 52px; height: 52px; margin: 0 -12px 34px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-lg);
+  }
+  .before-after .note { text-align: center; max-width: 30rem; margin: 18px auto 0; font-size: 13px; }
   figure { margin: 0; text-align: center; }
   figcaption {
     margin-top: 14px; font-size: 13px; font-weight: 650; letter-spacing: .06em;
@@ -285,6 +316,16 @@
   .trust h3 { font-size: 1.05rem; margin: 0 0 6px; }
   .trust p { margin: 0; color: var(--ink-muted); font-size: 15.5px; }
 
+  /* The end of the page, the way the promo ends: the icon, the line, where it is coming. */
+  .closing-card {
+    text-align: center; background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 28px; padding: 56px 24px;
+  }
+  .closing-card img { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
+  .closing-card .section-h { margin: 18px 0 8px; }
+  .closing-lead { color: var(--ink-muted); margin: 0 0 20px; font-size: 1.1rem; }
+  .closing-card .soon { margin: 0; }
+
   /* The Gmail permission, justified for the OAuth review: the text of the old home page. */
   .scope {
     border-left: 3px solid var(--accent); background: var(--accent-soft);
@@ -351,9 +392,9 @@
   }
   @media (max-width: 34rem) {
     body { font-size: 16px; }
-    .duo { gap: 14px; }
-    .duo .phone { --w: min(42vw, 200px); }
-    .duo figure:nth-child(2) { margin-top: 40px; }
+    .before-after .phone { --w: min(41vw, 200px); }
+    .before-after .turn { width: 40px; height: 40px; margin: 0 -10px 30px; }
+    .before-after .turn svg { width: 20px; height: 20px; }
     .versus { gap: 14px; }
     .versus .phone { --w: min(43vw, 220px); }
     .feature .phone { --w: min(62vw, 236px); }
