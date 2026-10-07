@@ -182,16 +182,20 @@
     margin: 0 0 20px;
   }
   .lead { font-size: 1.14rem; color: var(--ink-muted); margin: 0 0 22px; max-width: 34rem; }
-  /* Coming soon, drawn as a status rather than as a sentence: it is the one thing on the page
-     that changes on the day the stores say yes. */
-  .soon {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin: 0 0 26px; padding: 8px 16px 8px 14px; border-radius: 999px;
-    font-size: 15.5px; font-weight: 650; line-height: 1.35;
-    color: var(--go); background: var(--go-soft); border: 1px solid var(--go-line);
+  /* The stores, as their own badges and unaltered, which both of them require: Apple's first,
+     as Apple asks when other stores sit beside it, at the height of Google's, as Google asks,
+     with a quarter of that height clear around each. A store the app is not in yet keeps its
+     badge, without a link, and says so in a line under it rather than on it. */
+  .stores { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 14px 18px; margin: 0 0 30px; }
+  .store { display: inline-flex; flex-direction: column; align-items: center; gap: 13px; text-decoration: none; }
+  .store img { display: block; height: 52px; width: auto; }
+  a.store { border-radius: 9px; }
+  .store-note {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 650; line-height: 1.2; color: var(--go);
   }
-  .soon .dot {
-    width: 9px; height: 9px; border-radius: 50%; background: currentColor; flex: none;
+  .store-note .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none;
     animation: beat 2.4s ease-out infinite;
   }
   @keyframes beat {
@@ -199,7 +203,7 @@
     70%  { box-shadow: 0 0 0 9px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
   }
-  @media (prefers-reduced-motion: reduce) { .soon .dot { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .store-note .dot { animation: none; } }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
@@ -321,10 +325,10 @@
     text-align: center; background: var(--surface); border: 1px solid var(--hairline);
     border-radius: 28px; padding: 56px 24px;
   }
-  .closing-card img { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
+  .closing-card .closing-icon { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
   .closing-card .section-h { margin: 18px 0 8px; }
   .closing-lead { color: var(--ink-muted); margin: 0 0 20px; font-size: 1.1rem; }
-  .closing-card .soon { margin: 0; }
+  .closing-card .stores { justify-content: center; margin: 0; }
 
   /* The Gmail permission, justified for the OAuth review: the text of the old home page. */
   .scope {
@@ -372,6 +376,7 @@
     font-size: 15px; color: var(--ink-muted);
   }
   footer.site > div { flex-wrap: wrap; gap: 6px 20px; }
+  footer.site .legal { margin: 14px 0 0; font-size: 12.5px; }
   :root:not([data-active]) footer.site > div[data-lang="en"], :root[data-active="en"] footer.site > div[data-lang="en"] { display: flex; }
   :root[data-active="it"] footer.site > div[data-lang="it"] { display: flex; }
   :root[data-active="fr"] footer.site > div[data-lang="fr"] { display: flex; }
@@ -685,6 +690,7 @@
     <a href="support.html" data-keep-lang>지원</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </div>
+  <p class="legal">App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks of Google LLC.</p>
 </footer>
 
 <script>

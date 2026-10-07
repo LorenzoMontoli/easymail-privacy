@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Easymail · Your email, as a chat</title>
-<meta name="description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Coming soon to Google Play and the App Store. Privacy notice and terms of use included.">
+<meta name="description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. On Google Play now, coming soon to the App Store. Privacy notice and terms of use included.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://easymail-app.com/">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/icon-192.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Easymail">
-<meta property="og:description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. Coming soon to Google Play and the App Store. Privacy notice and terms of use included.">
+<meta property="og:description" content="Easymail, for Android and iPhone, shows your Gmail, Outlook and IMAP mail as chat conversations. On Google Play now, coming soon to the App Store. Privacy notice and terms of use included.">
 <meta property="og:url" content="https://easymail-app.com/">
 <meta property="og:image" content="https://easymail-app.com/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -188,16 +188,20 @@
     margin: 0 0 20px;
   }
   .lead { font-size: 1.14rem; color: var(--ink-muted); margin: 0 0 22px; max-width: 34rem; }
-  /* Coming soon, drawn as a status rather than as a sentence: it is the one thing on the page
-     that changes on the day the stores say yes. */
-  .soon {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin: 0 0 26px; padding: 8px 16px 8px 14px; border-radius: 999px;
-    font-size: 15.5px; font-weight: 650; line-height: 1.35;
-    color: var(--go); background: var(--go-soft); border: 1px solid var(--go-line);
+  /* The stores, as their own badges and unaltered, which both of them require: Apple's first,
+     as Apple asks when other stores sit beside it, at the height of Google's, as Google asks,
+     with a quarter of that height clear around each. A store the app is not in yet keeps its
+     badge, without a link, and says so in a line under it rather than on it. */
+  .stores { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 14px 18px; margin: 0 0 30px; }
+  .store { display: inline-flex; flex-direction: column; align-items: center; gap: 13px; text-decoration: none; }
+  .store img { display: block; height: 52px; width: auto; }
+  a.store { border-radius: 9px; }
+  .store-note {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 650; line-height: 1.2; color: var(--go);
   }
-  .soon .dot {
-    width: 9px; height: 9px; border-radius: 50%; background: currentColor; flex: none;
+  .store-note .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none;
     animation: beat 2.4s ease-out infinite;
   }
   @keyframes beat {
@@ -205,7 +209,7 @@
     70%  { box-shadow: 0 0 0 9px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
   }
-  @media (prefers-reduced-motion: reduce) { .soon .dot { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .store-note .dot { animation: none; } }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
@@ -327,10 +331,10 @@
     text-align: center; background: var(--surface); border: 1px solid var(--hairline);
     border-radius: 28px; padding: 56px 24px;
   }
-  .closing-card img { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
+  .closing-card .closing-icon { width: 72px; height: 72px; border-radius: 18px; box-shadow: var(--shadow); }
   .closing-card .section-h { margin: 18px 0 8px; }
   .closing-lead { color: var(--ink-muted); margin: 0 0 20px; font-size: 1.1rem; }
-  .closing-card .soon { margin: 0; }
+  .closing-card .stores { justify-content: center; margin: 0; }
 
   /* The Gmail permission, justified for the OAuth review: the text of the old home page. */
   .scope {
@@ -378,6 +382,7 @@
     font-size: 15px; color: var(--ink-muted);
   }
   footer.site > div { flex-wrap: wrap; gap: 6px 20px; }
+  footer.site .legal { margin: 14px 0 0; font-size: 12.5px; }
   :root:not([data-active]) footer.site > div[data-lang="en"], :root[data-active="en"] footer.site > div[data-lang="en"] { display: flex; }
   :root[data-active="it"] footer.site > div[data-lang="it"] { display: flex; }
   :root[data-active="fr"] footer.site > div[data-lang="fr"] { display: flex; }
@@ -439,7 +444,15 @@
       <p class="eyebrow">For Android and iPhone</p>
       <h1>Your email, as a chat</h1>
       <p class="lead">Easymail turns your email into a chat: one bubble per message, quoted text and signatures folded away, replies written right where you read. You sign in with the email you already have, Gmail, Outlook, iCloud or any IMAP mailbox: no new address, no new account.</p>
-      <p class="soon"><span class="dot"></span>Coming soon to Google Play and the App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-en.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Coming soon</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=en" rel="noopener">
+          <img src="img/badges/google-play-en.png" width="174" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-en">Watch the video</a>
         <a class="btn btn-quiet" href="#privacy">Privacy notice</a>
@@ -588,10 +601,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">Your inbox, as a chat.</h2>
       <p class="closing-lead">Free, for Android and iPhone.</p>
-      <p class="soon"><span class="dot"></span>Coming soon to Google Play and the App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-en.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Coming soon</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=en" rel="noopener">
+          <img src="img/badges/google-play-en.png" width="174" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -604,7 +625,15 @@
       <p class="eyebrow">Per Android e iPhone</p>
       <h1>La tua posta, come una chat</h1>
       <p class="lead">Easymail trasforma la tua posta in una chat: una bolla per messaggio, citazioni e firme ripiegate, risposte scritte proprio dove leggi. Entri con la mail che hai già, Gmail, Outlook, iCloud, Libero o qualsiasi casella IMAP: nessun indirizzo nuovo, nessun account nuovo.</p>
-      <p class="soon"><span class="dot"></span>In arrivo su Google Play e sull'App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-it.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Presto in uscita</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=it" rel="noopener">
+          <img src="img/badges/google-play-it.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-it">Guarda il video</a>
         <a class="btn btn-quiet" href="#privacy">Informativa privacy</a>
@@ -753,10 +782,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">La tua posta, come una chat.</h2>
       <p class="closing-lead">Gratis, per Android e iPhone.</p>
-      <p class="soon"><span class="dot"></span>In arrivo su Google Play e sull'App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-it.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Presto in uscita</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=it" rel="noopener">
+          <img src="img/badges/google-play-it.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -769,7 +806,15 @@
       <p class="eyebrow">Pour Android et iPhone</p>
       <h1>Vos e-mails, comme une discussion</h1>
       <p class="lead">Easymail transforme vos e-mails en discussion : une bulle par message, les citations et les signatures repliées, les réponses écrites là où vous lisez. Vous vous connectez avec l'adresse que vous avez déjà, Gmail, Outlook, iCloud ou toute boîte IMAP : pas de nouvelle adresse, pas de nouveau compte.</p>
-      <p class="soon"><span class="dot"></span>Bientôt sur Google Play et l'App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-fr.svg" width="164" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Bientôt disponible</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=fr" rel="noopener">
+          <img src="img/badges/google-play-fr.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-fr">Voir la vidéo</a>
         <a class="btn btn-quiet" href="#privacy">Avis de confidentialité</a>
@@ -918,10 +963,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">Votre boîte mail comme une discussion.</h2>
       <p class="closing-lead">Gratuite, pour Android et iPhone.</p>
-      <p class="soon"><span class="dot"></span>Bientôt sur Google Play et l'App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-fr.svg" width="164" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Bientôt disponible</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=fr" rel="noopener">
+          <img src="img/badges/google-play-fr.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -934,7 +987,15 @@
       <p class="eyebrow">Für Android und iPhone</p>
       <h1>Deine E‑Mails als Chat</h1>
       <p class="lead">Easymail macht aus deinen E-Mails einen Chat: eine Blase pro Nachricht, Zitate und Signaturen eingeklappt, Antworten genau dort, wo du liest. Du meldest dich mit der Adresse an, die du schon hast, ob Gmail, Outlook, iCloud oder ein beliebiges IMAP-Postfach: keine neue Adresse, kein neues Konto.</p>
-      <p class="soon"><span class="dot"></span>Bald bei Google Play und im App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-de.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Demnächst verfügbar</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=de" rel="noopener">
+          <img src="img/badges/google-play-de.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-de">Video ansehen</a>
         <a class="btn btn-quiet" href="#privacy">Datenschutzhinweis</a>
@@ -1083,10 +1144,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">Dein Posteingang als Chat.</h2>
       <p class="closing-lead">Kostenlos, für Android und iPhone.</p>
-      <p class="soon"><span class="dot"></span>Bald bei Google Play und im App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-de.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Demnächst verfügbar</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=de" rel="noopener">
+          <img src="img/badges/google-play-de.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -1099,7 +1168,15 @@
       <p class="eyebrow">Para Android y iPhone</p>
       <h1>Tu correo, como un chat</h1>
       <p class="lead">Easymail convierte tu correo en un chat: una burbuja por mensaje, las citas y las firmas plegadas, las respuestas escritas justo donde lees. Entras con el correo que ya tienes, Gmail, Outlook, iCloud o cualquier buzón IMAP: sin dirección nueva ni cuenta nueva.</p>
-      <p class="soon"><span class="dot"></span>Muy pronto en Google Play y en el App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-es.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Próximamente</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=es" rel="noopener">
+          <img src="img/badges/google-play-es.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-es">Ver el vídeo</a>
         <a class="btn btn-quiet" href="#privacy">Aviso de privacidad</a>
@@ -1248,10 +1325,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">Tu correo como un chat.</h2>
       <p class="closing-lead">Gratis, para Android y iPhone.</p>
-      <p class="soon"><span class="dot"></span>Muy pronto en Google Play y en el App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-es.svg" width="156" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>Próximamente</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=es" rel="noopener">
+          <img src="img/badges/google-play-es.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -1264,7 +1349,15 @@
       <p class="eyebrow">适用于 Android 和 iPhone</p>
       <h1>像聊天一样看邮件</h1>
       <p class="lead">Easymail 把你的邮件变成聊天：每封邮件一个气泡，引用和签名自动折叠，在阅读的地方直接回复。用你现有的邮箱登录，Gmail、Outlook、iCloud 或任何 IMAP 邮箱都可以：无需新地址，也无需新账号。</p>
-      <p class="soon"><span class="dot"></span>即将登陆 Google Play 和 App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-zh.svg" width="142" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>即将推出</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=zh-CN" rel="noopener">
+          <img src="img/badges/google-play-zh.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-zh">观看视频</a>
         <a class="btn btn-quiet" href="#privacy">隐私声明</a>
@@ -1413,10 +1506,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">像聊天一样看邮件。</h2>
       <p class="closing-lead">免费，适用于 Android 和 iPhone。</p>
-      <p class="soon"><span class="dot"></span>即将登陆 Google Play 和 App Store</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-zh.svg" width="142" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>即将推出</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=zh-CN" rel="noopener">
+          <img src="img/badges/google-play-zh.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -1429,7 +1530,15 @@
       <p class="eyebrow">Android と iPhone に対応</p>
       <h1>メールを、チャットのように</h1>
       <p class="lead">Easymail はメールをチャットに変えます。メッセージごとに吹き出しひとつ、引用や署名は折りたたまれ、返信は読んでいるその場で書けます。サインインには、いまお使いのメール（Gmail、Outlook、iCloud、あらゆる IMAP メールボックス）をそのまま使います。新しいアドレスもアカウントも要りません。</p>
-      <p class="soon"><span class="dot"></span>Google Play と App Store で近日公開</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-ja.svg" width="142" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>近日公開</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=ja" rel="noopener">
+          <img src="img/badges/google-play-ja.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-ja">動画を見る</a>
         <a class="btn btn-quiet" href="#privacy">プライバシー通知</a>
@@ -1578,10 +1687,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">メールをチャットのように。</h2>
       <p class="closing-lead">無料。Android と iPhone に対応。</p>
-      <p class="soon"><span class="dot"></span>Google Play と App Store で近日公開</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-ja.svg" width="142" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>近日公開</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=ja" rel="noopener">
+          <img src="img/badges/google-play-ja.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -1594,7 +1711,15 @@
       <p class="eyebrow">Android와 iPhone용</p>
       <h1>메일을 채팅처럼</h1>
       <p class="lead">Easymail은 메일을 채팅으로 바꿉니다. 메시지마다 말풍선 하나, 인용문과 서명은 접어 두고, 답장은 읽던 자리에서 바로 씁니다. 로그인은 지금 쓰는 메일 그대로 하면 됩니다. Gmail, Outlook, iCloud는 물론 어떤 IMAP 메일함이든 됩니다. 새 주소도 새 계정도 필요 없습니다.</p>
-      <p class="soon"><span class="dot"></span>Google Play와 App Store에 곧 출시</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-ko.svg" width="169" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>곧 출시</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=ko" rel="noopener">
+          <img src="img/badges/google-play-ko.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
       <div class="actions">
         <a class="btn btn-primary" href="#video-ko">동영상 보기</a>
         <a class="btn btn-quiet" href="#privacy">개인정보 처리방침</a>
@@ -1743,10 +1868,18 @@
 
   <section>
     <div class="closing-card">
-      <img src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
+      <img class="closing-icon" src="img/icon-192.png" width="72" height="72" alt="" loading="lazy" decoding="async">
       <h2 class="section-h">메일함을 채팅처럼.</h2>
       <p class="closing-lead">무료, Android와 iPhone용.</p>
-      <p class="soon"><span class="dot"></span>Google Play와 App Store에 곧 출시</p>
+      <div class="stores">
+        <div class="store">
+          <img src="img/badges/app-store-ko.svg" width="169" height="52" alt="App Store">
+          <span class="store-note"><span class="dot"></span>곧 출시</span>
+        </div>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.easymail.app&amp;hl=ko" rel="noopener">
+          <img src="img/badges/google-play-ko.png" width="175" height="52" alt="Google Play">
+        </a>
+      </div>
     </div>
   </section>
 </div>
@@ -2199,6 +2332,7 @@
     <a href="support.html" data-keep-lang>지원</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </div>
+  <p class="legal">App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks of Google LLC.</p>
 </footer>
 
 <script>
