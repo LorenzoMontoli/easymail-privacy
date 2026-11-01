@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Easymail · Approve Easymail for your organisation</title>
-<meta name="description" content="How an IT administrator approves Easymail for a Microsoft 365 or school tenant: delegated IMAP and SMTP permissions with OAuth, no Easymail server, one minute.">
+<meta name="description" content="How an IT administrator approves Easymail for a Microsoft 365 or school tenant: delegated Microsoft Graph mail permissions with OAuth, no Easymail server, one minute.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://easymail-app.com/admin-consent.html">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
@@ -555,13 +555,13 @@
     <p class="lead">A one-minute step for IT administrators of Microsoft 365, Exchange Online and school tenants.</p>
 
     <h3>What Easymail is</h3>
-    <p>Easymail is a free mail client for Android and iPhone that shows a mailbox as a chat. It connects to Exchange Online with the standard IMAP and SMTP protocols and OAuth 2.0 (XOAUTH2), the same way Thunderbird or Apple Mail do.</p>
+    <p>Easymail is a free mail client for Android and iPhone that shows a mailbox as a chat. It connects to Exchange Online through Microsoft Graph, the REST API of Microsoft 365, with OAuth 2.0.</p>
 
     <h3>What it asks for, and why</h3>
-    <p><b>Delegated permissions only.</b> IMAP.AccessAsUser.All and SMTP.Send of Office 365 Exchange Online, plus offline_access to renew the token without asking again. Every action is done on behalf of the signed-in user, with that user's own rights: no application permission, no access to other mailboxes.</p>
-    <p><b>No Easymail server.</b> The app talks to Exchange Online directly from the phone over an encrypted connection; nothing passes through a server of ours, and no data is sent to us.</p>
+    <p><b>Delegated permissions only.</b> Mail.ReadWrite, Mail.Send and User.Read of Microsoft Graph, plus offline_access to renew the token without asking again. Every action is done on behalf of the signed-in user, with that user's own rights: no application permission, no access to other mailboxes, calendars or contacts.</p>
+    <p><b>No Easymail server.</b> The app talks to Microsoft directly from the phone over an encrypted connection; nothing passes through a server of ours, and no data is sent to us.</p>
     <p><b>A copy only on the phone.</b> The app keeps a capped local copy of the mailbox to open quickly and work offline, encrypted at rest by the system, deleted on sign-out or uninstall.</p>
-    <p><b>Why your approval is needed.</b> Microsoft's default consent policy does not let users grant IMAP access to third-party apps; an administrator approves the app once for the whole organisation.</p>
+    <p><b>Why your approval is needed.</b> Microsoft's default consent policy does not let users grant third-party apps access to their mail (Mail.ReadWrite); an administrator approves the app once for the whole organisation.</p>
 
     <h3>Approve Easymail for your organisation</h3>
     <p>Sign in with an administrator account of your tenant. Microsoft shows the permissions above and records the approval in your tenant; nothing is sent to Easymail.</p>
@@ -569,7 +569,7 @@
       <label for="domain-en">Your organisation's domain (optional)</label>
       <input id="domain-en" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com or contoso.onmicrosoft.com. Leave it empty to be asked by Microsoft.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approve Easymail for your organisation</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approve Easymail for your organisation</a>
       <p class="note">Opens Microsoft's own admin consent page (login.microsoftonline.com).</p>
     </form>
 
@@ -581,15 +581,15 @@
         <dt>Publisher</dt><dd>Lorenzo Montoli, Italy (see the support page). The registration has no Microsoft 'verified publisher' badge: that programme is open to registered businesses only.</dd>
         <dt>Sign-in audience</dt><dd>Work, school and personal Microsoft accounts (multitenant)</dd>
         <dt>Redirect URI of this page</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>Permissions</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>Permissions</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>What happens next</h3>
-    <p>Once approved, your users add their work or school account in Easymail (Add a mailbox &gt; Outlook, Hotmail, Microsoft 365) and sign in with Microsoft as usual. The approval can be reviewed or revoked at any time in Microsoft Entra, under Enterprise applications.</p>
+    <p>Once approved, your users open Easymail and tap “Outlook and Hotmail” in the “Which mail do you use?” list, which also covers work and school accounts, then sign in with Microsoft as usual. This list is the app's first screen; to add another mailbox, they tap the initials at the top right, then “Add account”. The approval can be reviewed or revoked at any time in Microsoft Entra, under Enterprise applications.</p>
 
-    <h3>One more thing to check</h3>
-    <p>IMAP and SMTP AUTH must be enabled for the mailbox in Exchange Online: security defaults turn them off, and no consent turns them back on.</p>
+    <h3>Nothing to switch on</h3>
+    <p>Easymail does not use IMAP, POP or SMTP AUTH, so they can stay off. Microsoft Graph follows your tenant's policies: Conditional Access applies as usual, and an EWS application access policy that blocks third-party apps blocks Easymail too.</p>
     <p>The <a href="./" data-keep-lang>privacy notice</a> and the <a href="support.html" data-keep-lang>support page</a> say who is behind Easymail and how to reach them.</p>
   </article>
 
@@ -598,13 +598,13 @@
     <p class="lead">Un passo da un minuto per gli amministratori IT di Microsoft 365, Exchange Online e tenant scolastici.</p>
 
     <h3>Cos'è Easymail</h3>
-    <p>Easymail è un client di posta gratuito per Android e iPhone che mostra la casella come una chat. Si collega a Exchange Online con i protocolli standard IMAP e SMTP e OAuth 2.0 (XOAUTH2), come Thunderbird o Apple Mail.</p>
+    <p>Easymail è un client di posta gratuito per Android e iPhone che mostra la casella come una chat. Si collega a Exchange Online tramite Microsoft Graph, l'API REST di Microsoft 365, con OAuth 2.0.</p>
 
     <h3>Cosa chiede, e perché</h3>
-    <p><b>Solo autorizzazioni delegate.</b> IMAP.AccessAsUser.All e SMTP.Send di Office 365 Exchange Online, più offline_access per rinnovare il token senza chiedere di nuovo. Ogni azione avviene per conto dell'utente che ha effettuato l'accesso, con i suoi stessi diritti: nessuna autorizzazione applicativa, nessun accesso ad altre caselle.</p>
-    <p><b>Nessun server Easymail.</b> L'app parla con Exchange Online direttamente dal telefono su una connessione cifrata; niente passa da un nostro server, e nessun dato viene inviato a noi.</p>
+    <p><b>Solo autorizzazioni delegate.</b> Mail.ReadWrite, Mail.Send e User.Read di Microsoft Graph, più offline_access per rinnovare il token senza chiedere di nuovo. Ogni azione avviene per conto dell'utente che ha effettuato l'accesso, con i suoi stessi diritti: nessuna autorizzazione applicativa, nessun accesso ad altre caselle, calendari o contatti.</p>
+    <p><b>Nessun server Easymail.</b> L'app parla con Microsoft direttamente dal telefono su una connessione cifrata; niente passa da un nostro server, e nessun dato viene inviato a noi.</p>
     <p><b>Una copia solo sul telefono.</b> L'app tiene una copia locale della casella, con un tetto, per aprirsi in fretta e funzionare offline; la cifra il sistema a riposo, e si cancella all'uscita dall'account o alla disinstallazione.</p>
-    <p><b>Perché serve la tua approvazione.</b> La politica di consenso predefinita di Microsoft non lascia agli utenti concedere l'accesso IMAP alle app di terzi; un amministratore approva l'app una volta per tutta l'organizzazione.</p>
+    <p><b>Perché serve la tua approvazione.</b> La politica di consenso predefinita di Microsoft non lascia agli utenti concedere alle app di terzi l'accesso alla posta (Mail.ReadWrite); un amministratore approva l'app una volta per tutta l'organizzazione.</p>
 
     <h3>Approva Easymail per la tua organizzazione</h3>
     <p>Accedi con un account amministratore del tuo tenant. Microsoft mostra le autorizzazioni qui sopra e registra l'approvazione nel tuo tenant; a Easymail non viene inviato niente.</p>
@@ -612,7 +612,7 @@
       <label for="domain-it">Il dominio della tua organizzazione (facoltativo)</label>
       <input id="domain-it" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com oppure contoso.onmicrosoft.com. Vuoto: lo chiede Microsoft.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approva Easymail per la tua organizzazione</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approva Easymail per la tua organizzazione</a>
       <p class="note">Apre la pagina di consenso amministrativo di Microsoft (login.microsoftonline.com).</p>
     </form>
 
@@ -624,15 +624,15 @@
         <dt>Editore</dt><dd>Lorenzo Montoli, Italia (vedi la pagina di assistenza). La registrazione non ha il bollino 'editore verificato' di Microsoft: quel programma è aperto solo alle imprese registrate.</dd>
         <dt>Tipi di account supportati</dt><dd>Account Microsoft di lavoro, di scuola e personali (multi-tenant)</dd>
         <dt>URI di reindirizzamento di questa pagina</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>Autorizzazioni</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>Autorizzazioni</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>Cosa succede dopo</h3>
-    <p>Una volta approvata, i tuoi utenti aggiungono il loro account di lavoro o di scuola in Easymail (Aggiungi una casella &gt; Outlook, Hotmail, Microsoft 365) e accedono con Microsoft come sempre. L'approvazione si rivede o si revoca in qualsiasi momento in Microsoft Entra, in Applicazioni aziendali.</p>
+    <p>Una volta approvata, i tuoi utenti aprono Easymail, toccano «Outlook e Hotmail» nell'elenco «Che posta usi?» (che vale anche per gli account di lavoro e di scuola) e accedono con Microsoft come sempre. L'elenco è la prima schermata dell'app; per aggiungere un'altra casella si toccano le iniziali in alto a destra e poi «Aggiungi account». L'approvazione si può rivedere o revocare in qualsiasi momento in Microsoft Entra, alla voce «Applicazioni aziendali».</p>
 
-    <h3>Un'altra cosa da controllare</h3>
-    <p>IMAP e SMTP AUTH devono essere abilitati per la casella in Exchange Online: le impostazioni di sicurezza predefinite li spengono, e nessun consenso li riaccende.</p>
+    <h3>Niente da accendere</h3>
+    <p>Easymail non usa IMAP, POP né SMTP AUTH, che possono restare spenti. Microsoft Graph segue le politiche del tuo tenant: l'accesso condizionale vale come sempre, e una politica di accesso delle applicazioni EWS che blocca le app di terzi blocca anche Easymail.</p>
     <p>L'<a href="./" data-keep-lang>informativa sulla privacy</a> e la <a href="support.html" data-keep-lang>pagina di assistenza</a> dicono chi c'è dietro Easymail e come contattarci.</p>
   </article>
 
@@ -641,13 +641,13 @@
     <p class="lead">Une étape d'une minute pour les administrateurs informatiques de Microsoft 365, d'Exchange Online et des tenants scolaires.</p>
 
     <h3>Ce qu'est Easymail</h3>
-    <p>Easymail est un client de messagerie gratuit pour Android et iPhone qui affiche une boîte aux lettres comme une conversation. Il se connecte à Exchange Online avec les protocoles standard IMAP et SMTP et OAuth 2.0 (XOAUTH2), exactement comme Thunderbird ou Apple Mail.</p>
+    <p>Easymail est un client de messagerie gratuit pour Android et iPhone qui affiche une boîte aux lettres comme une conversation. Il se connecte à Exchange Online via Microsoft Graph, l'API REST de Microsoft 365, avec OAuth 2.0.</p>
 
     <h3>Ce qu'il demande, et pourquoi</h3>
-    <p><b>Des autorisations déléguées uniquement.</b> IMAP.AccessAsUser.All et SMTP.Send d'Office 365 Exchange Online, plus offline_access pour renouveler le jeton sans redemander. Chaque action est effectuée au nom de l'utilisateur connecté, avec ses propres droits : aucune autorisation d'application, aucun accès à d'autres boîtes aux lettres.</p>
-    <p><b>Aucun serveur Easymail.</b> L'application dialogue avec Exchange Online directement depuis le téléphone, par une connexion chiffrée ; rien ne transite par un serveur à nous, et aucune donnée ne nous est envoyée.</p>
+    <p><b>Des autorisations déléguées uniquement.</b> Mail.ReadWrite, Mail.Send et User.Read de Microsoft Graph, ainsi que offline_access pour renouveler le jeton sans redemander. Chaque action est effectuée au nom de l'utilisateur connecté, avec ses propres droits : aucune autorisation d'application et aucun accès à d'autres boîtes aux lettres, calendriers ou contacts.</p>
+    <p><b>Aucun serveur Easymail.</b> L'application dialogue avec Microsoft directement depuis le téléphone, par une connexion chiffrée ; rien ne transite par un serveur à nous, et aucune donnée ne nous est envoyée.</p>
     <p><b>Une copie seulement sur le téléphone.</b> L'application garde une copie locale plafonnée de la boîte pour s'ouvrir vite et fonctionner hors ligne, chiffrée au repos par le système, supprimée à la déconnexion ou à la désinstallation.</p>
-    <p><b>Pourquoi votre approbation est nécessaire.</b> La politique de consentement par défaut de Microsoft ne permet pas aux utilisateurs d'accorder l'accès IMAP aux applications tierces ; un administrateur approuve l'application une fois pour toute l'organisation.</p>
+    <p><b>Pourquoi votre approbation est nécessaire.</b> La politique de consentement par défaut de Microsoft ne permet pas aux utilisateurs d'autoriser les applications tierces à accéder à leur courrier (Mail.ReadWrite) ; un administrateur approuve l'application une fois pour toute l'organisation.</p>
 
     <h3>Approuver Easymail pour votre organisation</h3>
     <p>Connectez-vous avec un compte administrateur de votre tenant. Microsoft affiche les autorisations ci-dessus et enregistre l'approbation dans votre tenant ; rien n'est envoyé à Easymail.</p>
@@ -655,7 +655,7 @@
       <label for="domain-fr">Le domaine de votre organisation (facultatif)</label>
       <input id="domain-fr" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com ou contoso.onmicrosoft.com. Laissez vide pour que Microsoft vous le demande.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approuver Easymail pour votre organisation</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Approuver Easymail pour votre organisation</a>
       <p class="note">Ouvre la page de consentement administrateur de Microsoft (login.microsoftonline.com).</p>
     </form>
 
@@ -667,15 +667,15 @@
         <dt>Éditeur</dt><dd>Lorenzo Montoli, Italie (voir la page d'assistance). L'inscription n'a pas le badge « éditeur vérifié » de Microsoft : ce programme est réservé aux entreprises enregistrées.</dd>
         <dt>Comptes acceptés</dt><dd>Comptes Microsoft professionnels, scolaires et personnels (multitenant)</dd>
         <dt>URI de redirection de cette page</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>Autorisations</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>Autorisations</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>Et ensuite</h3>
-    <p>Une fois l'application approuvée, vos utilisateurs ajoutent leur compte professionnel ou scolaire dans Easymail (Ajouter une boîte aux lettres &gt; Outlook, Hotmail, Microsoft 365) et se connectent avec Microsoft comme d'habitude. L'approbation peut être revue ou révoquée à tout moment dans Microsoft Entra, sous Applications d'entreprise.</p>
+    <p>Une fois l'application approuvée, vos utilisateurs ouvrent Easymail, touchent « Outlook et Hotmail » dans la liste « Quelle messagerie utilisez-vous ? » (qui vaut aussi pour les comptes professionnels et scolaires) et se connectent avec Microsoft comme d'habitude. Cette liste est le premier écran de l'application. Pour ajouter une autre boîte, il suffit de toucher les initiales en haut à droite, puis « Ajouter un compte ». L'approbation peut être revue ou révoquée à tout moment dans Microsoft Entra, dans la section « Applications d'entreprise ».</p>
 
-    <h3>Une chose encore à vérifier</h3>
-    <p>IMAP et SMTP AUTH doivent être activés pour la boîte aux lettres dans Exchange Online : les paramètres de sécurité par défaut les désactivent, et aucun consentement ne les réactive.</p>
+    <h3>Rien à activer</h3>
+    <p>Easymail n'utilise ni IMAP, ni POP, ni SMTP AUTH : ces protocoles peuvent donc rester désactivés. Microsoft Graph suit les stratégies de votre tenant : l'accès conditionnel s'applique comme d'habitude, et une stratégie d'accès aux applications EWS qui bloque les applications tierces bloque également Easymail.</p>
     <p>L'<a href="./" data-keep-lang>avis de confidentialité</a> et la <a href="support.html" data-keep-lang>page d'assistance</a> disent qui est derrière Easymail et comment nous joindre.</p>
   </article>
 
@@ -684,13 +684,13 @@
     <p class="lead">Ein Schritt von einer Minute für IT-Administratoren von Microsoft 365, Exchange Online und Schul-Tenants.</p>
 
     <h3>Was Easymail ist</h3>
-    <p>Easymail ist ein kostenloser Mail-Client für Android und iPhone, der ein Postfach als Chat zeigt. Er verbindet sich mit Exchange Online über die Standardprotokolle IMAP und SMTP und OAuth 2.0 (XOAUTH2), genau wie Thunderbird oder Apple Mail.</p>
+    <p>Easymail ist ein kostenloser Mail-Client für Android und iPhone, der ein Postfach als Chat zeigt. Die Verbindung zu Exchange Online erfolgt über Microsoft Graph, die REST-API von Microsoft 365, mit OAuth 2.0.</p>
 
     <h3>Was sie anfordert, und warum</h3>
-    <p><b>Nur delegierte Berechtigungen.</b> IMAP.AccessAsUser.All und SMTP.Send von Office 365 Exchange Online, dazu offline_access, um das Token ohne erneute Nachfrage zu erneuern. Jede Aktion erfolgt im Namen des angemeldeten Benutzers, mit dessen eigenen Rechten: keine Anwendungsberechtigung, kein Zugriff auf andere Postfächer.</p>
-    <p><b>Kein Easymail-Server.</b> Die App spricht direkt vom Telefon aus mit Exchange Online, über eine verschlüsselte Verbindung; nichts läuft über einen Server von uns, und keine Daten werden an uns gesendet.</p>
+    <p><b>Nur delegierte Berechtigungen.</b> Mail.ReadWrite, Mail.Send und User.Read von Microsoft Graph, dazu offline_access, um das Token ohne erneute Nachfrage zu erneuern. Jede Aktion erfolgt im Namen des angemeldeten Benutzers, mit dessen eigenen Rechten: keine Anwendungsberechtigung, kein Zugriff auf andere Postfächer, Kalender oder Kontakte.</p>
+    <p><b>Kein Easymail-Server.</b> Die App spricht direkt vom Telefon aus mit Microsoft, über eine verschlüsselte Verbindung; nichts läuft über einen Server von uns, und keine Daten werden an uns gesendet.</p>
     <p><b>Eine Kopie nur auf dem Telefon.</b> Die App behält eine begrenzte lokale Kopie des Postfachs, um schnell zu öffnen und offline zu arbeiten; das System verschlüsselt sie im Ruhezustand, und beim Abmelden oder Deinstallieren wird sie gelöscht.</p>
-    <p><b>Warum deine Freigabe nötig ist.</b> Die Standard-Zustimmungsrichtlinie von Microsoft lässt Benutzer keinen IMAP-Zugriff für Apps von Drittanbietern gewähren; ein Administrator gibt die App einmal für die ganze Organisation frei.</p>
+    <p><b>Warum deine Freigabe nötig ist.</b> Die Standard-Zustimmungsrichtlinie von Microsoft verhindert, dass Benutzer Apps von Drittanbietern Zugriff auf ihre E-Mails (Mail.ReadWrite) gewähren; ein Administrator gibt die App einmal für die ganze Organisation frei.</p>
 
     <h3>Easymail für deine Organisation freigeben</h3>
     <p>Melde dich mit einem Administratorkonto deines Tenants an. Microsoft zeigt die Berechtigungen von oben und speichert die Freigabe in deinem Tenant; an Easymail wird nichts gesendet.</p>
@@ -698,7 +698,7 @@
       <label for="domain-de">Die Domain deiner Organisation (optional)</label>
       <input id="domain-de" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com oder contoso.onmicrosoft.com. Leer lassen, dann fragt Microsoft danach.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Easymail für deine Organisation freigeben</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Easymail für deine Organisation freigeben</a>
       <p class="note">Öffnet die Seite für die Administratorzustimmung von Microsoft (login.microsoftonline.com).</p>
     </form>
 
@@ -710,15 +710,15 @@
         <dt>Herausgeber</dt><dd>Lorenzo Montoli, Italien (siehe die Hilfeseite). Die Registrierung trägt nicht das Microsoft-Abzeichen „verifizierter Herausgeber“: Dieses Programm steht nur eingetragenen Unternehmen offen.</dd>
         <dt>Unterstützte Kontotypen</dt><dd>Geschäfts-, Schul- und persönliche Microsoft-Konten (mehrinstanzenfähig)</dd>
         <dt>Umleitungs-URI dieser Seite</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>Berechtigungen</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>Berechtigungen</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>Was danach passiert</h3>
-    <p>Nach der Freigabe fügen deine Benutzer ihr Geschäfts- oder Schulkonto in Easymail hinzu (Postfach hinzufügen &gt; Outlook, Hotmail, Microsoft 365) und melden sich wie gewohnt mit Microsoft an. Die Freigabe lässt sich jederzeit in Microsoft Entra unter Unternehmensanwendungen prüfen oder widerrufen.</p>
+    <p>Nach der Freigabe öffnen deine Benutzer die App Easymail, tippen in der Liste „Welche E-Mail nutzt du?“ auf „Outlook und Hotmail“ (das gilt auch für Geschäfts- und Schulkonten) und melden sich wie gewohnt mit ihrem Microsoft-Konto an. Die Liste ist der erste Bildschirm der App. Für ein weiteres Postfach tippen sie oben rechts auf die Initialen und dann auf „Konto hinzufügen“. Die Freigabe lässt sich jederzeit in Microsoft Entra unter „Unternehmensanwendungen“ prüfen oder widerrufen.</p>
 
-    <h3>Noch etwas zu prüfen</h3>
-    <p>IMAP und SMTP AUTH müssen für das Postfach in Exchange Online aktiviert sein: Die Sicherheitsstandards schalten sie ab, und keine Zustimmung schaltet sie wieder ein.</p>
+    <h3>Nichts muss eingeschaltet werden</h3>
+    <p>Easymail verwendet weder IMAP noch POP noch SMTP AUTH, daher können diese ausgeschaltet bleiben. Microsoft Graph folgt den Richtlinien deines Tenants: Der bedingte Zugriff gilt wie gewohnt, und eine EWS-Anwendungszugriffsrichtlinie, die Apps von Drittanbietern sperrt, sperrt auch Easymail.</p>
     <p>Der <a href="./" data-keep-lang>Datenschutzhinweis</a> und die <a href="support.html" data-keep-lang>Hilfeseite</a> sagen, wer hinter Easymail steht und wie du uns erreichst.</p>
   </article>
 
@@ -727,13 +727,13 @@
     <p class="lead">Un paso de un minuto para los administradores de TI de Microsoft 365, Exchange Online e inquilinos educativos.</p>
 
     <h3>Qué es Easymail</h3>
-    <p>Easymail es un cliente de correo gratuito para Android y iPhone que muestra el buzón como un chat. Se conecta a Exchange Online con los protocolos estándar IMAP y SMTP y OAuth 2.0 (XOAUTH2), igual que Thunderbird o Apple Mail.</p>
+    <p>Easymail es un cliente de correo gratuito para Android y iPhone que muestra el buzón como un chat. Se conecta a Exchange Online a través de Microsoft Graph, la API REST de Microsoft 365, con OAuth 2.0.</p>
 
     <h3>Qué pide, y por qué</h3>
-    <p><b>Solo permisos delegados.</b> IMAP.AccessAsUser.All y SMTP.Send de Office 365 Exchange Online, más offline_access para renovar el token sin volver a preguntar. Cada acción se hace en nombre del usuario que ha iniciado sesión, con sus propios derechos: ningún permiso de aplicación, ningún acceso a otros buzones.</p>
-    <p><b>Ningún servidor de Easymail.</b> La aplicación habla con Exchange Online directamente desde el teléfono por una conexión cifrada; nada pasa por un servidor nuestro y no se nos envía ningún dato.</p>
+    <p><b>Solo permisos delegados.</b> Mail.ReadWrite, Mail.Send y User.Read de Microsoft Graph, más offline_access para renovar el token sin volver a preguntar. Cada acción se hace en nombre del usuario que ha iniciado sesión, con sus propios derechos: ningún permiso de aplicación, ningún acceso a otros buzones, calendarios o contactos.</p>
+    <p><b>Ningún servidor de Easymail.</b> La aplicación habla con Microsoft directamente desde el teléfono por una conexión cifrada; nada pasa por un servidor nuestro y no se nos envía ningún dato.</p>
     <p><b>Una copia solo en el teléfono.</b> La aplicación guarda una copia local limitada del buzón para abrirse rápido y funcionar sin conexión; el sistema la cifra en reposo, y se elimina al cerrar sesión o desinstalar.</p>
-    <p><b>Por qué hace falta tu aprobación.</b> La directiva de consentimiento predeterminada de Microsoft no deja que los usuarios concedan acceso IMAP a aplicaciones de terceros; un administrador aprueba la aplicación una vez para toda la organización.</p>
+    <p><b>Por qué hace falta tu aprobación.</b> La directiva de consentimiento predeterminada de Microsoft no deja que los usuarios concedan a aplicaciones de terceros acceso a su correo (Mail.ReadWrite); un administrador aprueba la aplicación una vez para toda la organización.</p>
 
     <h3>Aprueba Easymail para tu organización</h3>
     <p>Inicia sesión con una cuenta de administrador de tu inquilino. Microsoft muestra los permisos de arriba y registra la aprobación en tu inquilino; a Easymail no se envía nada.</p>
@@ -741,7 +741,7 @@
       <label for="domain-es">El dominio de tu organización (opcional)</label>
       <input id="domain-es" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com o contoso.onmicrosoft.com. Déjalo vacío para que te lo pregunte Microsoft.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Aprobar Easymail para tu organización</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>Aprobar Easymail para tu organización</a>
       <p class="note">Abre la página de consentimiento del administrador de Microsoft (login.microsoftonline.com).</p>
     </form>
 
@@ -753,15 +753,15 @@
         <dt>Editor</dt><dd>Lorenzo Montoli, Italia (ver la página de ayuda). El registro no tiene la insignia de «editor verificado» de Microsoft: ese programa está abierto solo a empresas registradas.</dd>
         <dt>Tipos de cuenta admitidos</dt><dd>Cuentas Microsoft profesionales, educativas y personales (multiinquilino)</dd>
         <dt>URI de redirección de esta página</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>Permisos</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>Permisos</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>Qué pasa después</h3>
-    <p>Una vez aprobada, tus usuarios añaden su cuenta profesional o educativa en Easymail (Añadir un buzón &gt; Outlook, Hotmail, Microsoft 365) e inician sesión con Microsoft como siempre. La aprobación se puede revisar o revocar en cualquier momento en Microsoft Entra, en Aplicaciones empresariales.</p>
+    <p>Una vez aprobada, tus usuarios abren Easymail, tocan «Outlook y Hotmail» en la lista «¿Qué correo usas?» (que también sirve para las cuentas profesionales y educativas) e inician sesión con Microsoft como siempre. La lista es la primera pantalla de la aplicación. Para añadir otro buzón, hay que tocar las iniciales arriba a la derecha y, a continuación, «Añadir cuenta». La aprobación se puede revisar o revocar en cualquier momento en Microsoft Entra, en la sección «Aplicaciones empresariales».</p>
 
-    <h3>Una cosa más que comprobar</h3>
-    <p>IMAP y SMTP AUTH deben estar habilitados para el buzón en Exchange Online: los valores predeterminados de seguridad los desactivan, y ningún consentimiento los vuelve a activar.</p>
+    <h3>No hay nada que activar</h3>
+    <p>Easymail no usa IMAP, POP ni SMTP AUTH, que pueden seguir desactivados. Microsoft Graph sigue las directivas de tu inquilino: el acceso condicional se aplica como siempre, y una directiva de acceso a aplicaciones de EWS que bloquea las aplicaciones de terceros también bloquea Easymail.</p>
     <p>El <a href="./" data-keep-lang>aviso de privacidad</a> y la <a href="support.html" data-keep-lang>página de ayuda</a> dicen quién está detrás de Easymail y cómo contactar.</p>
   </article>
 
@@ -770,13 +770,13 @@
     <p class="lead">Microsoft 365、Exchange Online 和学校租户的 IT 管理员只需一分钟。</p>
 
     <h3>Easymail 是什么</h3>
-    <p>Easymail 是一款免费的 Android 和 iPhone 邮件客户端，把邮箱显示成聊天的样子。它通过标准的 IMAP 和 SMTP 协议以及 OAuth 2.0（XOAUTH2）连接 Exchange Online，与 Thunderbird 或 Apple Mail 的方式相同。</p>
+    <p>Easymail 是一款免费的 Android 和 iPhone 邮件客户端，把邮箱显示成聊天的样子。它通过 Microsoft Graph（Microsoft 365 的 REST API）并使用 OAuth 2.0 连接 Exchange Online。</p>
 
     <h3>它申请什么，为什么</h3>
-    <p><b>仅委托权限。</b> Office 365 Exchange Online 的 IMAP.AccessAsUser.All 和 SMTP.Send，以及用于续订令牌、无需再次询问的 offline_access。每项操作都以已登录用户的名义、按该用户自己的权限进行：没有应用程序权限，不会访问其他邮箱。</p>
-    <p><b>没有 Easymail 服务器。</b> 应用从手机直接通过加密连接与 Exchange Online 通信；不经过我们的任何服务器，也不向我们发送任何数据。</p>
+    <p><b>仅委托权限。</b> Microsoft Graph 的 Mail.ReadWrite、Mail.Send 和 User.Read，以及用于续订令牌、无需再次询问的 offline_access。每项操作都以已登录用户的名义、按该用户自己的权限进行：没有应用程序权限，不会访问其他邮箱、日历或联系人。</p>
+    <p><b>没有 Easymail 服务器。</b> 应用从手机直接通过加密连接与 Microsoft 通信；不经过我们的任何服务器，也不向我们发送任何数据。</p>
     <p><b>副本只在手机上。</b> 应用在本地保留一份有上限的邮箱副本，用于快速打开和离线使用，由系统静态加密，退出登录或卸载时删除。</p>
-    <p><b>为什么需要你的批准。</b> Microsoft 的默认同意策略不允许用户向第三方应用授予 IMAP 访问权限；由管理员为整个组织批准一次即可。</p>
+    <p><b>为什么需要你的批准。</b> Microsoft 的默认同意策略不允许用户向第三方应用授予邮件访问权限（Mail.ReadWrite）；由管理员为整个组织批准一次即可。</p>
 
     <h3>为你的组织批准 Easymail</h3>
     <p>使用你租户的管理员账号登录。Microsoft 会显示上述权限，并把批准记录在你的租户中；不会向 Easymail 发送任何内容。</p>
@@ -784,7 +784,7 @@
       <label for="domain-zh">你的组织的域名（可选）</label>
       <input id="domain-zh" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com 或 contoso.onmicrosoft.com。留空则由 Microsoft 询问。</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>为你的组织批准 Easymail</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>为你的组织批准 Easymail</a>
       <p class="note">将打开 Microsoft 自己的管理员同意页面（login.microsoftonline.com）。</p>
     </form>
 
@@ -796,15 +796,15 @@
         <dt>发布者</dt><dd>Lorenzo Montoli，意大利（见帮助页面）。此注册没有 Microsoft 的“已验证发布者”标记：该计划只对注册企业开放。</dd>
         <dt>支持的账号类型</dt><dd>工作、学校和个人 Microsoft 账号（多租户）</dd>
         <dt>此页面的重定向 URI</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>权限</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>权限</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>之后会怎样</h3>
-    <p>批准后，你的用户在 Easymail 中添加自己的工作或学校账号（添加邮箱 &gt; Outlook、Hotmail、Microsoft 365），像往常一样用 Microsoft 登录。批准可以随时在 Microsoft Entra 的“企业应用程序”中查看或撤销。</p>
+    <p>批准后，你的用户打开 Easymail，在“你用哪个邮箱？”列表中点按“Outlook 和 Hotmail”（工作和学校账号也适用），像往常一样用 Microsoft 登录。该列表就是应用的第一个界面；如需添加其他邮箱，请点按右上角的姓名缩写，然后点按“添加账号”。批准可以随时在 Microsoft Entra 的“企业应用程序”中查看或撤销。</p>
 
-    <h3>还要检查一件事</h3>
-    <p>Exchange Online 中必须为该邮箱启用 IMAP 和 SMTP AUTH：安全默认值会把它们关闭，任何同意都不会重新打开。</p>
+    <h3>无需开启任何设置</h3>
+    <p>Easymail 不使用 IMAP、POP 或 SMTP AUTH，因此它们可以保持关闭。Microsoft Graph 遵循你租户的策略：条件访问照常生效；如果 EWS 应用程序访问策略阻止第三方应用，也会阻止 Easymail。</p>
     <p><a href="./" data-keep-lang>隐私声明</a>和<a href="support.html" data-keep-lang>帮助页面</a>说明了 Easymail 的运营方以及联系方式。</p>
   </article>
 
@@ -813,13 +813,13 @@
     <p class="lead">Microsoft 365、Exchange Online、学校テナントの IT 管理者向けの、1 分で終わる手順です。</p>
 
     <h3>Easymail とは</h3>
-    <p>Easymail は、メールボックスをチャットのように表示する Android と iPhone 向けの無料メールクライアントです。標準の IMAP と SMTP プロトコルと OAuth 2.0（XOAUTH2）で Exchange Online に接続します。Thunderbird や Apple Mail と同じ方法です。</p>
+    <p>Easymail は、メールボックスをチャットのように表示する Android と iPhone 向けの無料メールクライアントです。Microsoft 365 の REST API である Microsoft Graph を通じて、OAuth 2.0 で Exchange Online に接続します。</p>
 
     <h3>要求する権限と、その理由</h3>
-    <p><b>委任されたアクセス許可のみ。</b> Office 365 Exchange Online の IMAP.AccessAsUser.All と SMTP.Send、そして再度尋ねずにトークンを更新するための offline_access です。すべての操作はサインインしたユーザーの代理として、そのユーザー自身の権限で行われます。アプリケーションのアクセス許可はなく、他のメールボックスにはアクセスしません。</p>
-    <p><b>Easymail のサーバーはありません。</b> アプリは端末から暗号化された接続で Exchange Online と直接やり取りします。私たちのサーバーを経由することはなく、データが私たちに送られることもありません。</p>
+    <p><b>委任されたアクセス許可のみ。</b> Microsoft Graph の Mail.ReadWrite、Mail.Send、User.Read、そして再度尋ねずにトークンを更新するための offline_access です。すべての操作はサインインしたユーザーの代理として、そのユーザー自身の権限で行われます。アプリケーションのアクセス許可はなく、他のメールボックス、予定表、連絡先にはアクセスしません。</p>
+    <p><b>Easymail のサーバーはありません。</b> アプリは端末から暗号化された接続で Microsoft と直接やり取りします。私たちのサーバーを経由することはなく、データが私たちに送られることもありません。</p>
     <p><b>コピーは端末上にだけ。</b> すばやく開きオフラインでも使えるよう、アプリはメールボックスのローカルコピーを上限付きで保持します。システムにより保存時に暗号化され、サインアウトまたはアンインストールで削除されます。</p>
-    <p><b>承認が必要な理由。</b> Microsoft の既定の同意ポリシーでは、ユーザーはサードパーティ製アプリに IMAP アクセスを許可できません。管理者が組織全体に対して一度承認します。</p>
+    <p><b>承認が必要な理由。</b> Microsoft の既定の同意ポリシーでは、ユーザーはサードパーティ製アプリにメールへのアクセス（Mail.ReadWrite）を許可できません。管理者が組織全体に対して一度承認します。</p>
 
     <h3>組織で Easymail を承認する</h3>
     <p>テナントの管理者アカウントでサインインしてください。Microsoft が上記のアクセス許可を表示し、承認をテナントに記録します。Easymail には何も送られません。</p>
@@ -827,7 +827,7 @@
       <label for="domain-ja">組織のドメイン（省略可）</label>
       <input id="domain-ja" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com または contoso.onmicrosoft.com。空のままにすると Microsoft が尋ねます。</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>組織で Easymail を承認する</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>組織で Easymail を承認する</a>
       <p class="note">Microsoft の管理者同意ページ（login.microsoftonline.com）が開きます。</p>
     </form>
 
@@ -839,15 +839,15 @@
         <dt>発行元</dt><dd>Lorenzo Montoli、イタリア（サポートページを参照）。この登録には Microsoft の「検証済み発行元」バッジはありません。そのプログラムは登記された企業にのみ開かれています。</dd>
         <dt>サポートされているアカウントの種類</dt><dd>職場、学校、個人の Microsoft アカウント（マルチテナント）</dd>
         <dt>このページのリダイレクト URI</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>アクセス許可</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>アクセス許可</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>承認した後は</h3>
-    <p>承認が済むと、ユーザーは Easymail で職場または学校のアカウントを追加し（メールボックスを追加 &gt; Outlook、Hotmail、Microsoft 365）、いつもどおり Microsoft でサインインできます。承認は Microsoft Entra の「エンタープライズ アプリケーション」でいつでも確認、取り消しができます。</p>
+    <p>承認が済むと、ユーザーは Easymail を開き、「どのメールを使っていますか？」の一覧で「Outlook と Hotmail」をタップします（職場や学校のアカウントもこちらです）。あとはいつもどおり Microsoft でサインインします。この一覧はアプリの最初の画面です。別のメールボックスを追加するには、右上のイニシャルをタップしてから「アカウントを追加」をタップします。承認は Microsoft Entra の「エンタープライズ アプリケーション」でいつでも確認、取り消しができます。</p>
 
-    <h3>もう一つ確認すること</h3>
-    <p>Exchange Online でそのメールボックスの IMAP と SMTP AUTH が有効になっている必要があります。セキュリティの既定値群はこれらを無効にし、どの同意によっても再び有効にはなりません。</p>
+    <h3>有効にする設定はありません</h3>
+    <p>Easymail は IMAP、POP、SMTP AUTH を使わないため、これらは無効のままでかまいません。Microsoft Graph はテナントのポリシーに従います。条件付きアクセスは通常どおり適用され、サードパーティ製アプリをブロックする EWS アプリケーション アクセス ポリシーは Easymail もブロックします。</p>
     <p><a href="./" data-keep-lang>プライバシー通知</a>と<a href="support.html" data-keep-lang>サポートページ</a>に、Easymail の運営者と連絡先が書かれています。</p>
   </article>
 
@@ -856,13 +856,13 @@
     <p class="lead">Microsoft 365, Exchange Online, 학교 테넌트의 IT 관리자를 위한, 1분이면 끝나는 절차입니다.</p>
 
     <h3>Easymail이란</h3>
-    <p>Easymail은 메일함을 채팅처럼 보여 주는 Android와 iPhone용 무료 메일 클라이언트입니다. 표준 IMAP, SMTP 프로토콜과 OAuth 2.0(XOAUTH2)으로 Exchange Online에 연결하며, Thunderbird나 Apple Mail과 같은 방식입니다.</p>
+    <p>Easymail은 메일함을 채팅처럼 보여 주는 Android와 iPhone용 무료 메일 클라이언트입니다. Microsoft 365의 REST API인 Microsoft Graph를 통해 OAuth 2.0으로 Exchange Online에 연결합니다.</p>
 
     <h3>무엇을 요청하며, 왜인가</h3>
-    <p><b>위임된 권한만 사용합니다.</b> Office 365 Exchange Online의 IMAP.AccessAsUser.All과 SMTP.Send, 그리고 다시 묻지 않고 토큰을 갱신하기 위한 offline_access입니다. 모든 작업은 로그인한 사용자를 대신해 그 사용자 자신의 권한으로 이루어집니다. 애플리케이션 권한은 없으며 다른 메일함에는 접근하지 않습니다.</p>
-    <p><b>Easymail 서버가 없습니다.</b> 앱은 휴대전화에서 암호화된 연결로 Exchange Online과 직접 통신합니다. 저희 서버를 거치지 않으며, 어떤 데이터도 저희에게 전송되지 않습니다.</p>
+    <p><b>위임된 권한만 사용합니다.</b> Microsoft Graph의 Mail.ReadWrite, Mail.Send, User.Read, 그리고 다시 묻지 않고 토큰을 갱신하기 위한 offline_access입니다. 모든 작업은 로그인한 사용자를 대신해 그 사용자 자신의 권한으로 이루어집니다. 애플리케이션 권한은 없으며 다른 메일함, 일정, 연락처에는 접근하지 않습니다.</p>
+    <p><b>Easymail 서버가 없습니다.</b> 앱은 휴대전화에서 암호화된 연결로 Microsoft와 직접 통신합니다. 저희 서버를 거치지 않으며, 어떤 데이터도 저희에게 전송되지 않습니다.</p>
     <p><b>사본은 휴대전화에만 있습니다.</b> 빠르게 열고 오프라인에서도 쓸 수 있도록 앱은 메일함의 로컬 사본을 용량 제한을 두고 보관합니다. 시스템이 저장 시 암호화하며, 로그아웃하거나 앱을 삭제하면 지워집니다.</p>
-    <p><b>승인이 필요한 이유.</b> Microsoft의 기본 동의 정책은 사용자가 타사 앱에 IMAP 접근을 허용하는 것을 막습니다. 관리자가 조직 전체를 위해 한 번만 승인하면 됩니다.</p>
+    <p><b>승인이 필요한 이유.</b> Microsoft의 기본 동의 정책은 사용자가 타사 앱에 메일 접근(Mail.ReadWrite)을 허용하는 것을 막습니다. 관리자가 조직 전체를 위해 한 번만 승인하면 됩니다.</p>
 
     <h3>조직에서 Easymail 승인하기</h3>
     <p>테넌트의 관리자 계정으로 로그인하세요. Microsoft가 위의 권한을 보여 주고 승인을 테넌트에 기록합니다. Easymail에는 아무것도 전송되지 않습니다.</p>
@@ -870,7 +870,7 @@
       <label for="domain-ko">조직의 도메인(선택 사항)</label>
       <input id="domain-ko" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
       <p class="hint">contoso.com 또는 contoso.onmicrosoft.com. 비워 두면 Microsoft가 묻습니다.</p>
-      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>조직에서 Easymail 승인하기</a>
+      <a class="btn btn-primary" href="https://login.microsoftonline.com/organizations/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&amp;redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&amp;state=easymail" data-approve>조직에서 Easymail 승인하기</a>
       <p class="note">Microsoft의 관리자 동의 페이지(login.microsoftonline.com)가 열립니다.</p>
     </form>
 
@@ -882,15 +882,15 @@
         <dt>게시자</dt><dd>Lorenzo Montoli, 이탈리아(지원 페이지 참조). 이 등록에는 Microsoft의 '확인된 게시자' 배지가 없습니다. 그 프로그램은 등록된 기업에만 열려 있습니다.</dd>
         <dt>지원되는 계정 유형</dt><dd>회사, 학교 및 개인 Microsoft 계정(다중 테넌트)</dd>
         <dt>이 페이지의 리디렉션 URI</dt><dd><code>https://easymail-app.com/admin-consent.html</code></dd>
-        <dt>권한</dt><dd><code>IMAP.AccessAsUser.All</code>, <code>SMTP.Send</code> (Office 365 Exchange Online), <code>offline_access</code></dd>
+        <dt>권한</dt><dd><code>Mail.ReadWrite</code>, <code>Mail.Send</code>, <code>User.Read</code> (Microsoft Graph), <code>offline_access</code></dd>
       </dl>
     </div>
 
     <h3>승인 후에는</h3>
-    <p>승인되면 사용자는 Easymail에서 회사 또는 학교 계정을 추가하고(메일함 추가 &gt; Outlook, Hotmail, Microsoft 365) 평소처럼 Microsoft로 로그인합니다. 승인은 Microsoft Entra의 엔터프라이즈 애플리케이션에서 언제든지 확인하거나 철회할 수 있습니다.</p>
+    <p>승인되면 사용자는 Easymail을 열고 ‘어떤 메일을 사용하세요?’ 목록에서 ‘Outlook 및 Hotmail’을 누른 뒤(회사 및 학교 계정도 여기에 해당합니다) 평소처럼 Microsoft로 로그인합니다. 이 목록은 앱의 첫 화면입니다. 다른 메일함을 추가하려면 오른쪽 위의 이니셜을 누르고 ‘계정 추가’를 누르면 됩니다. 승인은 Microsoft Entra의 엔터프라이즈 애플리케이션에서 언제든지 확인하거나 철회할 수 있습니다.</p>
 
-    <h3>한 가지 더 확인할 것</h3>
-    <p>Exchange Online에서 해당 메일함의 IMAP과 SMTP AUTH가 켜져 있어야 합니다. 보안 기본값은 이를 끄며, 어떤 동의로도 다시 켜지지 않습니다.</p>
+    <h3>켜야 할 것이 없습니다</h3>
+    <p>Easymail은 IMAP, POP, SMTP AUTH를 사용하지 않으므로 이들은 꺼 두어도 됩니다. Microsoft Graph는 테넌트의 정책을 따릅니다. 조건부 액세스는 평소처럼 적용되며, 타사 앱을 차단하는 EWS 애플리케이션 액세스 정책은 Easymail도 차단합니다.</p>
     <p><a href="./" data-keep-lang>개인정보 처리방침</a>과 <a href="support.html" data-keep-lang>지원 페이지</a>에 Easymail 운영자 정보와 연락 방법이 적혀 있습니다.</p>
   </article>
 </div>
@@ -953,7 +953,7 @@
     <a href="support.html" data-keep-lang>지원</a>
     <a href="mailto:lorenzomontoli@gmail.com">lorenzomontoli@gmail.com</a>
   </div>
-  <p class="legal">App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks of Google LLC.</p>
+  <p class="legal">Apple, the Apple logo and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks of Google LLC. Android is a trademark of Google LLC.</p>
 </footer>
 
 <script>
@@ -1009,7 +1009,7 @@
      tenant id, and "organizations" otherwise, which makes Microsoft ask which tenant it is: the
      rules of AdminConsent.tenantOf in the app. Without this script the link is the one in the
      page, with "organizations". */
-  var BASE = "https://login.microsoftonline.com/{tenant}/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All%20https%3A%2F%2Foutlook.office.com%2FSMTP.Send%20offline_access&redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&state=easymail";
+  var BASE = "https://login.microsoftonline.com/{tenant}/v2.0/adminconsent?client_id=f8508d9e-0271-4b25-9c79-75e1fa95541e&scope=https%3A%2F%2Fgraph.microsoft.com%2FMail.ReadWrite%20https%3A%2F%2Fgraph.microsoft.com%2FMail.Send%20https%3A%2F%2Fgraph.microsoft.com%2FUser.Read%20offline_access&redirect_uri=https%3A%2F%2Feasymail-app.com%2Fadmin-consent.html&state=easymail";
   var DOMAIN = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
   var TENANT_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
   var PERSONAL = ["outlook", "hotmail", "live", "msn"];
